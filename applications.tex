@@ -71,34 +71,34 @@ Streaming processing gives another motivating example for Markov
 decision processes. In stream processing, input data are retrieved and
 analyzed continuously. Such continual observation is commonly found
 in social media, service providers, or even electronic surveillance
-systems. To protect privacy, differentially private mechanisms have
-been formulated and designed~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}. 
-We model a discrete variant of the mechanisms by Markov decision processes.
+systems. To protect privacy, privacy-respecting mechanisms must be
+formulated and designed. Classical differential privacy however is
+insufficient in streaming processing. Note that observations are of
+indefinite lengths in such applications. All differentially private
+mechanism necessarily stay in their internal states indefinitely
+before outcomes are produced. Although differential privacy demands
+privacy-respecting outcomes, internal states may reveal private
+information in such mechanisms. When differentially private mechanisms
+are in their internal states, privacy is still lost if an intrusion
+occurs.
 
-For illustration, consider monitoring events of the types $a$ and $b$
-continuously. An observation is a sequence of event types. We would
-like to compute the number of event types in observations. Hence for
-observations $a \cdots a$ and $b \cdots b$ of arbitrary positive
-lengths, the query result is $1$; and the query result is $2$ for
-other non-empty observations. 
+In pan privacy, data analysis mechanisms are required to respect
+privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}. 
+The idea is to show reachability probabilities are similar on
+neighboring observations. In the following, we model a discrete
+variant of the mechanisms by Markov decision processes. We will also
+specify pan privacy on our model using $\dpCTL$.
 
-In order to formulate differential privacy, define two obsevations
-are \emph{neighbors} if one can be obtained from the other by replacing
+Consider monitoring events of the types $a$ and $b$ continuously. An
+observation is a sequence of event types. Two obsevations are
+{neighbors} if one can be obtained from the other by replacing 
 event types any number of times, that is, if they are of the same
 length. \bw{Later, we will consider a different definition of
-neighborhood by restricting the number of replacements.} Classical
-differential privacy requires the distributions of outcomes $0$,
-$1$, and $2$ are similar on neighboring observations. For streaming
-processing, observations are of indefinite lengths. Data analysis
-algorithms necessarily stay in their internal states indefinitely
-before outcomes are produced. Internal states however may reveal
-private information. When data analysis algorithms are in internal
-states, privacy may still be lost if an intrusion occurs. Classical
-differential privacy is not very useful during continual observation.
-
-In pan privacy, data analysis algorithms are required to respect
-privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}. 
-
+neighborhood by restricting the number of replacements.} 
+We would like to compute the number of event types in
+observations. Hence for observations $a \cdots a$ and $b \cdots b$ of
+arbitrary positive lengths, the query result is $1$; and the query
+result is $2$ for other non-empty observations. 
 
 For each event, a bit denotes whether it has occurred or not. To model
 adjacent inputs, we use four actions symbols to denote events and its
