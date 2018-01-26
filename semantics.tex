@@ -23,9 +23,9 @@ $s$. Define the satisfaction relation $K, \neighbor{S}, s
   \Pr [\{ \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with }
                     \pi_0 = s\}] \in J \\
   K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
-  & \textmd{ if } & 
+  & \textmd{ if } &
   \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
-      p(s) \leq \epsilon p(t) + \delta \textmd{ and } 
+      p(s) \leq \epsilon p(t) + \delta \textmd{ and }
       p(t) \leq \\
   & & \epsilon p(s)  + \delta  \textmd{ where } p(x) = \Pr [\{
       \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with}\\
@@ -33,19 +33,19 @@ $s$. Define the satisfaction relation $K, \neighbor{S}, s
 \end{eqnarray*}
 
 Moreover, the relation $K, \neighbor{S}, \pi \models \phi$ is defined as
-follows.
+for the standard LTL formulas. We only give the semantics for $\X$ and $\until$ as follows.
 \begin{eqnarray*}
-  K, \neighbor{S}, \pi \models \X \Phi
+  K, \neighbor{S}, \pi \models \X \phi
   & \textmd{ if } &
-  K, \neighbor{S}, \pi[1] \models \Phi\\
-  K, \neighbor{S}, \pi \models \Phi \until \Psi 
+  K, \neighbor{S}, \pi[1] \models \phi\\
+  K, \neighbor{S}, \pi \models \phi \until \psi
   & \textmd{ if } &
   \textmd{there is a } j \geq 0 \textmd{ such that }
-  K, \neighbor{S}, \pi[j] \models \Psi \textmd{ and } \\
-  & & K, \neighbor{S}, \pi[k] \models \Phi
+  K, \neighbor{S}, \pi[j] \models \psi \textmd{ and } \\
+  & & K, \neighbor{S}, \pi[k] \models \phi
       \textmd{ for every } 0 \leq k < j
 \hide{
-  K, \neighbor{S}, \pi \models \Phi \buntil{n} \Psi 
+  K, \neighbor{S}, \pi \models \Phi \buntil{n} \Psi
   & \textmd{ if } &
   \textmd{there is a } 0 \leq j \leq n \textmd{ such that }
   K, \neighbor{S}, \pi[j] \models \Psi \textmd{ and } \\
@@ -66,49 +66,77 @@ satisfying $\phi$ from $s$ on $K$ with $N$. The semantics of the
 differentially private operator hence becomes
 \begin{eqnarray*}
   K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
-  & \textmd{ if } & 
+  & \textmd{ if } &
   \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
-      \myPr{s}{K}{N}{\phi} \leq \epsilon \myPr{t}{K}{N}{\phi} + \delta 
+      \myPr{s}{K}{N}{\phi} \leq \epsilon \myPr{t}{K}{N}{\phi} + \delta
       \textmd{ and }\\
   & &  \myPr{t}{K}{N}{\phi} \leq \epsilon \myPr{s}{K}{N}{\phi} + \delta
 \end{eqnarray*}
 
 Other than the differentially private operator, the semantics of
-$\dpCTL$ is standard~\cite{BK:08:PMC}. 
-To intuit the semantics of $\dpriv{\epsilon}{\delta} \phi$, 
+$\dpCTL$ is standard~\cite{BK:08:PMC}.
+To intuit the semantics of $\dpriv{\epsilon}{\delta} \phi$,
 recall that  $\myPr{s}{K}{N}{\phi}$ is the probability of having
-paths satisfying $\phi$ from $s$. Thus, a state $s$ satisfies 
+paths satisfying $\phi$ from $s$. Thus, a state $s$ satisfies
 $\dpriv{\epsilon}{\delta} \phi$ if having paths satisfying $\phi$
 from $s$ is $(\epsilon, \delta)$-close to having paths satisfying
 $\phi$ from every neighbor of $s$. In other words, it is
 probabilistically similar to observe paths satisfying $\phi$ from $s$
 and from all neighbors of $s$.
 
+\section{Specifying Properties in $\dpCTL$}
+In this section we describe what type of properties in the differential privacy context can be expressed using $\dpCTL$.
+
+\paragraph{Standard Differential Privacy.} 
+The formula $\dpriv{3}{0} (\X Y)$ holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X Y$ from $s$ and $t$ satisfy:
+$\myPr{s}{K}{N}{\X Y}\le 3\myPr{t}{K}{N}{\X Y}$. The formula $\dpriv{3}{0} (\X Y)\wedge \dpriv{3}{0} (\X N)$ thus specifies the differential privacy property for states $+$ and $-$ in Example~\ref{exa:survey}.
+
+Further, consider the Markov chain in
+Figure~\ref{figure:geometric-mechanism-markov-chain}. Assume
+$L(out_i) = \{ out_i \}$ and $\Delta (f) = 1$. Then $in_k$ and $in_l$ are
+neighbors iff $| k - l | \leq 1$\lz{put above sentence to the def of the model}. Define the $\dpCTL$ formula
+$\psi = \dpriv{.5}{0} (\F out_0) \wedge \dpriv{.5}{0} (\F out_1) \wedge
+\cdots \wedge \dpriv{.5}{0} (\F out_5)$\lz{I think we better use $\X$ operator here ;)}. If the state $in_k$ satisfies
+$\psi$ for $k = 0, \ldots, 5$, then the $.5$-geometric mechanism is
+$(0.5, 0)$-differentially private.
+
+
+\paragraph{Compositional Properties.}
+Compositional aspect is one of the building block for differentially private algorithms. According to the compositional theorem \cite{}, for $(\epsilon_1,0)$-differentially private algorithm $M_1$ and
+$(\epsilon_2,0)$-differentially private algorithm $M_2$, their combination $M$ defined by $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1\epsilon_2,0)$-differentially private. The degradation is rooted in the repeated computation. To illustrate this property, we consider the extended example below \lz{here example of the survey example, expanded twice: we should discuss the graph before it is drawn...}
+
+We consider the formula $\dpriv{9}{0} (\X (Y\wedge \X Y))$. A path satisfies $\X (Y\wedge \X Y)$ if the second state satisfies $Y$ and the third state satisfies $Y$ as well. We verify that this formula is satisfied  for state $+$ and $-$. Moreover, the bound $\epsilon=9$ is bound, since \lz{tbd once graph is given}. Finally, the formula $\wedge_{a_1,a_2}\dpriv{9}{0} (\X (a_1\wedge \X a_2))$ corresponds to the desired compositional property for the model, where $a_1,a_2$ range over all atomic propositions $\{Y,N\}$.
+
+We consider another simpler formula for comparision: $\dpriv{3}{0} (\X \X Y)$. In this case we donot have privacy lost, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
+
+\paragraph{Advanced Compositional Properties}
+
+One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider ...
+\lz{find a -- simpler -- formula such that the bound is not tight, maybe $\delta>0$ is needed}
+
+
+
+\paragraph{Infinite ...}
 Note that $\dpCTL$ generalizes differential privacy to infinite
 behaviors naturally. Classical differential privacy discusses properties about
 randomized terminating mechanisms. Sophisticated mechanisms for
 streaming data have also been discussed in social networks and
 internet of things. Such mechanisms inherently have infinite
-computation. Their privacy guarantees are approximated by those of the 
+computation. Their privacy guarantees are approximated by those of the
 prefixes of computation.
 With \dpCTL, the subformula $\phi$ in $\dpriv{\epsilon}{\delta} \phi$
 can be an arbitrary $\dpCTL$ path formula. One can specify
 $(\epsilon, \delta)$-closedness over infinite behaviors naturally. For instance,
-$\dpriv{\epsilon}{\delta} (\G \PJ{[1,1]} (\F \mathit{high}))$
-specifies states having $(\epsilon, \delta)$-close 
-infinitely often $\mathit{high}$ behaviors to its neighbors. 
+$\dpriv{\epsilon}{\delta} (\G \PJ{[1,1]} (\F \mathit{high}))$ \lz{now we can use $G F high$}
+specifies states having $(\epsilon, \delta)$-close
+infinitely often $\mathit{high}$ behaviors to its neighbors.
 
-\noindent
-\textit{Example.} 
-Consider the Markov chain in
-Figure~\ref{figure:geometric-mechanism-markov-chain}. Assume 
-$L(out_i) = \{ out_i \}$ and $\Delta (f) = 1$. Then $in_k$ and $in_l$ are
-neighbors iff $| k - l | \leq 1$. Define the $\dpCTL$ formula
-$\psi = \dpriv{.5}{0} (\F out_0) \wedge \dpriv{.5}{0} (\F out_1) \wedge
-\cdots \wedge \dpriv{.5}{0} (\F out_5)$. If the state $in_k$ satisfies
-$\psi$ for $k = 0, \ldots, 5$, then the $.5$-geometric mechanism is
-$(0.5, 0)$-differentially private.
 
+
+
+
+\section{Markov Decision Processes}
+\lz{let put it as another section after Markov chains}
 The semantics over Markov chains generalizes to Markov decision
 processes as well. Note that two states with different enabled actions
 are trivially distinguishable; no privacy can be preserved. Without
@@ -130,15 +158,15 @@ relation $M, \neighbor{S}, s \models \Phi$ as follows.
   M, \neighbor{S}, s \models \Phi_1\\
   M, \neighbor{S}, s \models \PJ{J} \phi
   & \textmd{ if } &
-  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \in J  
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \in J
   \textmd{ for every scheduler } \scheduler{S}\\
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
    position-independent scheduler } \\
-  & & \scheduler{S}, 
+  & & \scheduler{S},
    \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq \epsilon \cdot
-   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta 
+   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
    \textmd{ and }
    \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq \epsilon \cdot
   \\
@@ -148,7 +176,7 @@ relation $M, \neighbor{S}, s \models \Phi$ as follows.
 Recall that $M_{\scheduler{S}}$ is but a Markov chain. The semantics
 of $M_{\scheduler{S}}, \neighbor{S}, \pi \models \phi$ and hence the
 probability $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ are
-defined as in Markov chains. 
+defined as in Markov chains.
 The semantics of $\dpCTL$ on reactive Markov decision processes
 is again standard except the differentially private operator
 $\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
@@ -156,12 +184,12 @@ $\dpriv{\epsilon}{\delta} \phi$ specifies states which are $(\epsilon,
 \delta)$-close to all its neighbors in having paths satisfying $\phi$
 for arbitrary position-independent schedulers. That is, no
 position-independent scheduler can force any of neighbors to have
-probabilistically distinguishable behaviors. 
+probabilistically distinguishable behaviors.
 
 \noindent
 \emph{Discussion.}
 Another definition of the differentially private operator
-might be: 
+might be:
 \begin{eqnarray*}
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
   & \textmd{ if } &
@@ -171,7 +199,7 @@ might be:
   \epsilon \cdot\\
   && \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta \textmd{ and }
   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
-  \epsilon \cdot \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} 
+  \epsilon \cdot \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
   + \delta
 \end{eqnarray*}
 A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
