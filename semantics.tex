@@ -84,6 +84,104 @@ $\phi$ from every neighbor of $s$. In other words, it is
 probabilistically similar to observe paths satisfying $\phi$ from $s$
 and from all neighbors of $s$.
 
+\section{Model Checking Algorithms}
+The model checking algorithms for $\dpCTL$ follow the classical
+algorithms for $\PCTL$ by computing the states satisfying
+sub state-formulae inductively~\cite{BK:08:PMC}. It hence suffices to
+consider the inductive step where the states satisfying the subformula
+$\dpriv{\epsilon}{\delta} (\phi)$ is computed.
+
+%We start with the algorithm for Markov chains.
+
+In the classical $\PCTL$ model checking algorithm for Markov chains,
+states satisfying the subformula $\PJ{J} \phi$ are obtained by
+computing $\myPr{s}{K}{\neighbor{S}}{\phi}$ for state $s \in S$.
+These probabilities can be computed by solving linear equations or
+through iterative approximations. We summarize it in the following
+theorem~\cite{BK:08:PMC}:
+
+\begin{lemma}
+  Let $K = (S, \wp, L)$ be a Markov chain, $s
+  \in S$, and $B, C \subseteq S$. The probabilities
+  $\myPr{s}{K}{\neighbor{S}}{\gX B}$ and
+  $\myPr{s}{K}{\neighbor{S}}{B \mho C}$
+\hide{
+  $\Pr[\{ \pi : K, \neighbor{K}, \pi \models B \buntil{n} C \textmd{
+    with } \pi_0 = s \}]$
+} are computable within time polynomial in
+  $|S|$.
+  \label{lemma:PJ-subroutines}
+\end{lemma}
+
+In Lemma~\ref{lemma:PJ-subroutines}, we abuse the notation slightly to
+admit path formulae of the form $\gX B$ (next $B$) and
+$B \guntil C$ ($B$ until $C$) with $B, C \subseteq S$ as
+in~\cite{BK:08:PMC}. They are interpreted by introducing new atomic
+propositions $B$ and $C$ for each $s \in B$ and $s \in C$
+respectively. We will also use graphical symbols $\gF C$ ($C$ in
+the future) and $\gG C$ (globally $C$) in such path formulae
+$\varphi$ to minimize confusion.
+
+In order to determine the set $\{ s : K, \neighbor{S}, s \models
+\dpriv{\epsilon}{\delta} \varphi \}$, our algorithm first computes
+the probabilities $p (s) = \myPr{s}{K}{\neighbor{S}}{\varphi}$ for every
+$s \in S$ (Algorithm~\ref{algorithm:sat-dpriv-dtmc}). For each $s \in S$,
+it then compares the probabilities $p (s)$ and $p (t)$ for every
+neighbor $t$ of $s$. If there is a neighbor $t$ such that $p (s)$ and
+$p (t)$ are not $(\epsilon, \delta)$-close, the state $s$
+is removed from the result. Hence
+Algorithm~\ref{algorithm:sat-dpriv-dtmc} returns all states which are
+$(\epsilon, \delta)$-close to their neighbors.
+The algorithm requires at most $O
+(|S|^2)$ additional steps. We hence have the following results:
+
+\begin{algorithm}
+  \begin{algorithmic}[1]
+    \Function{SAT}{$K$, $\neighbor{S}$, $\phi$}
+    \Match{$\phi$}
+    \Comment{by Lemma~\ref{lemma:PJ-subroutines}}
+    \Case{$\X \Psi$}
+      \State{$B \leftarrow \textmd{SAT} (K, \neighbor{S}, \Psi)$}
+      \State{$p(s) \leftarrow \myPr{s}{K}{\neighbor{S}}{\gX B}$
+        for every $s \in S$}
+    \EndCase
+    \Case{$\Psi \until \Psi'$}
+      \State{$B \leftarrow \textmd{SAT} (K, \neighbor{S}, \Psi)$}
+      \State{$C \leftarrow \textmd{SAT} (K, \neighbor{S}, \Psi')$}
+      \State{$p(s) \leftarrow \myPr{s}{K}{\neighbor{S}}{B \guntil C}$ for
+        every $s \in S$}
+    \EndCase
+    \EndMatch
+    \State{$R \leftarrow S$}
+    \For{$s \in S$}
+      \For{$t$ with $s \neighbor{K} t$}
+        \If{$p(s) \not\leq \epsilon p(t) + \delta$ or
+            $p(t) \not\leq \epsilon p(s) + \delta$}
+        {remove $s$ from $R$}
+        \EndIf
+      \EndFor
+    \EndFor
+
+    \State{\Return $R$}
+    \EndFunction
+  \end{algorithmic}
+  \caption{SAT($\phi$, $\neighbor{K}$)}
+  \label{algorithm:sat-dpriv-dtmc}
+\end{algorithm}
+
+\begin{proposition}
+  Let $K = (S, \wp, L)$ be a Markov chain.
+  $\{ s : K, \neighbor{K}, s \models \dpriv{\epsilon}{\delta} \phi \}$ is
+  computable within time polynomial in $|S|$.
+\end{proposition}
+
+\begin{corollary}
+  Let $K = (S, \wp, L)$ be a Markov chain and $\Phi$ a $\dpCTL$
+  formula. $\{ s : K, \neighbor{K}, s \models \Phi \}$ is
+  computable within time polynomial in $|S|$ and $|\Phi|$.
+\end{corollary}
+
+
 \section{Specifying Properties in $\dpCTL$}
 In this section we describe what type of properties in the differential privacy context can be expressed using $\dpCTL$.
 
@@ -110,10 +208,10 @@ We consider the formula $\dpriv{9}{0} (\X (Y\wedge \X Y))$. A path satisfies $\X
 We consider another simpler formula for comparision: $\dpriv{3}{0} (\X \X Y)$. In this case we donot have privacy lost, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
 
 \paragraph{Advanced Compositional Properties}
+One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider our survey example, and the property $\dpriv{1}{.5} (\X Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=1$ or $\delta_1=.5$ without increasing the other one. 
 
-One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider ...
-\lz{find a -- simpler -- formula such that the bound is not tight, maybe $\delta>0$ is needed}
 
+Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X (Y\wedge \X Y))$ under the model in ???. Applying the compositional theorem\lz{Bow-Yaw, as we only refer to the book, I wonder whether using the notion $e^\epsilon$ is easier to explain?}, one can choose $\epsilon_2=\epsilon_1^2=1$ and $\delta_2=2\delta_1=1$. However, we can check easily that one can get better privacy parameter $(1,0.5)$ or $(0,\frac{9}{16})$. 
 
 
 \paragraph{Infinite ...}
@@ -136,7 +234,6 @@ infinitely often $\mathit{high}$ behaviors to its neighbors.
 
 
 \section{Markov Decision Processes}
-\lz{let put it as another section after Markov chains}
 The semantics over Markov chains generalizes to Markov decision
 processes as well. Note that two states with different enabled actions
 are trivially distinguishable; no privacy can be preserved. Without
@@ -173,6 +270,8 @@ relation $M, \neighbor{S}, s \models \Phi$ as follows.
   & &
    \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
 \end{eqnarray*}
+
+\lz{how about using "query sequence" instead of position-independent scheduler, and then argue that it makes sense for the resulting MDP model from differential privacy? This corresponds to a special scheduler that is applied on both neighboring states. }
 Recall that $M_{\scheduler{S}}$ is but a Markov chain. The semantics
 of $M_{\scheduler{S}}, \neighbor{S}, \pi \models \phi$ and hence the
 probability $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ are
