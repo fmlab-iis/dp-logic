@@ -1,0 +1,479 @@
+
+The model checking algorithms for $\dpCTL$ follow the classical
+algorithms for $\PCTL$ by computing the states satisfying 
+sub state-formulae inductively~\cite{BK:08:PMC}. It hence suffices to
+consider the inductive step where the states satisfying the subformula 
+$\dpriv{\epsilon}{\delta} (\phi)$ is computed. We start with the
+algorithm for Markov chains.
+
+In the classical $\PCTL$ model checking algorithm for Markov chains,
+states satisfying the subformula $\PJ{J} \phi$ are obtained by
+computing $\myPr{s}{K}{\neighbor{S}}{\phi}$ for state $s \in S$. 
+These probabilities can be computed by solving linear equations or
+through iterative approximations. We summarize it in the following
+theorem~\cite{BK:08:PMC}:
+
+\begin{lemma}
+  Let $K = (S, \wp, L)$ be a Markov chain, $s
+  \in S$, and $B, C \subseteq S$. The probabilities
+  $\myPr{s}{K}{\neighbor{S}}{\gX B}$ and
+  $\myPr{s}{K}{\neighbor{S}}{B \mho C}$
+\hide{
+  $\Pr[\{ \pi : K, \neighbor{K}, \pi \models B \buntil{n} C \textmd{
+    with } \pi_0 = s \}]$ 
+} are computable within time polynomial in
+  $|S|$.
+  \label{lemma:PJ-subroutines}
+\end{lemma}
+
+In Lemma~\ref{lemma:PJ-subroutines}, we abuse the notation slightly to
+admit path formulae of the form $\gX B$ (next $B$) and
+$B \guntil C$ ($B$ until $C$) with $B, C \subseteq S$ as
+in~\cite{BK:08:PMC}. They are interpreted by introducing new atomic
+propositions $B$ and $C$ for each $s \in B$ and $s \in C$
+respectively. We will also use graphical symbols $\gF C$ ($C$ in
+the future) and $\gG C$ (globally $C$) in such path formulae
+$\varphi$ to minimize confusion.  
+
+In order to determine the set $\{ s : K, \neighbor{S}, s \models
+\dpriv{\epsilon}{\delta} \varphi \}$, our algorithm first computes
+the probabilities $p (s) = \myPr{s}{K}{\neighbor{S}}{\varphi}$ for every
+$s \in S$ (Algorithm~\ref{algorithm:sat-dpriv-dtmc}). For each $s \in S$,
+it then compares the probabilities $p (s)$ and $p (t)$ for every
+neighbor $t$ of $s$. If there is a neighbor $t$ such that $p (s)$ and
+$p (t)$ are not $(\epsilon, \delta)$-close, the state $s$
+is removed from the result. Hence
+Algorithm~\ref{algorithm:sat-dpriv-dtmc} returns all states which are
+$(\epsilon, \delta)$-close to their neighbors. 
+The algorithm requires at most $O
+(|S|^2)$ additional steps. We hence have the following results:
+
+\begin{algorithm}
+  \begin{algorithmic}[1]
+    \Function{SAT}{$K$, $\neighbor{S}$, $\phi$}
+    \Match{$\phi$}
+    \Comment{by Lemma~\ref{lemma:PJ-subroutines}}
+    \Case{$\X \Psi$} 
+      \State{$B \leftarrow \textmd{SAT} (K, \neighbor{S}, \Psi)$}
+      \State{$p(s) \leftarrow \myPr{s}{K}{\neighbor{S}}{\gX B}$
+        for every $s \in S$} 
+    \EndCase
+    \Case{$\Psi \until \Psi'$}
+      \State{$B \leftarrow \textmd{SAT} (K, \neighbor{S}, \Psi)$}
+      \State{$C \leftarrow \textmd{SAT} (K, \neighbor{S}, \Psi')$}
+      \State{$p(s) \leftarrow \myPr{s}{K}{\neighbor{S}}{B \guntil C}$ for
+        every $s \in S$} 
+    \EndCase
+    \EndMatch
+    \State{$R \leftarrow S$}
+    \For{$s \in S$}
+      \For{$t$ with $s \neighbor{K} t$}
+        \If{$p(s) \not\leq \epsilon p(t) + \delta$ or
+            $p(t) \not\leq \epsilon p(s) + \delta$}
+        {remove $s$ from $R$}
+        \EndIf
+      \EndFor
+    \EndFor
+    
+    \State{\Return $R$}
+    \EndFunction
+  \end{algorithmic}
+  \caption{SAT($\phi$, $\neighbor{K}$)}
+  \label{algorithm:sat-dpriv-dtmc}
+\end{algorithm}
+
+\begin{proposition}
+  Let $K = (S, \wp, L)$ be a Markov chain.
+  $\{ s : K, \neighbor{K}, s \models \dpriv{\epsilon}{\delta} \phi \}$ is
+  computable within time polynomial in $|S|$.
+\end{proposition}
+
+\begin{corollary}
+  Let $K = (S, \wp, L)$ be a Markov chain and $\Phi$ a $\dpCTL$
+  formula. $\{ s : K, \neighbor{K}, s \models \Phi \}$ is
+  computable within time polynomial in $|S|$ and $|\Phi|$.
+\end{corollary}
+
+Our next task is to compute $\{ M, \neighbor{S}, s \models
+\dpriv{\epsilon}{\delta} \phi \}$ for a Markov decision process $M =
+(S, \Act, \wp, L)$. Recall the semantics of $\dpriv{\epsilon}{\delta}
+\phi$. Given $s, t$ with $s \neighbor{M} t$ and a path formula
+$\phi$, we need to decide whether
+$\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq 
+\epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta$
+for every scheduler $\scheduler{S}$. 
+By recursion, we will obtain a
+(generalized) path formula $\varphi$ from $\phi$. It suffices to
+decide whether 
+$\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\varphi} \leq 
+\epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\varphi} + \delta$.
+To do so, we will find a position-independent strategy $\scheduler{S}$
+maximizing $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\varphi} -
+\epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\varphi}$ and check
+if the maximum is less than or equal to $\delta$. 
+As a starter, consider
+\begin{eqnarray}
+  \label{eqn:max-nextB}
+\max_{\textmd{pos.-ind. } \scheduler{S}} 
+\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B} -
+\epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}
+\end{eqnarray}
+where $s, t \in S$ and $B \subseteq S$. To compute
+(\ref{eqn:max-nextB}), one has to consider paths satisfying $\gX B$ 
+from $s$ and $t$ induced by the same action sequences. In the
+following, we construct the self-product of Markov decision
+processes. Similar to product automata, the product MDP simulates
+probabilistic computation from $s$ and $t$ on the same actions in
+parallel. A strategy on the product MDP corresponds to a
+position-independent strategy in the original MDP. 
+
+Let $M = (S, \Act, \wp, L)$ be a reactive MDP.
+Define the \emph{self-product} MDP
+$M^{\times} = (S \times S, \Act, \wp^{\times}, \emptyset)$ where
+$\wp^{\times} ((s, t), \alpha, (s', t')) = \wp (s, \alpha, s') \times
+\wp (t, \alpha, 
+t')$. Observe that $\sum_{(s', t') \in S \times S} \wp^{\times} ((s, t),
+\alpha, (s', t'))$ $=$ $\sum_{s' \in S} \sum_{t' \in S} \wp (s, \alpha,
+s') \times \wp (t, \alpha, t')$ $=$ $\sum_{s' \in S}$ $\wp (s, \alpha, s')
+\sum_{t' \in S} \wp (t, \alpha, t')$ $=$ $\sum_{s' \in S} \wp (s, \alpha,
+s')$ $=$ $1$. $\wp^{\times} ((s, t), \alpha, \bullet)$ is a probability
+distribution over $S \times S$ for every $\alpha \in \Act$.
+
+\begin{lemma}
+  Let $M = (S, \Act, \wp, L)$ be a reactive Markov decision process and
+  $M^{\times}$ its self-product. For any paths $s_0\alpha_1s_1\alpha_2
+  \cdots \alpha_k s_k$ and $t_0 \alpha_1 t_1 \alpha_2 \cdots \alpha_k
+  t_k$ induced by $\alpha_1 \alpha_2 \cdots \alpha_k$, we have
+  $\Pr^{M} [s_0 \alpha_1 s_1 \alpha_2 \cdots \alpha_k s_k] \times
+  \Pr^{M} [t_0 \alpha_1 t_1 \alpha_2 \cdots \alpha_k t_k] =
+  \Pr^{M^{\times}} [(s_0, t_0) \alpha_1 (s_1, t_1) \alpha_2 \cdots
+  \alpha_k (s_k, t_k)]$.
+  \label{lemma:joint-probability}
+\end{lemma}
+
+\todo{Correspondence between strategies on $M$ and $M^{\times}$}
+
+Since strategies on $M^{\times}$ are position-independent strategies
+on $M$, we compute (\ref{eqn:max-nextB}) by finding the maximal
+expected reward on $M^{\times}$ of infinite time horizon with absoring
+states. A \emph{reward function} on $M$ is a function $r : S
+\rightarrow \bbfR$. For an $\scheduler{S}$-path $\pi = \pi_0 \alpha_1 \pi_1
+\cdots$, define $r (\pi) = \sum_i r (\pi_i)$.
+Let $\mathit{Ab} \subseteq S$. Define $M[\mathit{Ab}] = (S, \Act,
+\wp^-, L)$ where $\wp^- (s, \alpha, t) = \wp (s, \alpha, t)$ if $s
+\not\in \mathit{Ab}$ and $\wp^- (s, \alpha, t) = 0$ otherwise. That
+is, $M[\mathit{Ab}]$ is an MDP with the \emph{absorbing} states
+$\mathit{Ab}$. 
+For any scheduler $\scheduler{S}$, the expected reward on $M$ of
+infinite time horizon with absorbing states is
+\begin{eqnarray*}
+{V}^{\scheduler{S}} (s) & = & 
+E[ {r} (\pi) | \pi
+\textmd{ is an $\scheduler{S}$-path of } M[\mathit{Ab}]
+\textmd{ with } \pi_0 = s ]
+\end{eqnarray*}
+
+Consider the following reward functions on $M^{\times}$:
+\[
+\begin{array}{c|ccccc}
+  \textmd{when } (s, t) \in 
+  & B \times (S \setminus B)
+  & \hspace{1em}
+  & (S \setminus B) \times B
+  & \hspace{1em}
+  & \textmd{others}\\
+  \hline
+  {r}_{\gX B, S}^{\times} (s, t) & 1 && 0 && 0\\
+  {r}_{S, \gX B}^{\times} (s, t) & 0 && -\epsilon && 0\\
+\end{array}
+\]
+Let $\nevernextB = \{ s : M, s \models \forall \gX (S \setminus
+B) \}$, $\mathit{Ab}_{\gX B, \gX B} = (B
+\times B) \cup (B \times \nevernextB) \cup (\nevernextB \times B)
+\cup (\nevernextB \times \nevernextB)$.
+Define
+\begin{eqnarray*}
+  {V}_{\gX B, S}^{\times \scheduler{S}} (s, t) & = &
+  E[ {r}_{\gX B, S}^{\times} (\pi^{\times}) | \pi^{\times} \textmd{ is an
+  $\scheduler{S}$-path of } M^{\times}[\mathit{Ab}_{\gX B, \gX B}]
+  \textmd{ with } \pi_0^{\times} = (s, t) ]\\
+  {V}_{S, \gX B}^{\times \scheduler{S}} (s, t) & = &
+  E[ {r}_{S, \gX B}^{\times} (\pi^{\times}) | \pi^{\times} \textmd{ is an
+  $\scheduler{S}$-path of } M^{\times}[\mathit{Ab}_{\gX B, \gX B}] 
+  \textmd{ with } \pi_0^{\times} = (s, t) ]
+\end{eqnarray*}
+
+The expected rewards ${V}_{\gX, S}^{\times\scheduler{S}} (s, t)$ and
+${V}_{S, \gX}^{\times\scheduler{S}} (s, t)$ are the weighted
+probabilities of having $\gX B$-paths from $s$ and $t$
+respectively. More formally,
+\begin{proposition}
+  \label{proposition:joint-probabilities}
+  Let $M = (S, \Act, \wp, L)$ be a reactive MDP and $B \subseteq S$.
+  For any scheduler $\scheduler{S}$ on $M^{\times}$, we have
+  \begin{enumerate}
+  \item ${V}_{\gX B, S}^{\times\scheduler{S}} (s, t) = 
+    \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}$;
+  \item ${V}_{S, \gX B}^{\times\scheduler{S}} (s, t) =  
+    -\epsilon \cdot \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}$.
+  \end{enumerate}
+\end{proposition}
+
+, and $S^{?}_{\gX B} = S
+\times S \setminus \mathit{Ab}_{\gX B}$
+\begin{eqnarray}
+  \label{eqn:lp-nextB}
+\begin{array}{rclll}
+  \multicolumn{3}{c}{
+  \min \sum\limits_{(s, t) \in {S}^{?}_{\gX B}} x_{s, t}
+  }\\
+  x_{s, t} & = & 0 & \hspace{.05\columnwidth} &
+  (s, t) \in \nevernextB \times \nevernextB \\
+  x_{s, t} & = & 1 && 
+  (s, t) \in B \times \nevernextB\\
+  x_{s, t} & = & - \epsilon &&
+  (s, t) \in \nevernextB \times B\\
+  x_{s, t} & = & 1 - \epsilon && 
+  (s, t) \in B \times B\\
+  x_{s, t} &\geq& 
+  \sum\limits_{(s', t') \in {S}^{2}}
+   \wp^{\times} ((s, t), \alpha, (s', t')) \times x_{s', t'} 
+  &&
+  \alpha \in \Act, (s, t) \in {S}^{?}_{\gX B}
+\end{array}
+\end{eqnarray}
+
+\begin{theorem}
+  Let $x^*_{s, t}$ attain the optimum in the linear programming
+  problem~(\ref{eqn:lp-nextB}). For every $s, t \in S$, 
+  $x^*_{s, t} = \max\limits_{\scheduler{S}}
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B} - 
+  \epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}$.  
+  \label{theorem:nextC}
+\end{theorem}
+
+Next, we consider the generalized path formula $\varphi = \gF C$. We
+would like to compute the maximal difference of weighted probabilities
+of paths satisfying $\gF C$ from $s$ and $t$ among
+position-independent schedulers. That is, 
+\begin{eqnarray}
+  \label{eqn:max-eventuallyC}
+\max_{\textmd{pos.-ind. } \scheduler{S}} 
+\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C} -
+\epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C}
+\end{eqnarray}
+where $s, t \in S$ and $C \subseteq S$. 
+
+Let $M = (S, \Act, \wp, L)$ and $C \subseteq S$. Define $\lift{M}{C} =
+((S \setminus C) \cup \{ \bot, \top \}, \Act, \lift{\wp}{C}, \lift{L}{C})$ where
+$\lift{L}{C} (s) = L (s)$ for $s \in S$ and $\lift{L}{C} (\bot) =
+\lift{L}{C} (\top) = \emptyset$; and
+\begin{itemize}
+\item $\lift{\wp}{C} (s, \alpha, t) = \wp (s, \alpha, t)$ for $s \in
+  S$, $\alpha \in \Act$ and $t \not\in C$;
+\item $\lift{\wp}{C} (s, \alpha, \top) = \sum_{t \in C} \wp (s,
+  \alpha, t)$ for $s \in S$, $\alpha \in \Act$; and
+\item $\lift{\wp}{C} (\top, \alpha, \bot) = \lift{\wp}{C} (\bot,
+  \alpha, \bot) = 1$ for $\alpha \in \Act$.
+\end{itemize}
+
+Consider the following reward functions on $\lift{M}{C}^{\times}$:
+\[
+\begin{array}{c|cccccccc}
+  \textmd{when } (s, t) \in 
+  & \{ \top \} \times (S \setminus C)
+  & \hspace{1em}
+  & (S \setminus C) \times \{ \top \}
+  & \hspace{1em}
+  & \{ (\top, \top) \}
+  & \hspace{1em}
+  & \textmd{others}\\
+  \hline
+  {r}_{{\gF C}S}^{\times} (s, t) & 1 && 0 && 1 && 0\\
+  {r}_{S{\gF C}}^{\times} (s, t) & 0 && -\epsilon && -\epsilon && 0\\
+  {r}_{{\gF C}{\gF C}}^{\times} (s, t) & 1 && -\epsilon && 1-\epsilon && 0\\
+\end{array}
+\]
+Let $\mathit{Ab}_{\gF C, \gF C} = \{ \bot, \top \} \times \{ \bot,
+\top \} \cup \{ \bot, \top \} \times \neverC \cup \neverC \times \{
+\bot, \top \} \cup \neverC \times \neverC$ be the absorbing states.
+Define
+\begin{eqnarray*}
+  {V}_{\gF C, S}^{\times \scheduler{S}} (s, t) & = &
+  E[ {r}_{\gF C, S}^{\times} (\pi^{\times}) | \pi^{\times} \textmd{ is an
+  $\scheduler{S}$-path of } M^{\times}[\mathit{Ab}_{\gF C, \gF C}]
+  \textmd{ with } \pi_0^{\times} = (s, t) ]\\
+  {V}_{S, \gF C}^{\times \scheduler{S}} (s, t) & = &
+  E[ {r}_{S, \gF C}^{\times} (\pi^{\times}) | \pi^{\times} \textmd{ is an
+  $\scheduler{S}$-path of } M^{\times}[\mathit{Ab}_{\gF C, \gF C}] 
+  \textmd{ with } \pi_0^{\times} = (s, t) ]\\
+  {V}_{\gF C, \gF C}^{\times \scheduler{S}} (s, t) & = &
+  E[ {r}_{\gF C, \gF C}^{\times} (\pi^{\times}) | \pi^{\times} \textmd{ is an
+  $\scheduler{S}$-path of } M^{\times}[\mathit{Ab}_{\gF C, \gF C}] 
+  \textmd{ with } \pi_0^{\times} = (s, t) ]
+\end{eqnarray*}
+
+\begin{proposition}
+  Let $M = (S, \Act, \wp, L)$ be a reactive MDP and $C \subseteq S$.
+  For any scheduler $\scheduler{S}$ on $M^{\times}$, we have
+  \begin{enumerate}
+  \item ${V}_{\gF C, S}^{\times\scheduler{S}} (s, t) = 
+    \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C}$;
+  \item ${V}_{S, \gF C}^{\times\scheduler{S}} (s, t) =  
+    -\epsilon \cdot \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C}$.
+  \end{enumerate}
+  \label{proposition:individual-probability-nextC}
+\end{proposition}
+
+Observe that ${r}_{\gF C, \gF C}^{\times \scheduler{S}} (s, t) =
+{r}_{\gF C, S}^{\times \scheduler{S}} (s, t) + {r}_{S, \gF C}^{\times
+  \scheduler{S}} (s, t)$. By linearity of expectation, we have
+\begin{eqnarray*}
+  & & {V}_{\gF C, \gF C}^{\times \scheduler{S}} (s, t)\\
+  &=& E[ {r}_{\gF C, \gF C}^{\times \scheduler{S}} (\pi^{\times}) |
+      \pi^{\times} \textmd{ is an $\scheduler{S}$-path of }
+      M^{\times}[\mathit{Ab}_{\gF C, \gF C}] \textmd{ with }
+      \pi_0^{\times} = (s, t) ]\\
+  &=&  E[ {r}_{\gF C, S}^{\times \scheduler{S}} (\pi^{\times}) |
+      \pi^{\times} \textmd{ is an $\scheduler{S}$-path of }
+      M^{\times}[\mathit{Ab}_{\gF C, \gF C}] \textmd{ with }
+      \pi_0^{\times} = (s, t) ] +\\
+  & &  E[ {r}_{S, \gF C}^{\times \scheduler{S}} (\pi^{\times}) |
+      \pi^{\times} \textmd{ is an $\scheduler{S}$-path of }
+      M^{\times}[\mathit{Ab}_{\gF C, \gF C}] \textmd{ with }
+      \pi_0^{\times} = (s, t) ]\\
+  &=& {V}_{\gF C, S}^{\times \scheduler{S}} (s, t) +
+      {V}_{S, \gF C}^{\times \scheduler{S}} (s, t)\\
+  &=& \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C} -
+      \epsilon \cdot \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C}.
+\end{eqnarray*}
+
+
+\begin{lemma}
+  Let $M = (S, \Act, \wp, L)$ be a reactive MDP and $C \subseteq S$.
+  For any scheduler $\scheduler{S}$ on $M$,
+  $V^{\scheduler{S}}_{\Diamond C} (s, t) =
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C} -
+  \epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C}$.
+\label{lemma:eventuallyC}
+\end{lemma}
+
+With Lemma~\ref{lemma:eventuallyC}, it is standard to compute 
+the maximal value (\ref{eqn:max-eventuallyC}) by linear programming.
+Let ${S}^{?}_{\Diamond C} = S \times S \setminus
+\mathit{Ab}_{\Diamond C}$. Consider the following 
+instance of the linear programming problem:
+\begin{eqnarray}
+  \label{eqn:lp-eventuallyC}
+\begin{array}{rclll}
+  \multicolumn{3}{c}{
+  \min \sum\limits_{(s, t) \in {S}^{?}_{\Diamond C}} y_{s, t}
+  }\\
+  y_{s, t} & = & 0 & \hspace{.05\columnwidth} &
+  (s, t) \in \neverC \times \neverC\\
+  y_{s, t} & = & 1 & &
+  (s, t) \in C \times \neverC\\
+  y_{s, t} & = & - \epsilon & &
+  (s, t) \in \neverC \times C\\
+  y_{s, t} & \geq & 1 - \epsilon + 
+  \sum\limits_{(s', t') \in S^2}
+   \wp^{\times} ((s, t), \alpha, (s', t')) \times y_{s', t'} & &
+  (s, t) \in C \times C\\
+  y_{s, t} &\geq & \sum\limits_{(s', t') \in
+  S^2}
+   \wp^{\times} ((s, t), \alpha, (s', t')) \times y_{s', t'} 
+  & &
+  \alpha \in \Act, (s, t) \in {S}^{?}_{\Diamond C}
+\end{array}
+\end{eqnarray}
+
+\begin{theorem}
+  Let $y^*_{s, t}$ attain the optimum
+  in the linear programming problem~(\ref{eqn:lp-eventuallyC}). For
+  every $s, t \in S$,   
+  $y^*_{s, t} = \max\limits_{\scheduler{S}}
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C} - 
+  \epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gF C}$.  
+  \label{theorem:eventuallyC}
+\end{theorem}
+
+We compute the following maximal value similarly:
+\begin{eqnarray}
+  \label{eqn:max-BuntilC}
+  \max_{\scheduler{S}} 
+  \pPr{\scheduler{S}}{s}{B \guntil C} -
+  \epsilon \pPr{\scheduler{S}}{t}{B \guntil C}
+\end{eqnarray}
+Define $\neverBuntilC = S \setminus (B \cup C)$. Note that 
+$\neverBuntilC = \textmd{SAT}(\PJ{[0,0]} B \guntil C)$.
+Define
+\[
+r_{B \guntil C} (s, t) =
+\left\{
+  \begin{array}{ll}
+    1 & \textmd{ if } (s, t) \in C \times \neverBuntilC\\
+    -\epsilon & \textmd{ if } (s, t) \in \neverBuntilC \times C\\
+    1 - \epsilon & \textmd{ if } (s, t) \in C \times C\\
+    0 & \textmd{ otherwise}
+  \end{array}
+\right.
+\]
+Consider the expected reward of
+infinite time horizon with the 
+absorbing states $\mathit{Ab}_{B \guntil C} = (C \times
+\neverBuntilC) \cup (\neverBuntilC \times C) \cup (\neverBuntilC \times
+\neverBuntilC)$.
+\[
+V^{\scheduler{S}}_{B \guntil C}(s, t) = E[ r_{B \guntil C} (\pi) | \pi
+\textmd{ is an $\scheduler{S}$-path of } 
+{M}^{\times}[\mathit{Ab}_{B \guntil C}] \textmd{ with } \pi_0 = (s, t) ]
+\]
+
+The following lemma follows similarly as Lemma~\ref{lemma:eventuallyC}:
+\begin{lemma}
+  Let $M = (S, \Act, \wp, L)$ be an MDP and $B, C \subseteq S$.
+  For any scheduler $\scheduler{S}$ on $M$,
+  $V^{\scheduler{S}}_{B \guntil C} (s, t) =
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{B \guntil C} - 
+  \epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{B \guntil C}$.  
+  \label{lemma:BuntilC}
+\end{lemma}
+
+Lemma~\ref{lemma:BuntilC} allows us to compute the maximal value
+(\ref{eqn:max-BuntilC}) by linear programming.
+Let ${S}^{?}_{B \guntil C} = S \times S \setminus 
+\mathit{Ab}_{B \guntil C}$. Consider the following instance of the
+linear programming problem: 
+\begin{eqnarray}
+  \label{eqn:lp-BuntilC}
+\begin{array}{rclll}
+  \multicolumn{3}{c}{
+  \min \sum\limits_{(s, t) \in {S}^{?}_{B \guntil C}} z_{s, t}
+  }\\
+  z_{s, t} & = & 0 & \hspace{.05\columnwidth} &
+  (s, t) \in \neverBuntilC \times \neverBuntilC\\
+  z_{s, t} & = & 1 && 
+  (s, t) \in C \times \neverBuntilC\\
+  z_{s, t} & = & - \epsilon &&
+  (s, t) \in \neverBuntilC \times C\\
+  z_{s, t} & \geq & 1 - \epsilon +
+  \sum\limits_{(s', t') \in {S}^{2}}
+   \wp^{\times} ((s, t), \alpha, (s', t')) \times z_{s', t'} && 
+  (s, t) \in C \times C\\
+  z_{s, t} &\geq& \sum\limits_{(s', t') \in
+  {S}^{2}}
+   \wp^{\times} ((s, t), \alpha, (s', t')) \times z_{s', t'} 
+  &&
+  \alpha \in \Act, (s, t) \in {S}^{?}_{B \until C}
+\end{array}
+\end{eqnarray}
+
+\begin{theorem}
+  Let $z^*_{s, t}$ attain the optimum in the linear programming
+  problem~(\ref{eqn:lp-BuntilC}). For every $s, t \in S$, 
+  $z^*_{s, t} = \max\limits_{\scheduler{S}}
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{B \guntil C} - 
+  \epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{B \guntil C}$.  
+  \label{theorem:BuntilC}
+\end{theorem}
+

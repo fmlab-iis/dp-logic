@@ -1,0 +1,124 @@
+
+Let $\bbfZ$ and $\bbfZ^{\geq 0}$ be the sets of integers and
+non-negative integers respectively. For $n \geq 0$, $\underline{n} =
+\{ 0, 1, \ldots, n \} \subseteq \bbfZ^{\geq 0}$.
+
+We briefly review the definitions of differential privacy, Markov
+chains, and Markov decision processes. For differential privacy, we
+follow the non-standard \todo{why?} definition in~\cite{GRS:09:UUPM,GRS:12:UUPM}. Our
+definitions of Markov chains and Markov decision processes are adopted
+from~\cite{BK:08:PMC}.
+
+\subsection{Differential Privacy}
+
+We denote the data universe by $\mathcal{X}$; $x \in \mathcal{X}^n$ is
+a database with $n$ rows from the data universe. Two databases $x$ and
+$x'$ are \emph{neighbors} (denoted by $d(x, x') \leq 1$) if they are
+identical except at most one row. A \emph{query} $f$ is a function
+from $\mathcal{X}^n$ to its range $R$. The \emph{sensitivity} of the
+query $f$ (written $\Delta (f)$) is $\max_{d(x, x') \leq 1} | f (x) -
+f (x') |$. For instance, a \emph{counting} query counts the number
+of rows with certain attributes (say, female). The sensitivity of a
+counting query is $1$ since any neighbor can change the count by at
+most one. We only consider queries with finite  ranges for simplicity. 
+A \emph{data analysis mechanism} (or
+\emph{mechanism} for brevity) $M_f$ for a query $f$
+is a randomized algorithm with inputs in $\mathcal{X}^n$ and outputs
+in $\tilde{R}$. 
+A mechanism may not have the same output range as its query, that is,
+$\tilde{R} \neq R$ in general. 
+A mechanism $M_f$ for $f$ is \emph{oblivious} if 
+$\Pr[M_f(x) = \tilde{r}] = \Pr[M_f(x') = \tilde{r}]$ for every
+$r \in \tilde{R}$ when $f (x) = f (x')$. In words, outputs of an
+oblivious mechanism depend on the query result $f (x)$ but not on the
+input database $x$. The order of rows in a database, for instance, is
+irrelevant to oblivious mechanisms. A database $x$ is
+\emph{$(\epsilon, \delta)$-close} to $x'$ in a mechanism
+$M_f$ if for every $\tilde{r} \in \tilde{R}$,
+\[
+\Pr[M_f (x) = \tilde{r}] \leq \epsilon \Pr[M_f (x') =
+\tilde{r}] + \delta.\footnote{The standard definition requires 
+$\Pr[M_f (x) = \tilde{r}] \leq e^\epsilon \Pr[M_f (x') =
+\tilde{r}] + \delta$~\cite{DMNS:06:CNSPD,D:06:DP}. 
+Since $\epsilon = e^{\ln \epsilon}$, our $(\epsilon, \delta)$-closedness is
+equivalent to the standard $(\ln \epsilon,
+\delta)$-closedness~\cite{GRS:09:UUPM,GRS:12:UUPM}.}  
+\]
+A mechanism $M_f$ is \emph{$(\epsilon, \delta)$-differentially
+  private} % $(\epsilon, \delta \approx 0)$ 
+if for every $x, x' \in \mathcal{X}^n$ with $d(x, x') \leq 1$,
+$x$ is $(\epsilon, \delta)$-close to $x'$ in $M_f$.
+
+The parameters $\epsilon$ and $\delta$ quantify probabilistically
+similar behaviors; 
+the smaller they are, the behaviors are more similar.
+Informally, a differentially private mechamism has probabilistically
+similar behabiors on neighboring databases. It will have similar
+output distributions when a row is added, deleted, or replaced by
+another in a given 
+database. Consider, for instance, a database contains the row
+corresponding to an individual. A differentially private mechanism
+will have a similar output distribution when the individual is not in
+the database. Regardless of the presence of the individual, such
+mechanisms will behave similarly. Privacy of the individual is thus
+preserved by differentially private mechanisms. \todo{not clear}
+
+\subsection{Markov Chains and Markov Decision Processes}
+
+Let $\AP$ be the set of \emph{atomic propositions}.
+A \emph{(finite) discrete-time Markov chain} $K = (S, \wp, L)$ consists
+of a non-empty finite set $S$ of \emph{states}, a \emph{transition
+  probability function} $\wp : S \times S \rightarrow [0, 1]$ with
+$\sum_{t \in S} \wp(s, t) = 1$ for every $s \in S$, and
+a \emph{labeling function} $L : S \rightarrow 2^{\AP}$. A \emph{path}
+in $K$ is an infinite sequence $\pi = \pi_0 \pi_1 \cdots \pi_n \cdots$
+of states with $\wp (\pi_i, \pi_{i+1}) > 0$ for all $i \geq 0$. We write
+$\pi[j]$ for the suffix $\pi_j \pi_{j+1} \cdots$. % Thus $\pi[0] = \pi$.
+
+Let $\Act$ denote the set of \emph{actions}.
+A \emph{(finite) Markov decision process} $M = (S, \Act, \wp, L)$ consists
+of a \emph{transition probability function} $\wp : S \times \Act
+\times S \rightarrow [0, 1]$ with $\sum_{t \in S} \wp(s, \alpha, t)
+\in \{ 0, 1 \}$ for every $s \in S$ and $\alpha \in \Act$ and $S$,
+$L$ as for Markov chains. Define
+$\Act(s) = \{ \alpha : \sum_{t \in S} \wp (s, \alpha, t) = 1
+\}$. That is, $\Act(s)$ is the set of \emph{enabled} actions in state
+$s$. A Markov devision process is \emph{reactive} if $\Act(s) = \Act$
+for every $s \in S$.
+A \emph{path} $\pi$ in $M$ is an infinite sequence $\pi_0 \alpha_1
+\pi_1 \cdots \pi_n \alpha_{n+1} \cdots$ with 
+$\wp(\pi_i, \alpha_{i+1}, \pi_{i+1}) > 0$ for all $i \geq 0$. 
+Similarly, we write $\pi[j]$ for the suffix $\pi_j \alpha_{j+1}
+\pi_{j+1} \cdots$ of $\pi$. 
+\hide{
+For any measurable set $\Pi$ of paths, we
+write $\Pr[\Pi]$ for the \emph{probability measure} of $\Pi$.
+}
+
+Let $M = (S, \Act, \wp, L)$ be a Markov decision process. A
+\emph{scheduler} for $M$ is a function $\scheduler{S} : S^+
+\rightarrow \Act$ with $\scheduler{S}(s_0s_1\cdots s_n) \in
+\Act(s_n)$. A scheduler is \emph{position-independent} if
+$\scheduler{S}(\sigma) = \scheduler{S}(\sigma')$ when $|\sigma| =
+|\sigma'|$. 
+A path $\pi =
+\pi_0 \alpha_1 \pi_1 \cdots \pi_n \alpha_{n+1} \cdots$ is an
+\emph{$\scheduler{S}$-path} if $\alpha_{i+1} = \scheduler{S}(\pi_0
+\pi_1 \cdots \pi_i)$ for all $i \geq 0$. 
+Note that a Markov decision process with a
+scheduler $\scheduler{S}$ induces a Markov chain $M_{\scheduler{S}} =
+(S^+, \wp_{\scheduler{S}}, L')$ where $L' (\sigma s) = L (s)$, 
+$\wp_{\scheduler{S}} (\sigma s, \sigma s t) = \wp (s,
+\scheduler{S}(\sigma s), t)$ for $\sigma \in S^*$ and $s, t \in S$.
+\hide{
+Subsequently, we write
+$\Pr_{\scheduler{S}} (\Pi)$ for the \emph{probability measure} of the
+measurable path set $\Pi$ on $M$ given the scheduler $\scheduler{S}$. 
+}
+
+\hide{
+A \emph{reward function} on an MDP $M = (S, \wp, I, L)$ is a function
+$r : S \rightarrow \bbfR$. The \emph{reward} for $r (\pi)$ a finite
+path $\pi$ in $M$ is $\sum_{i=0}^n s_i$ where $\pi = s_0 \alpha_1 s_1
+\cdots s_n$. 
+}

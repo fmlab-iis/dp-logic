@@ -1,0 +1,101 @@
+
+% privacy and differential privacy
+
+In the era of data analysis, personal information is constantly
+collected and analyzed by various parties. Privacy has become an
+important issue for every individual. In order to address such
+concerns, the research community has proposed several privacy
+preserving mechanisms over the years (see~\cite{FWC:10:PPDP} for a
+slightly outdated survey). Among these mechanisms, differential
+privacy has attracted much attention from theoretical computer science
+to industry~\cite{DR:14:AFDP,JLE:14:DPML,A:16:EPYU}.
+
+Differential privacy formalizes the tradeoff between privacy and
+utility in data analysis. Intuitively, a randomized data analysis
+mechanism is differentially private if it behaves similarly on similar
+input databases~\cite{DMNS:06:CNSPD,D:06:DP}. Consider, for example,
+the Laplace mechanism where a random noise is added to analysis
+results by Laplace distribution~\cite{DR:14:AFDP}. Random noises
+hide the differences of analysis results from different databases
+provided similar databases have similar results. Clearly, more 
+randomness gives more privacy but less utility in released noisy
+results. Under the framework of differential privacy, data analysts
+can balance the tradeoff rigorously in their data analysis
+mechanisms~\cite{DR:14:AFDP,JLE:14:DPML}.
+
+% model checking differentially private implementation
+
+Designing differentially private mechanisms can be tedious for
+sophisticated data analyses. Privacy leak has also been observed from
+data analysis programs with differentially private
+designs~\cite{M:12:SLSBDP,TKBW:17:PLAI}. This calls for formal
+analysis of differential privacy on both designs and implementations. 
+In tis paper, we propose the logic $\dpCTL$ for specifying
+differentially private states and develop their model checking
+algorithms. Data analysts can automatically verify their designs and
+implementations with our techniques. Most interestingly, our
+techniques can be adopted rather easily by existing probabilistic
+model checkers. Hopefully, more interaction between model checking and
+privacy analysis will follow in the future.
+
+% Markov chains and MDP as formal models, actions made by adversary
+
+In differential privacy, data analysis mechanisms are
+but randomized algorithms. We follow the standard practice in
+probabilistic model checking to formalize such mechanisms by
+by Markov chains or Markov decision processes. 
+When a data analysis mechanism does not
+interact with its environment, it is formalized as a Markov
+chain. Otherwise, its interactions are formalized by actions in
+Markov decision processes. Our formalization effectively assumes that
+actions are controlled by adversaries. It is subsequently necessary to
+consider attacks from all possible adversaries in order to establish
+differential privacy.
+%\todo{What is a state?}
+
+% new differential privacy state modal operator
+
+Two ingredients are introduced to specify differentially private
+behaviors. A reflexive and commutative user-defined binary relation
+over states is required to formalize similar states. Two states are
+similar if they are related by the binary relation. We moreover add
+the path quantifier $\dpriv{\epsilon}{\delta}$ for similar
+behaviors. Informally, a state satisfies $\dpriv{z\epsilon}{\delta}
+\phi$ if it has probabilistically similar path behavior $\phi$ as
+its similar states. Consider, for instance, a binary data analysis
+mechanism computing the likelihood ($\mathit{high}$ or $\mathit{low}$)
+of an epidemic in a population. Then a state satisfies
+$\dpriv{\epsilon}{\delta} (\F \mathit{high}) \wedge
+\dpriv{\epsilon}{\delta} (\F \mathit{low})$ if the mechanism is
+$(\epsilon, \delta)$-differentially private at the state.
+\todo{not clear here}
+
+% differential privacy of infinite behaviors
+
+An important byproduct of this work is to analyze privacy over
+infinite behaviors. Consider the formula $\dpriv{\epsilon}{\delta} 
+(\G \PJ{[1,1]} (\F \mathit{high}))$. A state satisfies the formula if it
+is probabilistically similar to always almost surely
+answer $\mathit{high}$ as similar states. Compared to the unbounded
+but finite behavior specified by $\F \mathit{high}$, 
+$\G \PJ{[1,1]} (\F \mathit{high})$ specifies an infinite behavior.
+Not only can differential privacy specify randomized algorithms, it
+also naturally generalize to reactive systems.
+Privacy analysis applies to systems with infinite behaviors as well.
+
+% construction and complexity
+
+In order to verify $\dpCTL$ properties, we extend the standard
+probabilistic model checking algorithms. For Markov chains, the states
+satisfying a subformula $\dpriv{\epsilon}{\delta} \phi$ are computed
+by a simple variant of the algorithm for the subformula
+$\PJ{J} \phi$. For Markov Decision Processes, a product construction
+followed by the standard algorithm for infinite horizon expected total
+undiscounted reward for Markov Decision Processes with absorbing
+states will do. The time complexity of our model checking algorithm is
+still polynomial. The logic $\dpCTL$ essentially obtains its
+expressiveness for free.
+
+% analyze mechanism
+
+

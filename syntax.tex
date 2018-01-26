@@ -1,0 +1,18 @@
+
+Consider
+\begin{eqnarray*}
+  \Phi & ::= & \top \ |\ p \ |\ \neg \Phi \ |\ \Phi \wedge \Phi \ |\ 
+               \PJ{J} \phi \ |\ \dpriv{\epsilon}{\delta} \phi\\
+  \phi & ::= & \X \Phi \ |\ \Phi \until \Phi
+\end{eqnarray*}
+A \emph{state} formula $\Phi$ is either $\top$, an atomic proposition
+$p$, the negation of a sate formula, the conjunction of two state
+formulae, a \emph{probabilistic} operator $\PJ{J}$ with $J$
+an interval in $[0, 1]$ followed by a path formula, or a
+\emph{differentially private} operator $\dpriv{\epsilon}{\delta}$
+ with two non-negative real numbers $\epsilon$ and $\delta$ followed
+ by a path formula. A 
+\emph{path} formula $\phi$ is a \emph{next} operator ($\X$)
+followed by a state formula, or an \emph{until} operator
+($\until$) operator enclosed by two state formulae. 
+

@@ -1,0 +1,43 @@
+
+
+\newcommand{\todo}[1]{\textcolor{blue}{TODO: {#1}}}
+\newcommand{\hide}[1]{}
+\newcommand{\bbfR}{\mathbb{R}}
+\newcommand{\bbfZ}{\mathbb{Z}}
+\newcommand{\AP}{\mathit{AP}}
+\newcommand{\Act}{\mathit{Act}}
+\newcommand{\PJ}[1]{\mathbb{P}_{#1}}
+\newcommand{\minPr}{\textmd{minPr}}
+\newcommand{\maxPr}{\textmd{maxPr}}
+\newcommand{\dpriv}[2]{\mathcal{D}_{{#1}, {#2}}}
+\newcommand{\X}{\mathsf{X}\xspace}
+\newcommand{\F}{\mathsf{F}\xspace}
+\newcommand{\G}{\mathsf{G}\xspace}
+\newcommand{\until}{\mathbin{\mathsf{U}}}
+\newcommand{\gX}{\bigcirc}
+\newcommand{\gF}{\lozenge}
+\newcommand{\gG}{\square}
+\newcommand{\guntil}{\mathbin{\mho}}
+\newcommand{\buntil}[1]{\mathbin{\mathsf{U}_{\leq #1}}}
+\newcommand{\neighbor}[1]{\mathit{N}_{#1}}
+\newcommand{\scheduler}[1]{\mathfrak{#1}}
+\newcommand{\dpCTL}{\textsf{dpCTL}\xspace}
+\newcommand{\PCTL}{\textsf{PCTL}\xspace}
+\newcommand{\pPr}[3]{\Omega({#1},{#2},{#3})}
+\newcommand{\uscore}[0]{{\char95}}
+\newcommand{\myPr}[4]{{\Pr}_{#3}^{#2}({#1}, {#4})}
+\newcommand{\neverC}{S_{\forall\gG \neg C}}
+\newcommand{\neverBuntilC}{S_{\forall \neg (B \guntil C)}}
+\newcommand{\nevernextB}{S_{\forall \gX \neg B}}
+\newcommand{\lift}[2]{{#1}_{#2}}
+
+\algnewcommand\algorithmicmatch{\textbf{match}}
+\algnewcommand\algorithmicwith{\textbf{with}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+% New "environments"
+\algdef{SE}[MATCH]{Match}{EndMatch}[1]{\algorithmicmatch\ {#1}\ \algorithmicwith}{\algorithmicend\ \algorithmicmatch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ {#1}:}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndMatch}%
+\algtext*{EndCase}%
+\algnewcommand{\IfThenElse}[3]{% \IfThenElse{<if>}{<then>}{<else>}
+  \State \algorithmicif\ #1\ \algorithmicthen\ #2\ \algorithmicelse\ #3}

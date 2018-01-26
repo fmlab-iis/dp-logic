@@ -1,0 +1,167 @@
+\hide{
+
+\begin{figure}
+  \centering
+  \[
+  \begin{array}{rcll}
+    \multicolumn{4}{l}{
+      \textmd{Objective: maximize 
+      $y_r - \epsilon y_t$
+      and
+      $y_t - \epsilon y_r$}
+    }\\
+    \multicolumn{4}{l}{
+      \textmd{Subject to}
+    }\\
+    \sum_{\alpha \in \Act} y_{(s, \alpha)} - 
+    \sum_{s' \in S} \sum_{\alpha' \in \Act} \wp (s', \alpha', s) y_{(s', \alpha')}
+    & = & 0 % was I(s) 
+    & \textmd{ for all } s \in S \setminus F\\
+    y_s - \sum_{s' \in S \setminus F} \sum_{\alpha' \in \Act} 
+    \wp (s', \alpha', s) y_{(s', \alpha')}
+    & = & 0
+    & \textmd{ for all } s \in F\\
+    y_s
+    & = & 1
+    & \textmd{ for all } s \in F\\
+    y_s
+    & = & 0
+    & \textmd{ for all } s \textmd{ which cannot reach } F
+  \end{array}
+  \]
+  \caption{Linear Programming for Differential Privacy of States $r$
+    and $t$}
+  \label{figure:lp-dp}
+\end{figure}
+
+\begin{theorem}\cite{EKVY:07:MMCMDP}
+  Let $M = (S, \wp, I, L)$ be a reduced MDP with absorbing target $F
+  \subseteq S$. Let $(c, d) \in \bbfR^2$. The following are
+  equivalent:
+  \begin{enumerate}
+  \item There is a memoryless scheduler $\scheduler{S}$ such that
+    \[
+    \begin{array}{lcl}
+      \Pr(\{ \pi_r : M_{\scheduler{S}}, \neighbor{M}, \pi_r \models
+      \Diamond F \}) & \geq &
+      \epsilon \cdot 
+      \Pr(\{ \pi_t : M_{\scheduler{S}}, \neighbor{M}, \pi_t \models
+      \Diamond F \}) + c; \textmd{ and}\\
+      \Pr(\{ \pi_t : M_{\scheduler{S}}, \neighbor{M}, \pi_t \models
+      \Diamond F \}) & \geq &
+      \epsilon \cdot 
+      \Pr(\{ \pi_r : M_{\scheduler{S}}, \neighbor{M}, \pi_r \models
+      \Diamond F \}) + d
+    \end{array}
+    \]
+  \item There is a feasible solution $y'$ for the multi-objective
+    linear programming problem in Figure~\ref{figure:lp-dp} such that
+    \[
+    y'_r \geq \epsilon y'_t + c \textmd{ and }
+    y'_t \geq \epsilon y'_r + d
+    \]
+  \item There is an arbitrary scheduler $\scheduler{S}$ such that
+    \[
+    \begin{array}{lcl}
+      \Pr(\{ \pi_r : M_{\scheduler{S}}, \neighbor{M}, \pi_r \models
+      \Diamond F \}) & \geq &
+      \epsilon \cdot 
+      \Pr(\{ \pi_t : M_{\scheduler{S}}, \neighbor{M}, \pi_t \models
+      \Diamond F \}) + c; \textmd{ and}\\
+      \Pr(\{ \pi_t : M_{\scheduler{S}}, \neighbor{M}, \pi_t \models
+      \Diamond F \}) & \geq &
+      \epsilon \cdot 
+      \Pr(\{ \pi_r : M_{\scheduler{S}}, \neighbor{M}, \pi_r \models
+      \Diamond F \}) + d
+    \end{array}
+    \]
+  \end{enumerate}
+\end{theorem}
+
+\begin{lemma}
+  Consider the multiobjective linear programming problem in
+  Figure~\ref{figure:lp-dp}. If $(\delta, \delta)$ is achievable, then
+  $p_r \leq \epsilon \cdot p_t + \delta$ and $p_t \leq \epsilon \cdot
+  p_r + \delta$ where $p_r = \Pr (\{ \pi_r : M_{\scheduler{S}},
+  \neighbor{M}, \pi_r \models \Diamond F \})$ and $p_t = \Pr (\{ \pi_t
+  : M_{\scheduler{S}}, \neighbor{M}, \pi_t \models \diamond F \})$ for
+  every scheduler $\scheduler{S}$.
+\end{lemma}
+
+Let $M = (S, \wp, I, L)$ be a finite Markov decision process, $s \in
+S$, and $B, C \subseteq S$. Define
+\begin{eqnarray*}
+  \minPr (\{ \pi_s : M, \neighbor{M}, \pi_s \models \phi \}) & = &
+  \inf_{\scheduler{S}} \Pr (\pi_s : M_{\scheduler{S}}, \neighbor{M},
+  \pi_s \models \phi \})\\  
+  \maxPr (\{ \pi_s : M, \neighbor{M}, \pi_s \models \phi \}) & = &
+  \sup_{\scheduler{S}} \Pr (\pi_s : M_{\scheduler{S}}, \neighbor{M}, 
+  \pi_s \models \phi \})\\
+\end{eqnarray*}
+where $\phi$ is $\X B$, $B \until C$, or $B \buntil{n} C$.
+
+\begin{theorem}
+  Let $M = (S, \wp, I, L)$ be a finite Markov decision provess, $s
+  \in S$, and $B, C \subseteq S$. There is an algorithm
+  computes $\minPr(\{ \pi_s : K, \neighbor{M}, \pi_s \models \X B \})$,
+  $\minPr(\{ \pi_s : K, \neighbor{M}, \pi_s \models B \until C \})$,  
+  $\minPr(\{ \pi_s : K, \neighbor{M}, \pi_s \models B \buntil{n} C \})$,
+  $\maxPr(\{ \pi_s : K, \neighbor{M}, \pi_s \models \X B \})$,
+  $\maxPr(\{ \pi_s : K, \neighbor{M}, \pi_s \models B \until C \})$, and
+  $\maxPr(\{ \pi_s : K, \neighbor{M}, \pi_s \models B \buntil{n} C \})$,  
+  in time  polynomial in $|S|$ and $n$.
+\end{theorem}
+
+\begin{lemma}
+  Let $M = (S, \wp, I, L)$ be a finite Markov decision process. The
+  set $\{ s : M, \neighbor{M}, s \models \dpriv{\epsilon}{\delta} (\phi) \}$ is
+  computable in time polynomial in $|S|$ and $n_{\textmd{max}}$.
+\end{lemma}
+
+\begin{algorithm}
+  \begin{algorithmic}[1]
+    \Function{SAT}{$\phi$, $\neighbor{M}$}
+    \Match{$\phi$}
+    \Case{$\X \psi$} 
+      \State{$B \leftarrow \textmd{SAT} (\psi, \neighbor{M})$}
+      \State{$\mathit{minp}(s) \leftarrow \minPr(\{ \pi_s : K,
+        \neighbor{M}, \pi_s \models \X B \})$ for every $s \in S$}
+      \State{$\mathit{maxp}(s) \leftarrow \maxPr(\{ \pi_s : K,
+        \neighbor{M}, \pi_s \models \X B \})$ for every $s \in S$} 
+    \EndCase
+    \Case{$\psi \until \psi'$}
+      \State{$B \leftarrow \textmd{SAT} (\psi, \neighbor{M})$}
+      \State{$C \leftarrow \textmd{SAT} (\psi', \neighbor{M})$}
+      \State{$\mathit{minp}(s) \leftarrow \minPr(\{ \pi_s : K, \neighbor{M},
+        \pi_s \models B \until C \})$ for every $s \in S$}
+      \State{$\mathit{maxp}(s) \leftarrow \maxPr(\{ \pi_s : K, \neighbor{M},
+        \pi_s \models B \until C \})$ for every $s \in S$}
+    \EndCase
+    \Case{$\psi \buntil{n} \psi'$}
+      \State{$B \leftarrow \textmd{SAT} (\psi, \neighbor{M})$}
+      \State{$C \leftarrow \textmd{SAT} (\psi', \neighbor{M})$}
+      \State{$\mathit{minp}(s) \leftarrow \minPr(\{ \pi_s : K, \neighbor{M},
+        \pi_s \models B \buntil{n} C \})$ for every $s \in S$}
+      \State{$\mathit{maxp}(s) \leftarrow \maxPr(\{ \pi_s : K, \neighbor{M},
+        \pi_s \models B \buntil{n} C \})$ for every $s \in S$}
+    \EndCase
+    \EndMatch
+    \State{$R \leftarrow S$}
+    \For{$s \in S$}
+      \For{$t \in \neighbor{M}(s)$}
+        \If{$\mathit{minp}(s) \not\leq \epsilon \cdot
+          \mathit{minp}(t)$ or
+          $\mathit{maxp}(s) \not\leq \epsilon \cdot
+          \mathit{maxp}(t)$}
+        {remove $s$ from $R$}
+        \EndIf
+      \EndFor
+    \EndFor
+    
+    \State{\Return $R$}
+    \EndFunction
+  \end{algorithmic}
+  \caption{SAT($\phi$, $\neighbor{M}$)}
+  \label{algorithm:sat-dpriv-mdp}
+\end{algorithm}
+}

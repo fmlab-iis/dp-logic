@@ -1,0 +1,192 @@
+
+Given a finite discrete-time Markov chain $K = (S, \wp, L)$, a
+\emph{neighborhood relation on $S$} $\neighbor{S} \subseteq S \times S$
+is a reflexive and symmetric relation on $S$. We will write $s
+\neighbor{S} t$ when $(s, t) \in \neighbor{S}$. If $s \neighbor{S} t$,
+we say $s$ and $t$ are \emph{neighbors} or $t$ is a \emph{neighbor} of
+$s$. Define the satisfaction relation $K, \neighbor{S}, s
+\models \Phi$ as follows.
+\begin{eqnarray*}
+  K, \neighbor{S}, s \models \top\\
+  K, \neighbor{S}, s \models p
+  & \textmd{ if } &
+  p \in L(s)\\
+  K, \neighbor{S}, s \models \neg \Phi
+  & \textmd{ if } &
+  K, \neighbor{S}, s \not\models \Phi\\
+  K, \neighbor{S}, s \models \Phi_0 \wedge \Phi_1
+  & \textmd{ if } &
+  K, \neighbor{S}, s \models \Phi_0 \textmd{ and }
+  K, \neighbor{S}, s \models \Phi_1\\
+  K, \neighbor{S}, s \models \PJ{J} \phi
+  & \textmd{ if } &
+  \Pr [\{ \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with }
+                    \pi_0 = s\}] \in J \\
+  K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
+  & \textmd{ if } & 
+  \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
+      p(s) \leq \epsilon p(t) + \delta \textmd{ and } 
+      p(t) \leq \\
+  & & \epsilon p(s)  + \delta  \textmd{ where } p(x) = \Pr [\{
+      \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with}\\
+  & &  \pi_0 = x \}]
+\end{eqnarray*}
+
+Moreover, the relation $K, \neighbor{S}, \pi \models \phi$ is defined as
+follows.
+\begin{eqnarray*}
+  K, \neighbor{S}, \pi \models \X \Phi
+  & \textmd{ if } &
+  K, \neighbor{S}, \pi[1] \models \Phi\\
+  K, \neighbor{S}, \pi \models \Phi \until \Psi 
+  & \textmd{ if } &
+  \textmd{there is a } j \geq 0 \textmd{ such that }
+  K, \neighbor{S}, \pi[j] \models \Psi \textmd{ and } \\
+  & & K, \neighbor{S}, \pi[k] \models \Phi
+      \textmd{ for every } 0 \leq k < j
+\hide{
+  K, \neighbor{S}, \pi \models \Phi \buntil{n} \Psi 
+  & \textmd{ if } &
+  \textmd{there is a } 0 \leq j \leq n \textmd{ such that }
+  K, \neighbor{S}, \pi[j] \models \Psi \textmd{ and } \\
+  & & K, \neighbor{S}, \pi[k] \models \Phi
+      \textmd{ for every } 0 \leq k < j
+}
+\end{eqnarray*}
+
+To simplify our notation, for any Markov chain $K$, neighborhood
+relation $N$ on $S$, a state $s \in S$, and a path formula $\phi$,
+define
+\[
+\myPr{s}{K}{N}{\phi} =
+\Pr [ \{ \pi : K, N, \pi \models \phi \textmd{ with } \pi_0 = s \} ].
+\]
+That is, $\myPr{s}{K}{N}{\phi}$ denotes the probability of paths
+satisfying $\phi$ from $s$ on $K$ with $N$. The semantics of the
+differentially private operator hence becomes
+\begin{eqnarray*}
+  K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
+  & \textmd{ if } & 
+  \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
+      \myPr{s}{K}{N}{\phi} \leq \epsilon \myPr{t}{K}{N}{\phi} + \delta 
+      \textmd{ and }\\
+  & &  \myPr{t}{K}{N}{\phi} \leq \epsilon \myPr{s}{K}{N}{\phi} + \delta
+\end{eqnarray*}
+
+Other than the differentially private operator, the semantics of
+$\dpCTL$ is standard~\cite{BK:08:PMC}. 
+To intuit the semantics of $\dpriv{\epsilon}{\delta} \phi$, 
+recall that  $\myPr{s}{K}{N}{\phi}$ is the probability of having
+paths satisfying $\phi$ from $s$. Thus, a state $s$ satisfies 
+$\dpriv{\epsilon}{\delta} \phi$ if having paths satisfying $\phi$
+from $s$ is $(\epsilon, \delta)$-close to having paths satisfying
+$\phi$ from every neighbor of $s$. In other words, it is
+probabilistically similar to observe paths satisfying $\phi$ from $s$
+and from all neighbors of $s$.
+
+Note that $\dpCTL$ generalizes differential privacy to infinite
+behaviors naturally. Classical differential privacy discusses properties about
+randomized terminating mechanisms. Sophisticated mechanisms for
+streaming data have also been discussed in social networks and
+internet of things. Such mechanisms inherently have infinite
+computation. Their privacy guarantees are approximated by those of the 
+prefixes of computation.
+With \dpCTL, the subformula $\phi$ in $\dpriv{\epsilon}{\delta} \phi$
+can be an arbitrary $\dpCTL$ path formula. One can specify
+$(\epsilon, \delta)$-closedness over infinite behaviors naturally. For instance,
+$\dpriv{\epsilon}{\delta} (\G \PJ{[1,1]} (\F \mathit{high}))$
+specifies states having $(\epsilon, \delta)$-close 
+infinitely often $\mathit{high}$ behaviors to its neighbors. 
+
+\noindent
+\textit{Example.} 
+Consider the Markov chain in
+Figure~\ref{figure:geometric-mechanism-markov-chain}. Assume 
+$L(out_i) = \{ out_i \}$ and $\Delta (f) = 1$. Then $in_k$ and $in_l$ are
+neighbors iff $| k - l | \leq 1$. Define the $\dpCTL$ formula
+$\psi = \dpriv{.5}{0} (\F out_0) \wedge \dpriv{.5}{0} (\F out_1) \wedge
+\cdots \wedge \dpriv{.5}{0} (\F out_5)$. If the state $in_k$ satisfies
+$\psi$ for $k = 0, \ldots, 5$, then the $.5$-geometric mechanism is
+$(0.5, 0)$-differentially private.
+
+The semantics over Markov chains generalizes to Markov decision
+processes as well. Note that two states with different enabled actions
+are trivially distinguishable; no privacy can be preserved. Without
+loss of generality, we consider reactive Markov decision processes.
+Let $M = (S, \Act, \wp, L)$ be a reactive Markov
+decision process. Define the satisfaction
+relation $M, \neighbor{S}, s \models \Phi$ as follows.
+\begin{eqnarray*}
+  M, \neighbor{S}, s \models \top\\
+  M, \neighbor{S}, s \models p
+  & \textmd{ if } &
+  p \in L(s)\\
+  M, \neighbor{S}, s \models \neg \Phi
+  & \textmd{ if } &
+  M, \neighbor{S}, s \not\models \Phi\\
+  M, \neighbor{S}, s \models \Phi_0 \wedge \Phi_1
+  & \textmd{ if } &
+  M, \neighbor{S}, s \models \Phi_0 \textmd{ and }
+  M, \neighbor{S}, s \models \Phi_1\\
+  M, \neighbor{S}, s \models \PJ{J} \phi
+  & \textmd{ if } &
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \in J  
+  \textmd{ for every scheduler } \scheduler{S}\\
+  M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
+  & \textmd{ if } &
+  \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
+   position-independent scheduler } \\
+  & & \scheduler{S}, 
+   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq \epsilon \cdot
+   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta 
+   \textmd{ and }
+   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq \epsilon \cdot
+  \\
+  & &
+   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
+\end{eqnarray*}
+Recall that $M_{\scheduler{S}}$ is but a Markov chain. The semantics
+of $M_{\scheduler{S}}, \neighbor{S}, \pi \models \phi$ and hence the
+probability $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ are
+defined as in Markov chains. 
+The semantics of $\dpCTL$ on reactive Markov decision processes
+is again standard except the differentially private operator
+$\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
+$\dpriv{\epsilon}{\delta} \phi$ specifies states which are $(\epsilon,
+\delta)$-close to all its neighbors in having paths satisfying $\phi$
+for arbitrary position-independent schedulers. That is, no
+position-independent scheduler can force any of neighbors to have
+probabilistically distinguishable behaviors. 
+
+\noindent
+\emph{Discussion.}
+Another definition of the differentially private operator
+might be: 
+\begin{eqnarray*}
+  M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
+  & \textmd{ if } &
+  \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
+  scheduler } \scheduler{S},
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
+  \epsilon \cdot\\
+  && \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta \textmd{ and }
+  \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
+  \epsilon \cdot \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} 
+  + \delta
+\end{eqnarray*}
+A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
+no scheduler could differentiate the probabilities of paths satisfying
+$\phi$ from neighbors. Such a definition would allow strategies to
+take different actions from different states. It might need different
+action sequences to distinguish neighbors. Two neighbors could still be
+differentiated by a action sequence and lose their privacy. We hence
+prefer the original definition.
+
+\hide{
+Since the scheduler attaining the maximally probable
+behavior from a state may be different from the scheduler attaining
+the maximally probable behavior from its neighbors, two
+neighbors may still be distinguished by a scheduler. The
+weaker definition does not preserve differential privacy. We hence
+prefer the original definition.
+}

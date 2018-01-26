@@ -1,0 +1,88 @@
+\documentclass{llncs}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xspace}
+\pagestyle{plain}
+\usepackage{algorithm,algpseudocode}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{url}
+\usetikzlibrary{arrows,calc}
+
+\input{macros}
+
+\title{Model Checking Differentially Private Properties}
+\author{
+Depeng Liu\inst{1}
+\and
+Bow-Yaw Wang\inst{2}
+\and 
+Lijun Zhang\inst{1}}
+\institute{
+Chinese Academy of Sciences 
+\and
+Academia Sinica
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  We introduce the branching time temporal logic \dpCTL for specifying
+  differential privacy. Its model checking algorithm is also developed. 
+\end{abstract}
+
+\section{Introduction}
+\label{section:introduction}
+\input{introduction}
+
+This paper is organized as follows. After the introduction,
+preliminaries are given in Section~\ref{section:preliminaries}. The
+logic $\dpCTL$ is presented in
+Section~\ref{section:dpCTL}. The model cheking algorithms are developed in
+Section~\ref{section:model-checking-algorithms}. They are followed by
+applications (Section~\ref{section:applications}. Finally,
+Section~\ref{section:conclusions} concludes our presentation.
+
+\section{Preliminaries}
+\label{section:preliminaries}
+\input{preliminaries}
+
+\section{Examples}
+\label{section:examples}
+\input{examples}
+
+\section{The Logic $\dpCTL$}
+\label{section:dpCTL}
+\input{dpCTL}
+
+\subsection{Syntax}
+\label{subsection:syntax}
+\input{syntax}
+
+\subsection{Semantics}
+\label{subsection:semantics}
+\input{semantics}
+
+\section{Model Checking Algorithms}
+\label{section:model-checking-algorithms}
+\input{algorithms}
+
+\section{Applications}
+\label{section:applications}
+\input{applications}
+
+\section{Conclusions}
+\label{section:conclusions}
+
+
+\bibliographystyle{splncs03}
+\bibliography{refs}
+
+\end{document}
