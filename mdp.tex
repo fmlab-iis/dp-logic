@@ -219,6 +219,31 @@ action sequences to distinguish neighbors. Two neighbors could still be
 differentiated by a action sequence and lose their privacy. We hence
 prefer the original definition.
 
+\paragraph{Model Checking Algorithm.}
+
+Our next task is to compute $\{ M, \neighbor{S}, s \models
+\dpriv{\epsilon}{\delta} \phi \}$ for a Markov decision process $M =
+(S, \Act, \wp, L)$. Recall the semantics of $\dpriv{\epsilon}{\delta}
+\phi$. Given $s, t$ with $s \neighbor{M} t$ and a path formula
+$\phi$, we need to decide whether
+$\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
+\epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta$
+for every scheduler $\scheduler{S}$.
+If the path formula only contain next operators, it is easy to deal with. For $\phi:=\X B$ with $B\subseteq S$ only one step behaviour needs to be considered, thus only the first action in the query sequence is needed to compute the maximum
+\begin{eqnarray}
+  \label{eqn:max-nextB}
+\max_{\scheduler{S}}
+\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B} -
+\epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}
+\end{eqnarray}
+with $s, t \in S$. It can be easily generalized to nested next operators:  one needs only to enumerate 
+all actions query sequences of length obtained by the number of nexted $\X$ operators. 
+
+In general, the computation of the maximal probability for MDPs is non-trivial. \lz{we argue that it is difficult and leave as future work}
+
+Finally, we the property 
+$\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$ that is used to express the privacy for our threshold Markov chains. It is only a valid formula if we would allow infinite conjunctions. However, it is interesting to note the relation to language equivalence for probabilistic automata\lz{to be discussed} 
+
 \hide{
 Since the scheduler attaining the maximally probable
 behavior from a state may be different from the scheduler attaining

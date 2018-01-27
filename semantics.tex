@@ -181,4 +181,6 @@ The algorithm requires at most $O
   computable within time polynomial in $|S|$ and $|\Phi|$.
 \end{corollary}
 
-
+The model checking algorithm for $\dpCTLstar$ can be treated as in the classical setting \cite{BK:08:PMC}, as all we need is to  compute the the probability
+  $\myPr{s}{K}{\neighbor{S}}{\phi}$ with general path formula $\phi$, one first construct a deterministic $\omega$-automaton $R$, such as deterministic Rabin automaton. Then, the probability reduces to a 
+  reachability probability in the product Markov chain obtained from $K$ and $R$. There are more efficient algorithms without the product construction, see \cite{}. We skip the details. 

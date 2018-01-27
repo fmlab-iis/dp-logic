@@ -4,10 +4,7 @@ In this section we describe what type of properties in the differential privacy 
 The formula $\dpriv{3}{0} (\X Y)$ holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X Y$ from $s$ and $t$ satisfy:
 $\myPr{s}{K}{N}{\X Y}\le 3\myPr{t}{K}{N}{\X Y}$. The formula $\dpriv{3}{0} (\X Y)\wedge \dpriv{3}{0} (\X N)$ thus specifies the differential privacy property for states $+$ and $-$ in Example~\ref{exa:survey}.
 
-Further, consider the Markov chain in
-Figure~\ref{figure:geometric-mechanism-markov-chain}. Assume
-$L(out_i) = \{ out_i \}$ and $\Delta (f) = 1$. Then $in_k$ and $in_l$ are
-neighbors iff $| k - l | \leq 1$\lz{put above sentence to the def of the model}. Define the $\dpCTL$ formula
+ Define the $\dpCTL$ formula
 $\psi = \dpriv{.5}{0} (\F out_0) \wedge \dpriv{.5}{0} (\F out_1) \wedge
 \cdots \wedge \dpriv{.5}{0} (\F out_5)$\lz{I think we better use $\X$ operator here ;)}. If the state $in_k$ satisfies
 $\psi$ for $k = 0, \ldots, 5$, then the $.5$-geometric mechanism is
@@ -22,12 +19,14 @@ We consider the formula $\dpriv{9}{0} (\X (Y\wedge \X Y))$. A path satisfies $\X
 
 We consider another simpler formula for comparision: $\dpriv{3}{0} (\X \X Y)$. In this case we donot have privacy lost, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
 
-\paragraph{Tighter Privacy Bounds for Compositional Properties}
+\paragraph{Tighter Privacy Bounds for Compositional Properties.}
 One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider our survey example, and the property $\dpriv{1}{.5} (\X Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=1$ or $\delta_1=.5$ without increasing the other one.
 
 
 Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X (Y\wedge \X Y))$ under the model in ???. Applying the compositional theorem\lz{Bow-Yaw, as we only refer to the book, I wonder whether using the notion $e^\epsilon$ is easier to explain?}, one can choose $\epsilon_2=\epsilon_1^2=1$ and $\delta_2=2\delta_1=1$. However, we can check easily that one can get better privacy parameter $(1,0.5)$ or $(0,\frac{9}{16})$.
 
+\paragraph{Reachability Privacy} 
+For our threshold \lz{to do} model, we have the desired privacy property $\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$. Here $\dpriv{\epsilon}{0}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of reaching $\top$. 
 
 \paragraph{Infinite ...}
 Note that $\dpCTL$ generalizes differential privacy to infinite
