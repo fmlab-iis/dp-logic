@@ -1,0 +1,229 @@
+\subsection{Markov Decision Processes}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{.40\columnwidth}
+    \resizebox{\columnwidth}{!}{
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+      distance=2cm,node/.style={circle,draw}]
+      \node[node] (p) at ( 0,  1.5) { $+$ };
+      \node[node] (q) at ( 0, -1.5) { $-$ };
+      \node[node] (F) at (-1.5,  0) { $Y$ };
+      \node[node] (T) at ( 1.5,  0) { $N$ };
+
+      \path
+      (p) edge [bend right=45] node [left] { $L, .75$ } (F)
+      (p) edge [bend left=45] node [right] { $L, .25$ } (T)
+      (p) edge [bend left=45] node [right=-12,above] { $H, .8$ } (F)
+      (p) edge [bend right=45] node [right=12,above] { $H, .2$ } (T)
+
+      (q) edge [bend left=45] node [left] { $L, .25$ } (F)
+      (q) edge [bend right=45] node [right] { $L, .75$ } (T)
+      (q) edge [bend right=45] node [left=12,below] { $H, .2$ } (F)
+      (q) edge [bend left=45] node [right=12,below] { $H, .8$ } (T)
+
+      (F) edge [loop left] node [below] { $-, 1$ } (F)
+      (T) edge [loop right] node [below] { $-, 1$ } (T)
+      ;
+      \end{tikzpicture}
+    }
+    \caption{Markov Decision Process}
+    \label{figure:simple-mdp-mdp}
+  \end{subfigure}
+  \begin{subfigure}{.58\columnwidth}
+    \resizebox{\columnwidth}{!}{
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+      distance=2cm,node/.style={circle,draw,inner sep=1pt}]
+      \node[node] (pq) at (-2.1, 2.1) { $+-$ };
+      \node[node] (qp) at ( 2.1,-2.1) { $-+$ };
+      \node[node] (RR) at (-2.1,-2.1) { $YY$ };
+      \node[node] (BB) at ( 2.1, 2.1) { $NN$ };
+      \node[node] (RB) at (- .7,- .7) { $YN$ };
+      \node[node] (BR) at (  .7,  .7) { $NY$ };
+
+      \path
+      (pq) edge [bend right=5] node [left=1,below=12,rotate=270] { $L, .1875$ } (RR)
+      (pq) edge [bend left=5]  node [above=5,right=1] { $L, .1875$ } (BB)
+
+      (pq) edge [bend left=5]  node [right=4,rotate=270] { $H, .16$ } (RR)
+      (pq) edge [bend right=5] node [below=5,right=1] { $H, .16$ } (BB)
+
+      (pq) edge [bend left=5]  node [left,below=10,rotate=295]  { $L, .5625$ } (RB)
+      (pq) edge [bend right=5] node [left,below,rotate=330]  { $L, .0625$ } (BR)
+
+      (pq) edge [bend right=5] node [right=2,above,rotate=300] { $H, .64$ } (RB)
+      (pq) edge [bend left=5]  node [right,above,rotate=340] { $H, .04$ } (BR)
+
+
+
+      (qp) edge [bend right=5] node [above=5,left=1] { $L, .1875$ } (RR)
+      (qp) edge [bend left=5]  node [above=30,left=5,rotate=90] { $L, .1875$ } (BB)
+
+      (qp) edge [bend left=5]  node [below=5,left=1] { $H, .16$ } (RR)
+      (qp) edge [bend right=5] node [above,right=5,rotate=90] { $H, .16$ } (BB)
+
+      (qp) edge [bend left=5]  node [left,below,rotate=330]  { $L, .0625$ } (RB)
+      (qp) edge [bend right=5] node [left=3,below=3,rotate=295]  { $L, .5625$ } (BR)
+
+      (qp) edge [bend right=5] node [left=5,above,rotate=330] { $H, .04$ } (RB)
+      (qp) edge [bend left=5]  node [right=1,above=1,rotate=295] { $H, .64$ } (BR)
+
+
+      (RR) edge [loop left] node [above] { $-, 1$ } (RR)
+      (BB) edge [loop right] node [above] { $-, 1$ } (BB)
+      (RB) edge [loop below] node [left] { $-, 1$ } (RB)
+      (BR) edge [loop above] node [right] { $-, 1$ } (BR)
+      ;
+      \end{tikzpicture}
+\hide{
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+      distance=2cm,node/.style={circle,draw,inner sep=1pt}]
+      \node[node] (pq) at (   0,   0) { $+-$ };
+      \node[node] (RR) at (-  2,   0) { $YY$ };
+      \node[node] (BB) at (   2,   0) { $NN$ };
+      \node[node] (RB) at (   0, 1.5) { $YN$ };
+      \node[node] (BR) at (   0,-1.5) { $NY$ };
+
+      \path
+      (pq) edge [bend right=15] node [above] { $L, .1875$ } (RR)
+      (pq) edge [bend left=15]  node [above] { $L, .1875$ } (BB)
+
+      (pq) edge [bend left=15]  node [below] { $H, .16$ } (RR)
+      (pq) edge [bend right=15] node [below] { $H, .16$ } (BB)
+
+      (pq) edge [bend left=15]  node [left]  { $L, .5625$ } (RB)
+      (pq) edge [bend right=15] node [left]  { $L, .0625$ } (BR)
+
+      (pq) edge [bend right=15] node [right] { $H, .64$ } (RB)
+      (pq) edge [bend left=15]  node [right] { $H, .04$ } (BR)
+
+      (RR) edge [loop below] node [below] { $-, 1$ } (RR)
+      (BB) edge [loop above] node [above] { $-, 1$ } (BB)
+      (RB) edge [loop left] node [left] { $-, 1$ } (RB)
+      (BR) edge [loop right] node [right] { $-, 1$ } (BR)
+      ;
+      \end{tikzpicture}
+}
+    }
+    \caption{Product Markov Decision Process}
+    \label{figure:simple-mdp-product}
+  \end{subfigure}
+  \caption{Markov Decision Process and its Self-Product}
+  \label{figure:simple-mdp}
+\end{figure}
+
+Mechanisms are not necessarily closed randomized algorithms; they may
+perform different compution on users' requests.
+We use Markov decision processes to model such
+interactive mechanisms. Specifically, external inputs are modeled by
+actions. Behaviors associated with different inputs are modeled by
+distributions associated with actions.
+
+Consider again the survey mechanism. Suppose we would like to design
+an interactive mechanism which adjusts random noises on surveyers'
+requests. When the surveyer requests low-accuracy answers, the
+surveyee uses the survey mechanism as before. When high-accuracy
+answers are requested, the surveyee answers \textit{Yes} with
+probability $4/5$ and \textit{No} with probability $1/5$ when she has
+positive diagnosis. She answers \textit{Yes} with probability $1/5$
+and \textit{No} with probability $4/5$ when she is not
+diagnosed with the disease X. This gives an interactive mechanism
+corresponding to the Markov decision process shown in
+Figure~\ref{figure:simple-mdp-mdp}.
+
+In the figure, the states $+$,
+$-$, $Y$, and $N$ are interpreted as before. The actions $L$ and $H$
+denote low- and high-accuracy requests respectively. Let $M_H$ denote
+the Markov chain derived by high-accuracy requests.
+Observe that $1/5 \leq \Pr[M_H(x) = Y] \leq 4/5$ for any $x
+\in \mathcal{X}$. Hence $\Pr[M_H (x) = Y] \leq 4/5 = 4 \cdot 1/5 \leq
+4 \Pr[M_H (x') = Y]$ for any neighboring $x, x' \in
+\mathcal{X}$. Similarly, $\Pr[M_H (x) = N] \leq 4 \Pr[M_H (x') =
+N]$. The high-accuracy mechanism is $(4,0)$-differentially private.
+The privacy guarantees vary from accuracy requests.
+
+\subsection{Semantics}
+The semantics over Markov chains generalizes to Markov decision
+processes as well. Note that two states with different enabled actions
+are trivially distinguishable; no privacy can be preserved. Without
+loss of generality, we consider reactive Markov decision processes.
+Let $M = (S, \Act, \wp, L)$ be a reactive Markov
+decision process. Define the satisfaction
+relation $M, \neighbor{S}, s \models \Phi$ as follows.
+\begin{eqnarray*}
+  M, \neighbor{S}, s \models \top\\
+  M, \neighbor{S}, s \models p
+  & \textmd{ if } &
+  p \in L(s)\\
+  M, \neighbor{S}, s \models \neg \Phi
+  & \textmd{ if } &
+  M, \neighbor{S}, s \not\models \Phi\\
+  M, \neighbor{S}, s \models \Phi_0 \wedge \Phi_1
+  & \textmd{ if } &
+  M, \neighbor{S}, s \models \Phi_0 \textmd{ and }
+  M, \neighbor{S}, s \models \Phi_1\\
+  M, \neighbor{S}, s \models \PJ{J} \phi
+  & \textmd{ if } &
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \in J
+  \textmd{ for every scheduler } \scheduler{S}\\
+  M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
+  & \textmd{ if } &
+  \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
+   position-independent scheduler } \\
+  & & \scheduler{S},
+   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq \epsilon \cdot
+   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
+   \textmd{ and }
+   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq \epsilon \cdot
+  \\
+  & &
+   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
+\end{eqnarray*}
+
+\lz{how about using "query sequence" instead of position-independent scheduler, and then argue that it makes sense for the resulting MDP model from differential privacy? This corresponds to a special scheduler that is applied on both neighboring states. }
+Recall that $M_{\scheduler{S}}$ is but a Markov chain. The semantics
+of $M_{\scheduler{S}}, \neighbor{S}, \pi \models \phi$ and hence the
+probability $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ are
+defined as in Markov chains.
+The semantics of $\dpCTL$ on reactive Markov decision processes
+is again standard except the differentially private operator
+$\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
+$\dpriv{\epsilon}{\delta} \phi$ specifies states which are $(\epsilon,
+\delta)$-close to all its neighbors in having paths satisfying $\phi$
+for arbitrary position-independent schedulers. That is, no
+position-independent scheduler can force any of neighbors to have
+probabilistically distinguishable behaviors.
+
+\noindent
+\emph{Discussion.}
+Another definition of the differentially private operator
+might be:
+\begin{eqnarray*}
+  M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
+  & \textmd{ if } &
+  \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
+  scheduler } \scheduler{S},
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
+  \epsilon \cdot\\
+  && \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta \textmd{ and }
+  \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
+  \epsilon \cdot \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+  + \delta
+\end{eqnarray*}
+A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
+no scheduler could differentiate the probabilities of paths satisfying
+$\phi$ from neighbors. Such a definition would allow strategies to
+take different actions from different states. It might need different
+action sequences to distinguish neighbors. Two neighbors could still be
+differentiated by a action sequence and lose their privacy. We hence
+prefer the original definition.
+
+\hide{
+Since the scheduler attaining the maximally probable
+behavior from a state may be different from the scheduler attaining
+the maximally probable behavior from its neighbors, two
+neighbors may still be distinguished by a scheduler. The
+weaker definition does not preserve differential privacy. We hence
+prefer the original definition.
+}

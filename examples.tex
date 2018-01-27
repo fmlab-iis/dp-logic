@@ -1,3 +1,8 @@
+As discussed in previous section, a simple way to design differentially private mechanisms is to add
+random noises. 
+Thus, in this section, we discuss how to model differentially private mechanisms using Markov chains. We explain the main idea first with some examples.
+
+\paragraph{Survey Mechanisms.}
 
 \begin{figure}
   \centering
@@ -49,8 +54,7 @@
   \label{figure:2-dp}
 \end{figure}
 
-A simple way to design differentially private mechanisms is to add
-random noises. Consider the survey question: have you been diagnosed
+Consider the survey question: have you been diagnosed
 with the disease $X$? In order to protect surveyees' privacy, each
 answers the question as follows. The surveyee first flips a
 coin. If it is tail, she answers the question truthfully. Otherwise,
@@ -62,14 +66,14 @@ uniformly~\cite{DR:14:AFDP}.
 mechanism and its corresponding Markov chain. In the figure, the states
 $+$ and $-$ denote the diagnoses are positive or negative
 respectively; the states $Y$ and $N$ denote answers to the survey
-question. We have $AP=\{Y,N\}$, $L(Y)=\{Y\}$, $L(N)=\{N\}$, and $L(+)=L(-)=\emptyset$. \lz{draw it on the picture}
+question. We have $AP=\{Y,N\}$, $L(Y)=\{Y\}$, $L(N)=\{N\}$, and $L(+)=L(-)=\emptyset$. \lz{draw it on the picture?}
 
 The random noise boosts the probability of answering
 \textit{Yes} or \textit{No} to at least $1/4$ regardless of
 diagnoses. Inferences on individual diagnosis can be plausibly denied.
 \end{example}
 
-Let us analyze the survey mechanism briefly. The data universe
+Let us recall briefly the analysis of the survey mechanism. The data universe
 $\mathcal{X}$ is $\{ +, - \}$. The mechanism $M$ is a randomized
 algorithm with inputs in $\mathcal{X}$ and outputs in $\{ Y, N
 \}$. For any $x \in \mathcal{X}$, we have $1/4 \leq \Pr[M(x) = Y] \leq
@@ -79,6 +83,7 @@ Y]$. Similarly, $\Pr[M (x) = N] \leq 3 \Pr[M (x') = N]$ for any
 neighboring $x, x' \in \mathcal{X}$. The survey mechanism is
 $(3, 0)$-differentially private.
 
+\paragraph{Truncated $\alpha$-Geometric Mechanism.}
 More sophisticated differentially private mechanisms are
 available. Consider a query
 $f : \mathcal{X}^n \rightarrow \bbfZ^{\geq 0}$. Let $\alpha \in (0, 1)$.
@@ -226,145 +231,72 @@ mechanism. Figure~\ref{figure:geometric-mechanism-markov-chain} gives
 the Markov chain of the truncated
 $1/2$-geometric mechanism over $\underline{5}$.
 
+\subsection{Markov Chains for Differentially Private Mechanisms}
+Now we describe our main ideas for the modelling differentially private mechanisms. 
+A state $s$ stores at least the a database $x\in \mathcal{X}^n$, which is the data hold by a trusted \emph{curator}. A transition corresponds to the data analysis mechanisms.
+States are typically labelled with the corresponding outputs
+the curator generates. 
+
+In the differentially privacy context, we differentiate between offline and online models. 
+In the offline, or non-interactive, model the curator releases the outputs only once and plays no further role. Thus the models we constructed above are offline models. On the contrary, in the online, or interactive, model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differentially privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
+
+Below we describe an online model. 
 
 \begin{figure}
-  \centering
-  \begin{subfigure}{.40\columnwidth}
-    \resizebox{\columnwidth}{!}{
+    \centering
+    \begin{subfigure}{.4\columnwidth}
+\resizebox{\columnwidth}{!}{
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
-      distance=2cm,node/.style={circle,draw}]
-      \node[node] (p) at ( 0,  1.5) { $+$ };
-      \node[node] (q) at ( 0, -1.5) { $-$ };
-      \node[node] (F) at (-1.5,  0) { $Y$ };
-      \node[node] (T) at ( 1.5,  0) { $N$ };
+    distance=1cm,node/.style={circle,draw}]
+    \node[node] (p) at ( -1.5,  0) { $+$ };
+    \node[node] (Y1) at ( 0, .8) { $Y_1$ };
+    \node[node] (N1) at ( 0, -.8) { $N_1$ };
+    \node[node] (Y2) at (1.5,  .8) { $Y_2$ };
+    \node[node] (N2) at ( 1.5, -.8) { $N_2$ };
 
-      \path
-      (p) edge [bend right=45] node [left] { $L, .75$ } (F)
-      (p) edge [bend left=45] node [right] { $L, .25$ } (T)
-      (p) edge [bend left=45] node [right=-12,above] { $H, .8$ } (F)
-      (p) edge [bend right=45] node [right=12,above] { $H, .2$ } (T)
-
-      (q) edge [bend left=45] node [left] { $L, .25$ } (F)
-      (q) edge [bend right=45] node [right] { $L, .75$ } (T)
-      (q) edge [bend right=45] node [left=12,below] { $H, .2$ } (F)
-      (q) edge [bend left=45] node [right=12,below] { $H, .8$ } (T)
-
-      (F) edge [loop left] node [below] { $-, 1$ } (F)
-      (T) edge [loop right] node [below] { $-, 1$ } (T)
-      ;
-      \end{tikzpicture}
-    }
-    \caption{Markov Decision Process}
-    \label{figure:simple-mdp-mdp}
-  \end{subfigure}
-  \begin{subfigure}{.58\columnwidth}
-    \resizebox{\columnwidth}{!}{
-    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
-      distance=2cm,node/.style={circle,draw,inner sep=1pt}]
-      \node[node] (pq) at (-2.1, 2.1) { $+-$ };
-      \node[node] (qp) at ( 2.1,-2.1) { $-+$ };
-      \node[node] (RR) at (-2.1,-2.1) { $YY$ };
-      \node[node] (BB) at ( 2.1, 2.1) { $NN$ };
-      \node[node] (RB) at (- .7,- .7) { $YN$ };
-      \node[node] (BR) at (  .7,  .7) { $NY$ };
-
-      \path
-      (pq) edge [bend right=5] node [left=1,below=12,rotate=270] { $L, .1875$ } (RR)
-      (pq) edge [bend left=5]  node [above=5,right=1] { $L, .1875$ } (BB)
-
-      (pq) edge [bend left=5]  node [right=4,rotate=270] { $H, .16$ } (RR)
-      (pq) edge [bend right=5] node [below=5,right=1] { $H, .16$ } (BB)
-
-      (pq) edge [bend left=5]  node [left,below=10,rotate=295]  { $L, .5625$ } (RB)
-      (pq) edge [bend right=5] node [left,below,rotate=330]  { $L, .0625$ } (BR)
-
-      (pq) edge [bend right=5] node [right=2,above,rotate=300] { $H, .64$ } (RB)
-      (pq) edge [bend left=5]  node [right,above,rotate=340] { $H, .04$ } (BR)
-
-
-
-      (qp) edge [bend right=5] node [above=5,left=1] { $L, .1875$ } (RR)
-      (qp) edge [bend left=5]  node [above=30,left=5,rotate=90] { $L, .1875$ } (BB)
-
-      (qp) edge [bend left=5]  node [below=5,left=1] { $H, .16$ } (RR)
-      (qp) edge [bend right=5] node [above,right=5,rotate=90] { $H, .16$ } (BB)
-
-      (qp) edge [bend left=5]  node [left,below,rotate=330]  { $L, .0625$ } (RB)
-      (qp) edge [bend right=5] node [left=3,below=3,rotate=295]  { $L, .5625$ } (BR)
-
-      (qp) edge [bend right=5] node [left=5,above,rotate=330] { $H, .04$ } (RB)
-      (qp) edge [bend left=5]  node [right=1,above=1,rotate=295] { $H, .64$ } (BR)
-
-
-      (RR) edge [loop left] node [above] { $-, 1$ } (RR)
-      (BB) edge [loop right] node [above] { $-, 1$ } (BB)
-      (RB) edge [loop below] node [left] { $-, 1$ } (RB)
-      (BR) edge [loop above] node [right] { $-, 1$ } (BR)
-      ;
-      \end{tikzpicture}
-\hide{
-    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
-      distance=2cm,node/.style={circle,draw,inner sep=1pt}]
-      \node[node] (pq) at (   0,   0) { $+-$ };
-      \node[node] (RR) at (-  2,   0) { $YY$ };
-      \node[node] (BB) at (   2,   0) { $NN$ };
-      \node[node] (RB) at (   0, 1.5) { $YN$ };
-      \node[node] (BR) at (   0,-1.5) { $NY$ };
-
-      \path
-      (pq) edge [bend right=15] node [above] { $L, .1875$ } (RR)
-      (pq) edge [bend left=15]  node [above] { $L, .1875$ } (BB)
-
-      (pq) edge [bend left=15]  node [below] { $H, .16$ } (RR)
-      (pq) edge [bend right=15] node [below] { $H, .16$ } (BB)
-
-      (pq) edge [bend left=15]  node [left]  { $L, .5625$ } (RB)
-      (pq) edge [bend right=15] node [left]  { $L, .0625$ } (BR)
-
-      (pq) edge [bend right=15] node [right] { $H, .64$ } (RB)
-      (pq) edge [bend left=15]  node [right] { $H, .04$ } (BR)
-
-      (RR) edge [loop below] node [below] { $-, 1$ } (RR)
-      (BB) edge [loop above] node [above] { $-, 1$ } (BB)
-      (RB) edge [loop left] node [left] { $-, 1$ } (RB)
-      (BR) edge [loop right] node [right] { $-, 1$ } (BR)
-      ;
-      \end{tikzpicture}
+    \path
+    (p) edge node [above] { $\frac{3}{4}$ } (Y1)
+    (p) edge node [below] { $\frac{1}{4}$ } (N1)
+    (Y1) edge node [above] { $\frac{3}{4}$ } (Y2)
+    (Y1) edge node [above] { $\frac{1}{4}$ } (N2)
+    (N1) edge node [below] { $\frac{3}{4}$ } (Y2)
+    (N1) edge node [below] { $\frac{1}{4}$ } (N2)
+    ;
+    \end{tikzpicture}
 }
-    }
-    \caption{Product Markov Decision Process}
-    \label{figure:simple-mdp-product}
-  \end{subfigure}
-  \caption{Markov Decision Process and its Self-Product}
-  \label{figure:simple-mdp}
+%        \caption{Markov Chain of }
+%        \label{figure:2-dp-mc1}
+    \end{subfigure}
+    \hspace{.05\columnwidth}
+    \begin{subfigure}{.4\columnwidth}
+        \resizebox{\columnwidth}{!}{
+            \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+    distance=1cm,node/.style={circle,draw}]
+    \node[node] (n) at ( -1.5,  0) { $-$ };
+    \node[node] (Y1) at ( 0, .8) { $Y_1$ };
+    \node[node] (N1) at ( 0, -.8) { $N_1$ };
+    \node[node] (Y2) at (1.5,  .8) { $Y_2$ };
+    \node[node] (N2) at ( 1.5, -.8) { $N_2$ };
+
+    \path
+    (n) edge node [above] { $\frac{1}{4}$ } (Y1)
+    (n) edge node [below] { $\frac{3}{4}$ } (N1)
+    (Y1) edge node [above] { $\frac{1}{4}$ } (Y2)
+    (Y1) edge node [above] { $\frac{3}{4}$ } (N2)
+    (N1) edge node [below] { $\frac{1}{4}$ } (Y2)
+    (N1) edge node [below] { $\frac{3}{4}$ } (N2)
+    ;
+            \end{tikzpicture}
+        }
+%        \caption{Markov Chain of}
+%        \label{figure:2-dp-mc2}
+    \end{subfigure}
+    \caption{Markov Chain of }
+    \label{figure:2-dp-mc}
 \end{figure}
+\begin{example}
+  First, assume that the curator allows at most two survey queries. The corresponding model is depicted in Figure~\ref{figure:2-dp-mc}, where states $Y_1,Y_2$ are labelled by $Y$, and $N_1,N_2$ are labelled by $N$.
+\end{example}
 
-Mechanisms are not necessarily closed randomized algorithms; they may
-perform different compution on users' requests.
-We use Markov decision processes to model such
-interactive mechanisms. Specifically, external inputs are modeled by
-actions. Behaviors associated with different inputs are modeled by
-distributions associated with actions.
+\lz{tbd, the complex threshold example we discussed, by Depeng}
 
-Consider again the survey mechanism. Suppose we would like to design
-an interactive mechanism which adjusts random noises on surveyers'
-requests. When the surveyer requests low-accuracy answers, the
-surveyee uses the survey mechanism as before. When high-accuracy
-answers are requested, the surveyee answers \textit{Yes} with
-probability $4/5$ and \textit{No} with probability $1/5$ when she has
-positive diagnosis. She answers \textit{Yes} with probability $1/5$
-and \textit{No} with probability $4/5$ when she is not
-diagnosed with the disease X. This gives an interactive mechanism
-corresponding to the Markov decision process shown in
-Figure~\ref{figure:simple-mdp-mdp}.
-
-In the figure, the states $+$,
-$-$, $Y$, and $N$ are interpreted as before. The actions $L$ and $H$
-denote low- and high-accuracy requests respectively. Let $M_H$ denote
-the Markov chain derived by high-accuracy requests.
-Observe that $1/5 \leq \Pr[M_H(x) = Y] \leq 4/5$ for any $x
-\in \mathcal{X}$. Hence $\Pr[M_H (x) = Y] \leq 4/5 = 4 \cdot 1/5 \leq
-4 \Pr[M_H (x') = Y]$ for any neighboring $x, x' \in
-\mathcal{X}$. Similarly, $\Pr[M_H (x) = N] \leq 4 \Pr[M_H (x') =
-N]$. The high-accuracy mechanism is $(4,0)$-differentially private.
-The privacy guarantees vary from accuracy requests.

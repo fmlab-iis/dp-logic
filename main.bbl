@@ -1,0 +1,63 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+
+\bibitem{BK:08:PMC}
+Baier, C., Katoen, J.P.: Principles of Model Checking. The MIT Press (2008)
+
+\bibitem{DMNS:06:CNSPD}
+Dwork, C., McSherry, F., Nissim, K., Smith, A.: Calibrating noise to
+  sensitivity in private data analysis. In: Halevi, S., Rabin, T. (eds.) Theory
+  of Cryptography Conference. LNCS, vol. 3876, pp. 265--284. Springer (06)
+
+\bibitem{DR:14:AFDP}
+Dwork, C., Roth, A.: The algorithmic foundations of differential privacy.
+  Foundations and Trends in Theoretical Computer Science  9(3--4),  211--407
+  (2014)
+
+\bibitem{D:06:DP}
+Dwork, C.: Differential privacy. In: Bugliesi, M., Preneel, B., Sassone, V.,
+  Wegener, I. (eds.) International Colloquium on Automata, Languages and
+  Programming (ICALP). LNCS, vol. 4052, pp. 1--12. Springer (2006)
+
+\bibitem{DNPR:10:DPCO}
+Dwork, C., Naor, M., Pitassi, T., Rothblum, G.N.: Differential privacy under
+  continual observation. In: STOC. pp. 715--724. ACM, New York, NY, USA (2010)
+
+\bibitem{DNPRY:10:PPSA}
+Dwork, C., Naor, M., Pitassi, T., Rothblum, G.N., Yekhanin, S.: Pan-private
+  streaming algorithms. In: Innovations in Computer Science. pp. 66--80 (2010)
+
+\bibitem{FWC:10:PPDP}
+Fung, B.C.M., Wang, K., Chen, R., Yu, P.S.: Privacy-preserving data publish: A
+  survey of recent developments. ACM Computing Surveys  42(4),  14:1--14:53
+  (June 2010)
+
+\bibitem{GRS:09:UUPM}
+Ghosh, A., Roughgarden, T., Sundararajan, M.: Universally utility-maximizing
+  privacy mechanisms. In: STOC. pp. 351--360. ACM, New York, NY, USA (2009)
+
+\bibitem{GRS:12:UUPM}
+Ghosh, A., Roughgarden, T., Sundararajan, M.: Universally utility-maximizing
+  privacy mechanisms. SIAM Journal of Computing  41(6),  1673--1693 (2012)
+
+\bibitem{JLE:14:DPML}
+Ji, Z., Lipton, Z.C., Elkan, C.: Differential privacy and machine learning: a
+  survey and review. CoRR  abs/1412.7584 (2014),
+  \url{http://arxiv.org/abs/1412.7584}
+
+\bibitem{M:12:SLSBDP}
+Mironov, I.: On significance of the least significant bits for differential
+  privacy. In: Yu, T., Danezis, G., Gligor, V.D. (eds.) ACM Conference on
+  Computer and Communications Security. pp. 650--661 (2012)
+
+\bibitem{TKBW:17:PLAI}
+Tang, J., Korolova, A., Bai, X., Wang, X., Wang, X.: Privacy loss in apple's
+  implementation of differential privacy on {MacOS} 10.12. CoRR  abs/1709.02753
+  (2017), \url{http://arxiv.org/abs/1709.02753}
+
+\bibitem{A:16:EPYU}
+WWDC: Engineering privacy for your users (2016),
+  \url{https://developer.apple.com/videos/play/wwdc2016/709/}
+
+\end{thebibliography}
