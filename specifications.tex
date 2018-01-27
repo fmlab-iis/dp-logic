@@ -13,9 +13,65 @@ $(0.5, 0)$-differentially private.
 
 \paragraph{Compositional Properties.}
 Compositional aspect is one of the building block for differentially private algorithms. According to the compositional theorem \cite{}, for $(\epsilon_1,0)$-differentially private algorithm $M_1$ and
-$(\epsilon_2,0)$-differentially private algorithm $M_2$, their combination $M$ defined by $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1\epsilon_2,0)$-differentially private. The degradation is rooted in the repeated computation. To illustrate this property, we consider the extended example below \lz{here example of the survey example, expanded twice: we should discuss the graph before it is drawn...}
+$(\epsilon_2,0)$-differentially private algorithm $M_2$, their combination $M$ defined by $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1\epsilon_2,0)$-differentially private. The degradation is rooted in the repeated computation. To illustrate this property, we consider the extended survey example below where the curator allows two consequent queries.
+The corresponding model is depicted in Figure~\ref{figure:2-dp-mc}, where states $Y_1,Y_2$ are labelled by $Y$, and $N_1,N_2$ are labelled by $N$.
 
-We consider the formula $\dpriv{9}{0} (\X (Y\wedge \X Y))$. A path satisfies $\X (Y\wedge \X Y)$ if the second state satisfies $Y$ and the third state satisfies $Y$ as well. We verify that this formula is satisfied  for state $+$ and $-$. Moreover, the bound $\epsilon=9$ is bound, since \lz{tbd once graph is given}. Finally, the formula $\wedge_{a_1,a_2}\dpriv{9}{0} (\X (a_1\wedge \X a_2))$ corresponds to the desired compositional property for the model, where $a_1,a_2$ range over all atomic propositions $\{Y,N\}$.
+\begin{figure}
+    \centering
+    \begin{subfigure}{.4\columnwidth}
+\resizebox{\columnwidth}{!}{
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+    distance=1cm,node/.style={circle,draw}]
+    \node[node] (p) at ( -1.5,  0) { $+$ };
+    \node[node] (Y1) at ( 0, .8) { $Y_1$ };
+    \node[node] (N1) at ( 0, -.8) { $N_1$ };
+    \node[node] (Y2) at (1.5,  .8) { $Y_2$ };
+    \node[node] (N2) at ( 1.5, -.8) { $N_2$ };
+
+    \path
+    (p) edge node [above] { $\frac{3}{4}$ } (Y1)
+    (p) edge node [below] { $\frac{1}{4}$ } (N1)
+    (Y1) edge node [above] { $\frac{3}{4}$ } (Y2)
+    (Y1) edge node [above] { $\frac{1}{4}$ } (N2)
+    (N1) edge node [below] { $\frac{3}{4}$ } (Y2)
+    (N1) edge node [below] { $\frac{1}{4}$ } (N2)
+    ;
+    \end{tikzpicture}
+}
+%        \caption{Markov Chain of }
+%        \label{figure:2-dp-mc1}
+    \end{subfigure}
+    \hspace{.05\columnwidth}
+    \begin{subfigure}{.4\columnwidth}
+        \resizebox{\columnwidth}{!}{
+            \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+    distance=1cm,node/.style={circle,draw}]
+    \node[node] (n) at ( -1.5,  0) { $-$ };
+    \node[node] (Y1) at ( 0, .8) { $Y_1$ };
+    \node[node] (N1) at ( 0, -.8) { $N_1$ };
+    \node[node] (Y2) at (1.5,  .8) { $Y_2$ };
+    \node[node] (N2) at ( 1.5, -.8) { $N_2$ };
+
+    \path
+    (n) edge node [above] { $\frac{1}{4}$ } (Y1)
+    (n) edge node [below] { $\frac{3}{4}$ } (N1)
+    (Y1) edge node [above] { $\frac{1}{4}$ } (Y2)
+    (Y1) edge node [above] { $\frac{3}{4}$ } (N2)
+    (N1) edge node [below] { $\frac{1}{4}$ } (Y2)
+    (N1) edge node [below] { $\frac{3}{4}$ } (N2)
+    ;
+            \end{tikzpicture}
+        }
+%        \caption{Markov Chain of}
+%        \label{figure:2-dp-mc2}
+    \end{subfigure}
+    \caption{Markov Chain of Double Surveys}
+    \label{figure:2-dp-mc}
+\end{figure}
+
+
+
+We consider the formula $\dpriv{9}{0} (\X (Y\wedge \X Y))$. A path satisfies $\X (Y\wedge \X Y)$ if the second state satisfies $Y$ and the third state satisfies $Y$ as well. We verify that this formula is satisfied  for state $+$ and $-$. Moreover, the bound $\epsilon=9$ is bound, since the probability of satisfying $\X (Y\wedge \X Y)$ from states $+$ and $-$ are $9$ and $1$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{9}{0} (\X (a_1\wedge \X a_2))$ corresponds to the desired compositional property for the model, where $a_1,a_2$ range over all atomic propositions $\{Y,N\}$.
 
 We consider another simpler formula for comparision: $\dpriv{3}{0} (\X \X Y)$. In this case we donot have privacy lost, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
 
@@ -23,10 +79,10 @@ We consider another simpler formula for comparision: $\dpriv{3}{0} (\X \X Y)$. I
 One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider our survey example, and the property $\dpriv{1}{.5} (\X Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=1$ or $\delta_1=.5$ without increasing the other one.
 
 
-Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X (Y\wedge \X Y))$ under the model in ???. Applying the compositional theorem\lz{Bow-Yaw, as we only refer to the book, I wonder whether using the notion $e^\epsilon$ is easier to explain?}, one can choose $\epsilon_2=\epsilon_1^2=1$ and $\delta_2=2\delta_1=1$. However, we can check easily that one can get better privacy parameter $(1,0.5)$ or $(0,\frac{9}{16})$.
+Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X (Y\wedge \X Y))$ under the model in Figure~\ref{figure:2-dp-mc}. Applying the compositional theorem, one can choose $\epsilon_2=\epsilon_1^2=1$ and $\delta_2=2\delta_1=1$. However, we can check easily that one gets better privacy parameter $(1,0.5)$ or $(0,\frac{9}{16})$.
 
-\paragraph{Reachability Privacy} 
-For our threshold \lz{to do} model, we have the desired privacy property $\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$. Here $\dpriv{\epsilon}{0}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of reaching $\top$. 
+\paragraph{Reachability Privacy}
+For our threshold \lz{to do} model, we have the desired privacy property $\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$. Here $\dpriv{\epsilon}{0}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of reaching $\top$.
 
 \paragraph{Infinite ...}
 Note that $\dpCTL$ generalizes differential privacy to infinite

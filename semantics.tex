@@ -84,7 +84,7 @@ $\phi$ from every neighbor of $s$. In other words, it is
 probabilistically similar to observe paths satisfying $\phi$ from $s$
 and from all neighbors of $s$.
 
-\section{Model Checking Algorithms}
+\subsection{Model Checking Algorithms}
 We first describe the model checking algorithm for $\dpCTL$, which follows the classical
 algorithms for $\PCTL$ by computing the states satisfying
 sub state-formulae inductively~\cite{BK:08:PMC}. It hence suffices to
@@ -182,5 +182,5 @@ The algorithm requires at most $O
 \end{corollary}
 
 The model checking algorithm for $\dpCTLstar$ can be treated as in the classical setting \cite{BK:08:PMC}, as all we need is to  compute the the probability
-  $\myPr{s}{K}{\neighbor{S}}{\phi}$ with general path formula $\phi$, one first construct a deterministic $\omega$-automaton $R$, such as deterministic Rabin automaton. Then, the probability reduces to a 
-  reachability probability in the product Markov chain obtained from $K$ and $R$. There are more efficient algorithms without the product construction, see \cite{}. We skip the details. 
+  $\myPr{s}{K}{\neighbor{S}}{\phi}$ with general path formula $\phi$, one first construct a deterministic $\omega$-automaton $R$, such as deterministic Rabin automaton. Then, the probability reduces to a
+  reachability probability in the product Markov chain obtained from $K$ and $R$. There are more efficient algorithms without the product construction, see \cite{}. We skip the details.

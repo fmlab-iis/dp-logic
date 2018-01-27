@@ -1,5 +1,5 @@
 As discussed in previous section, a simple way to design differentially private mechanisms is to add
-random noises. 
+random noises.
 Thus, in this section, we discuss how to model differentially private mechanisms using Markov chains. We explain the main idea first with some examples.
 
 \paragraph{Survey Mechanisms.}
@@ -59,7 +59,7 @@ with the disease $X$? In order to protect surveyees' privacy, each
 answers the question as follows. The surveyee first flips a
 coin. If it is tail, she answers the question truthfully. Otherwise,
 she randomly answers \textit{Yes} or \textit{No}
-uniformly~\cite{DR:14:AFDP}. 
+uniformly~\cite{DR:14:AFDP}.
 
 \begin{example}\label{exa:survey}
   Figure~\ref{figure:2-dp} shows the survey
@@ -222,9 +222,9 @@ given in Figure~\ref{figure:geometric-mechanism-table}.
 
 Similar to the survey mechanism, it is
 straightfoward to model the truncated $1/2$-geometric
-mechanisms as Markov chains. 
+mechanisms as Markov chains.
 
-\begin{example}  
+\begin{example}
 Let the state $in_k$ and $out_l$
 denote the input value $k$ and output value $l$ respectively. Define
 the state set $S = \{ in_k, out_k : k \in \underline{n} \}$.
@@ -238,71 +238,53 @@ neighbors iff $| k - l | \leq 1$.
 \end{example}
 
 \subsection{Markov Chains for Differentially Private Mechanisms}
-Now we describe our main ideas for the modelling differentially private mechanisms. 
+Now we describe our main ideas for  modelling differentially private mechanisms.
 A state $s$ stores at least the a database $x\in \mathcal{X}^n$, which is the data hold by a trusted \emph{curator}. A transition corresponds to the data analysis mechanisms.
 States are typically labelled with the corresponding outputs
-the curator generates. 
+the curator generates.
 
-In the differentially privacy context, we differentiate between offline and online models. 
+In the differentially privacy context, we differentiate between offline and online models.
 In the offline, or non-interactive, model the curator releases the outputs only once and plays no further role. Thus the models we constructed above are offline models. On the contrary, in the online, or interactive, model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differentially privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
 
-Below we describe an online model. 
 
-\begin{figure}
-    \centering
-    \begin{subfigure}{.4\columnwidth}
-\resizebox{\columnwidth}{!}{
-    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
-    distance=1cm,node/.style={circle,draw}]
-    \node[node] (p) at ( -1.5,  0) { $+$ };
-    \node[node] (Y1) at ( 0, .8) { $Y_1$ };
-    \node[node] (N1) at ( 0, -.8) { $N_1$ };
-    \node[node] (Y2) at (1.5,  .8) { $Y_2$ };
-    \node[node] (N2) at ( 1.5, -.8) { $N_2$ };
+\paragraph{Online Model.}
+Below we describe an online model adapted from \cite{}: it ..... 
 
-    \path
-    (p) edge node [above] { $\frac{3}{4}$ } (Y1)
-    (p) edge node [below] { $\frac{1}{4}$ } (N1)
-    (Y1) edge node [above] { $\frac{3}{4}$ } (Y2)
-    (Y1) edge node [above] { $\frac{1}{4}$ } (N2)
-    (N1) edge node [below] { $\frac{3}{4}$ } (Y2)
-    (N1) edge node [below] { $\frac{1}{4}$ } (N2)
-    ;
-    \end{tikzpicture}
-}
-%        \caption{Markov Chain of }
-%        \label{figure:2-dp-mc1}
-    \end{subfigure}
-    \hspace{.05\columnwidth}
-    \begin{subfigure}{.4\columnwidth}
-        \resizebox{\columnwidth}{!}{
-            \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
-    distance=1cm,node/.style={circle,draw}]
-    \node[node] (n) at ( -1.5,  0) { $-$ };
-    \node[node] (Y1) at ( 0, .8) { $Y_1$ };
-    \node[node] (N1) at ( 0, -.8) { $N_1$ };
-    \node[node] (Y2) at (1.5,  .8) { $Y_2$ };
-    \node[node] (N2) at ( 1.5, -.8) { $N_2$ };
+We consider the database set $D = \{0,1,2,3,4,5\}$, a threshold
+$t \in \{0,1,2,3,4,5\}$, queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, a truncated $1/2-$geometric mechanisms over $\underline{5}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that they are all neighbours. The modeling can be done in guarded command language and some fragments are shown below.\todo{the algorithm seems redundant}
 
-    \path
-    (n) edge node [above] { $\frac{1}{4}$ } (Y1)
-    (n) edge node [below] { $\frac{3}{4}$ } (N1)
-    (Y1) edge node [above] { $\frac{1}{4}$ } (Y2)
-    (Y1) edge node [above] { $\frac{3}{4}$ } (N2)
-    (N1) edge node [below] { $\frac{1}{4}$ } (Y2)
-    (N1) edge node [below] { $\frac{3}{4}$ } (N2)
-    ;
-            \end{tikzpicture}
-        }
-%        \caption{Markov Chain of}
-%        \label{figure:2-dp-mc2}
-    \end{subfigure}
-    \caption{Markov Chain of }
-    \label{figure:2-dp-mc}
-\end{figure}
-\begin{example}
-  First, assume that the curator allows at most two survey queries. The corresponding model is depicted in Figure~\ref{figure:2-dp-mc}, where states $Y_1,Y_2$ are labelled by $Y$, and $N_1,N_2$ are labelled by $N$.
-\end{example}
+\begin{algorithm}
+    \begin{algorithmic}[1]
 
-\lz{tbd, the complex threshold example we discussed, by Depeng}
+        \Function{OnlineModel}{$d$, $t$}
+
+
+        \State{$\mathbf{If}$  $t=0$ $\rightarrow   2/3 : (\hat{t} = 0) + 1/6 : (\hat{t} = 1) + 1/12 : (\hat{t} = 2)$ }
+        \State{$+ 1/24 : (\hat{t} = 3) + 1/48 : (\hat{t} = 4) + 1/48: (\hat{t} = 5);$}
+        \State{$| $ $ t=1\rightarrow   1/3 : (\hat{t} = 0) + 1/3 : (\hat{t} = 1) + 1/6 : (\hat{t} = 2)$}
+        \State{$+ 1/12 : (\hat{t} = 3) + 1/24 : (\hat{t} = 4) + 1/24: (\hat{t} = 5);$}
+        \State{$...$  $...$}
+        \Comment{Assignments of $\hat{t}$ by the geometric mechanism}
+        \State{$\mathbf{Fi}$}
+
+        \For{each query $f_i$}
+        \State{$\mathbf{If}$  $d=0$ $\rightarrow   2/3 : (\hat{f} = 0) + 1/6 : (\hat{f} = 1) + 1/12 : (\hat{f} = 2)$ }
+        \State{$+ 1/24 : (\hat{f} = 3) + 1/48 : (\hat{f} = 4) + 1/48: (\hat{f} = 5);$}
+        \State{$| $ $ d=1\rightarrow   1/3 : (\hat{f} = 0) + 1/3 : (\hat{f} = 1) + 1/6 : (\hat{f} = 2)$}
+        \State{$+ 1/12 : (\hat{f} = 3) + 1/24 : (\hat{f} = 4) + 1/24: (\hat{f} = 5);$}
+        \State{$...$  $...$}
+        \Comment{Assignments of $\hat{f}$ by the geometric mechanism}
+        \State{$\mathbf{Fi}$}
+        \State{$\mathbf{If}$ $\hat{f}\ge \hat{t}$ $a_i=\top$ \Return }
+        \State{$|$   $\hat{f} < \hat{t}$ $a_i=\bot$}
+        \State{$\mathbf{Fi}$}
+        \EndFor
+        \EndFunction
+
+    \end{algorithmic}
+    \caption{Input is a private database $d \in \{0,1,2,3,4,5\}$, an adaptively chosen stream of sensitivity 1 queries $f_1$, . . ., a threshold $t \in \{0,1,2,3,4,5\}$.Output is a stream of answers $a_1$,...}
+    \label{algorithm:online-model}
+\end{algorithm}
+
+
 
