@@ -248,10 +248,10 @@ In the offline, or non-interactive, model the curator releases the outputs only 
 
 
 \paragraph{Online Model.}
-Below we describe an online model adapted from \cite{}: it ..... 
+Below we describe an online model adapted from \cite{}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which 
+are above a given threshold. Other queries below the threshold are considered "irrelevent" and might be discarded. In \cite{}, since the model is set for continuous database, the Laplace mechanism is applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanism is applied.
 
-We consider the database set $D = \{0,1,2,3,4,5\}$, a threshold
-$t \in \{0,1,2,3,4,5\}$, queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, a truncated $1/2-$geometric mechanisms over $\underline{5}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that they are all neighbours. The modeling can be done in guarded command language and some fragments are shown below.\todo{the algorithm seems redundant}
+We consider the database set $D = \{0,1,2,3,4,5\}$, a threshold $t \in \{0,1,2,3,4,5\}$, queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, a truncated $1/2-$geometric mechanisms over $\underline{5}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that they are all neighbours. The modeling can be done in guarded command language and some fragments are shown below.\todo{the algorithm seems redundant}
 
 \begin{algorithm}
     \begin{algorithmic}[1]
