@@ -1,5 +1,71 @@
 
-Streaming processing gives a motivating example for Markov
+Consider the MDP in Figure~\ref{figure:simple-mdp-mdp}. Suppose the
+states $+$ and $-$ are neighbors. Let us compute $\{ s : M,
+\neighbor{S}, s \models \dpriv{3}{0} (\F Y) \}$. First, the self
+product $M^2$ is depicted in Figure~\ref{figure:simple-mdp-product}
+(the states $++$ and $--$ and associated transitions are ignored
+for clarity). Applying
+Theorem~\ref{theorem:eventuallyC} with $\epsilon = 4$ and $\delta = 0$, 
+consider the following linear programming problem:
+\[
+\begin{array}{rcrcrcrcrcl}
+  \multicolumn{11}{c}{
+  \min x_{++} + x_{+-} + x_{-+} + x_{--} + x_{YY} + x_{YN} + x_{NY} + x_{NN}
+  }\\
+  \multicolumn{9}{r}{ x_{YN} } & = & 1 \\
+  \multicolumn{9}{r}{ x_{YY} } & = & -3 \\
+  \multicolumn{9}{r}{ x_{NY} } & = & -4 \\
+  \multicolumn{9}{r}{ x_{NN} } & = & 0 \\
+  x_{++} &-&   .5625 x_{YY} &-& .1875 x_{YN} &-& .1875 x_{NY} &-&
+               .0625 x_{NN} & \geq & 0\\
+  x_{++} &-&   .64   x_{YY} &-& .16   x_{YN} &-& .16   x_{NY} &-&
+               .04   x_{NN} & \geq & 0\\
+  x_{+-} &-&   .1875 x_{YY} &-& .5625 x_{YN} &-& .0625 x_{NY} &-& 
+               .1875 x_{NN} & \geq & 0\\
+  x_{+-} &-&   .16   x_{YY} &-& .64   x_{YN} &-& .04   x_{NY} &-&
+               .16   x_{NN} & \geq & 0\\
+  x_{-+} &-&   .1875 x_{YY} &-& .0625 x_{YN} &-& .5625 x_{NY} &-& 
+               .1875 x_{NN} & \geq & 0\\
+  x_{-+} &-&   .16   x_{YY} &-& .04   x_{YN} &-& .64   x_{NY} &-&
+               .16   x_{NN} & \geq & 0\\
+  x_{--} &-&   .0625 x_{YY} &-& .1875 x_{YN} &-& .1875 x_{NY} &-&
+               .5625 x_{NN} & \geq & 0\\
+  x_{--} &-&   .04   x_{YY} &-& .16   x_{YN} &-& .16   x_{NY} &-&
+               .64   x_{NN} & \geq & 0
+\end{array}
+\]
+The optimum is attained at 
+$(x_{++}, x_{+-}, x_{-+}, x_{--}) = (-2.25, 0, -2.75, -0.6)$. By
+Theorem~\ref{theorem:eventuallyC}, we have
+\[
+\begin{array}{l}
+\max_{\scheduler{S}}
+\myPr{+}{M_{\scheduler{S}}}{\neighbor{S}}{\F Y} -
+4 \myPr{+}{M_{\scheduler{S}}}{\neighbor{S}}{\F Y}
+= -2.25 \leq 0\\
+\max_{\scheduler{S}}
+\myPr{+}{M_{\scheduler{S}}}{\neighbor{S}}{\F Y} -
+4 \myPr{-}{M_{\scheduler{S}}}{\neighbor{S}}{\F Y}
+= 0 \leq 0 \\
+\max_{\scheduler{S}}
+\myPr{-}{M_{\scheduler{S}}}{\neighbor{S}}{\F Y} -
+4 \myPr{+}{M_{\scheduler{S}}}{\neighbor{S}}{\F Y}
+= -2.75 \leq 0\\
+\max_{\scheduler{S}}
+\myPr{-}{M_{\scheduler{S}}}{\neighbor{S}}{\F Y} -
+4 \myPr{-}{M_{\scheduler{S}}}{\neighbor{S}}{\F Y}
+= -0.6 \leq 0
+\end{array}
+\]
+Therefore $+, - \in \{ s : M, \neighbor{M}, s \models \dpriv{3}{0}
+(\F Y) \}$. This is expected. Recall that low- and high-accuracy
+mechanisms are $(3, 0)$- and $(4, 0)$-differentially private
+respectively. Regardless of request types, the interactive mechanism
+in Figure~\ref{figure:simple-mdp-mdp} can only achieve $(4,
+0)$-differential privacy at best.
+
+
+Streaming processing gives another motivating example for Markov
 decision processes. In stream processing, input data are retrieved and
 analyzed continuously. Such continual observation is commonly found
 in social media, service providers, or even electronic surveillance
@@ -34,19 +100,13 @@ lengths; and it is $2$ for other non-empty observations.
 
 Based on the density estimation algorithm in \cite{DNPRY:10:PPSA}, we
 consider the following mechanism for event type streams. Our mechanism
-keeps a bit for each event type. The bits are initialized to $0$ or
+keeps a flag for each event type. The flags are initialized to $0$ or
 $1$ uniformly. On observing an event type in the input stream, the
-bit for the event type is set to $0$ and $1$ with probability
+flag for the event type is set to $0$ and $1$ with probability
 $\frac{3}{8}$ and $\frac{5}{8}$ respectively. The mechanism continues
-to update its bits until it is asked to return the number of observed
-event types. To compute the number of observed event types, the
-mechanism adopts the truncated $1/2$-geometric mechanism on the sum of
-two bits for event types. If the sum is $0$, the mechanism outputs $0$
-with probability $\frac{2}{3}$ and $1, 2$ each with probability
-$\frac{1}{6}$. If the sum is $1$, one of $0, 1, 2$ is returned with
-the uniform distribution. If the sum is $2$, the mechanism outputs $2$
-with probability $\frac{2}{3}$ and $0, 1$ each with probability
-$\frac{1}{6}$ (Algorithm~\ref{algorithm:frequency-estimator}).
+to update its flags until it is asked to return the number of observed
+event types. 
+
 
 \begin{algorithm}
   \begin{algorithmic}[1]
@@ -89,58 +149,12 @@ $\frac{1}{6}$ (Algorithm~\ref{algorithm:frequency-estimator}).
   \label{algorithm:frequency-estimator}
 \end{algorithm}
 
-To model Algorithm~\ref{algorithm:frequency-estimator}, let
-us start with the formalization of observations. Note that the
-lengths of observations are finite but unbounded. An infinite Markov
-chain would be necessary if observations were formalized as states. 
-Recall that neighbors are observations of the same length. If we
-furthermore consider the formalization of neighbors, it is not clear
-how to construct a finite Markov chain for
-Algorithm~\ref{algorithm:frequency-estimator}. 
 
-In order to obtain a finite model, we formalize neighbors as action
-sequences in Markov decision processes. Consider the action set $\{
-a[a], a[b], b[a], b[b] \}$. Informally, the action $x[y]$ means the
-event type $x$ is replaced by the event type $y$ in a neighbor. An
-action sequence thus represents an observation and one of its
-neighbors and vice versa. More formally, the action sequence
-$x_1[y_1]x_2[y_2]\cdots x_n[y_n]$ represents the observation
-$x_1x_2\cdots x_n$ and its neighbor $y_1y_2\cdots y_n$. For instance,
-the action sequence $a[a]a[b]a[a]b[a]b[b]$ represents the observation
-$aaabb$ and a neighbor $abaab$.
-
-Similar to Algorithm~\ref{algorithm:frequency-estimator}, our Markov
-decision process has internal states $00$, $01$, $10$, $11$ for the
-two bits $f_a$ and $f_b$ of observed event types
-(Figure~\ref{figure:adjacent-inputs}). The internal state $01$
-represents $(f_a, f_b) = (0, 1)$, for instance. From the
-initialization state $I$, the Markov decision process moves to one of
-the four internal states randomly with the uniform
-distribution. Consider the internal state $01$. If the actions $a[a]$
-or $a[b]$ are chosen, they denote that the event type $a$ is currently
-observed. The Markov decision process moves to the internal state $01$
-and $11$ with probability $.375 = \frac{3}{8}$ and $.625 =
-\frac{5}{8}$ respectively. Other transitions are defined similarly. 
-
-On the other hand, the initialization state $\underline{I}$
-corresponds to the computation on neighbors. The Markov decision
-process moves to the interal states $\underline{00}$,
-$\underline{01}$, $\underline{10}$, $\underline{11}$ randomly with
-the uniform distribution. Consider, for example, the internal state
-$\underline{10}$. If the action $a[a]$ or $b[a]$ are chosen, they
-denote that the current event type is replaced with the eveny type
-$a$. The Markov decision process moves to the internal state
-$\underline{00}$ and $\underline{10}$ with probability $.375 =
-\frac{3}{8}$ and $.625 = \frac{5}{8}$ respectively. At an internal
-state, the Markov decision process can move to the output states $0$,
-$1$, or $2$ by the truncated $\frac{1}{2}$-geometric mechanism over
-$\underline{2}$ (Figure~\ref{figure:randomized-frequency}, \`{a} la
-Figure~\ref{figure:geometric-mechanism}). For any action sequence,
-observe that paths from the state $I$ and those from $\underline{I}$
-formalize the computation of Algorithm~\ref{algorithm:frequency-estimator} 
-on an observation and its neighbor represented by the sequence. We
-hence say the states $I$ and $\underline{I}$ are neighbors in the
-Markov decision process (Figure~\ref{figure:frequency-estimator}).
+For each event, a bit denotes whether it has occurred or not. To model
+adjacent inputs, we use four actions symbols to denote events and its
+replacement. For instance, the action $a[a]$ means the event $a$ is
+observed without replacement; $b[a]$ means the event $b$ is observed
+but replaced with $a$ in an adjacent input. 
 
 \begin{figure}
   \centering
@@ -176,7 +190,7 @@ Markov decision process (Figure~\ref{figure:frequency-estimator}).
       (11) edge [bend left=10] node [left=-3,above=1,rotate=90] { $b[\uscore]$, .375 } (10)
      
       (01) edge [loop below] node { $a[\uscore]$, .375 } (01)
-      (01) edge [bend left=10] node { $a[\uscore]$, .625 } (11)
+      (01) edge [bend left=10] node { $a[\uscore]$, .675 } (11)
       (01) edge [loop left] node [above=1,rotate=90] { $b[\uscore]$, .625 } (01)
       (01) edge [bend left=10] node [left=-3,above=1,rotate=90] { $b[\uscore]$, .375 } (00)
      
@@ -212,7 +226,7 @@ Markov decision process (Figure~\ref{figure:frequency-estimator}).
       (11') edge [bend left=10] node [left=-3,above=1,rotate=90] { $\uscore[b]$, .375 } (10')
      
       (01') edge [loop below] node { $\uscore[a]$, .375 } (01')
-      (01') edge [bend left=10] node { $\uscore[a]$, .625 } (11')
+      (01') edge [bend left=10] node { $\uscore[a]$, .675 } (11')
       (01') edge [loop left] node [above=1,rotate=90] { $\uscore[b]$, .625 } (01')
       (01') edge [bend left=10] node [left=-3,above=1,rotate=90] { $\uscore[b]$, .375 } (00')
      
@@ -282,19 +296,4 @@ Markov decision process (Figure~\ref{figure:frequency-estimator}).
   \label{figure:frequency-estimator}
 \end{figure}
 
-\noindent
-\emph{Privacy Specification}.
-For classical differential privacy, we are interested in the output
-distribution. 
-\[
-\dpriv{1}{0} \F 0 \wedge \dpriv{1}{0} \F 1 \wedge \dpriv{1}{0} \F 2
-\]
-\[
-\dpriv{1}{0} \F 0 \wedge \dpriv{1}{0} \F 1 \wedge \dpriv{1}{0} \F 2
-\wedge
-\bigwedge_{k \in \bbfN}
-\dpriv{1}{0} \X^k 00 \wedge 
-\dpriv{1}{0} \X^k 01 \wedge 
-\dpriv{1}{0} \X^k 10 \wedge 
-\dpriv{1}{0} \X^k 11
-\]
+\todo{verify this is $1$-DP}
