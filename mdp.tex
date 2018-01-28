@@ -109,7 +109,7 @@
     \caption{Product Markov Decision Process}
     \label{figure:simple-mdp-product}
   \end{subfigure}
-  \caption{Markov Decision Process and its Self-Product}
+  \caption{Markov Decision Process and its Self-Product\lz{in the current formulation, self loops in this example are not needed}}
   \label{figure:simple-mdp}
 \end{figure}
 
@@ -119,6 +119,8 @@ We use Markov decision processes to model such
 interactive mechanisms. Specifically, external inputs are modeled by
 actions. Behaviors associated with different inputs are modeled by
 distributions associated with actions.
+
+\lz{assume that we need reactive MDPs with absorbing states}
 
 Consider again the survey mechanism. Suppose we would like to design
 an interactive mechanism which adjusts random noises on surveyers'
@@ -236,13 +238,13 @@ If the path formula only contain next operators, it is easy to deal with. For $\
 \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B} -
 \epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}
 \end{eqnarray}
-with $s, t \in S$. It can be easily generalized to nested next operators:  one needs only to enumerate 
-all actions query sequences of length obtained by the number of nexted $\X$ operators. 
+with $s, t \in S$. It can be easily generalized to nested next operators:  one needs only to enumerate
+all actions query sequences of length obtained by the number of nexted $\X$ operators.
 
 In general, the computation of the maximal probability for MDPs is non-trivial. \lz{we argue that it is difficult and leave as future work}
 
-Finally, we the property 
-$\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$ that is used to express the privacy for our threshold Markov chains. It is only a valid formula if we would allow infinite conjunctions. However, it is interesting to note the relation to language equivalence for probabilistic automata\lz{to be discussed} 
+Finally, we the property
+$\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$ that is used to express the privacy for our threshold Markov chains. It is only a valid formula if we would allow infinite conjunctions. However, it is interesting to note the relation to language equivalence for probabilistic automata\lz{to be discussed}
 
 \hide{
 Since the scheduler attaining the maximally probable

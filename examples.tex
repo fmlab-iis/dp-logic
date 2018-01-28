@@ -243,16 +243,17 @@ A state $s$ stores at least the a database $x\in \mathcal{X}^n$, which is the da
 States are typically labelled with the corresponding outputs
 the curator generates.
 
-In the differentially privacy context, we differentiate between offline and online models.
-In the offline, or non-interactive, model the curator releases the outputs only once and plays no further role. Thus the models we constructed above are offline models. On the contrary, in the online, or interactive, model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differentially privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
+In the differentially privacy context, we differentiate between \emph{offline} and \emph{online} models.
+In the offline (or \emph{non-interactive}) model the curator releases the outputs only once and plays no further role. Thus the models we constructed in previous section are offline models. On the contrary, in the online (or \emph{interactive}) model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differentially privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
 
 
 \paragraph{Online Model.}
-Below we describe an online model adapted from \cite{}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which 
+Below we describe an online model adapted from \cite{}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which
 are above a given threshold. Other queries below the threshold are considered "irrelevent" and might be discarded. In \cite{}, since the model is set for continuous database, the Laplace mechanism is applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanism is applied.
 
 We consider the database set $D = \{0,1,2,3,4,5\}$, a threshold $t \in \{0,1,2,3,4,5\}$, queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, a truncated $1/2-$geometric mechanisms over $\underline{5}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that they are all neighbours. The modeling can be done in guarded command language and some fragments are shown below.\todo{the algorithm seems redundant}
 
+\lz{use $\frac{2}{3}$, not $2/3$, and use $t'$, not $\hat{t}$}
 \begin{algorithm}
     \begin{algorithmic}[1]
 

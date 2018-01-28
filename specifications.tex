@@ -1,4 +1,4 @@
-In this section we describe what type of properties in the differential privacy context can be expressed using $\dpCTL$.
+In this section we describe how properties in the differential privacy literature can be expressed using $\dpCTLstar$ formulae.
 
 \paragraph{Standard Differential Privacy.}
 The formula $\dpriv{3}{0} (\X Y)$ holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X Y$ from $s$ and $t$ satisfy:
@@ -8,12 +8,12 @@ $\myPr{s}{K}{N}{\X Y}\le 3\myPr{t}{K}{N}{\X Y}$. The formula $\dpriv{3}{0} (\X Y
 $\psi = \dpriv{.5}{0} (\F out_0) \wedge \dpriv{.5}{0} (\F out_1) \wedge
 \cdots \wedge \dpriv{.5}{0} (\F out_5)$\lz{I think we better use $\X$ operator here ;)}. If the state $in_k$ satisfies
 $\psi$ for $k = 0, \ldots, 5$, then the $.5$-geometric mechanism is
-$(0.5, 0)$-differentially private.
+$(.5, 0)$-differentially private.
 
 
 \paragraph{Compositional Properties.}
-Compositional aspect is one of the building block for differentially private algorithms. According to the compositional theorem \cite{}, for $(\epsilon_1,0)$-differentially private algorithm $M_1$ and
-$(\epsilon_2,0)$-differentially private algorithm $M_2$, their combination $M$ defined by $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1\epsilon_2,0)$-differentially private. The degradation is rooted in the repeated computation. To illustrate this property, we consider the extended survey example below where the curator allows two consequent queries.
+Compositional aspect is one of the building block for differentially private algorithms. According to the compositional theorem \cite[Theorem 3.16]{DR:14:AFDP}, for $(\epsilon_1,\delta_1)$-differentially private algorithm $M_1$ and
+$(\epsilon_2,\delta_2)$-differentially private algorithm $M_2$, their combination $M$ defined by $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1\epsilon_2,\delta_1+\delta_2)$-differentially private. The degradation is rooted in the repeated computation. To illustrate this property, we consider the extended survey example below where the curator allows two consequent queries.
 The corresponding model is depicted in Figure~\ref{figure:2-dp-mc}, where states $Y_1,Y_2$ are labelled by $Y$, and $N_1,N_2$ are labelled by $N$.
 
 \begin{figure}
@@ -71,9 +71,11 @@ The corresponding model is depicted in Figure~\ref{figure:2-dp-mc}, where states
 
 
 
-We consider the formula $\dpriv{9}{0} (\X (Y\wedge \X Y))$. A path satisfies $\X (Y\wedge \X Y)$ if the second state satisfies $Y$ and the third state satisfies $Y$ as well. We verify that this formula is satisfied  for state $+$ and $-$. Moreover, the bound $\epsilon=9$ is bound, since the probability of satisfying $\X (Y\wedge \X Y)$ from states $+$ and $-$ are $9$ and $1$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{9}{0} (\X (a_1\wedge \X a_2))$ corresponds to the desired compositional property for the model, where $a_1,a_2$ range over all atomic propositions $\{Y,N\}$.
+We consider the formula $\dpriv{9}{0} (\X (Y\wedge \X Y))$. A path satisfies $\X (Y\wedge \X Y)$ if the second state satisfies $Y$ and the third state satisfies $Y$ as well. We verify that this formula is satisfied  for state $+$ and $-$. Moreover, the bound $\epsilon=9$ is tight, since the probability of satisfying $\X (Y\wedge \X Y)$ from states $+$ and $-$ are $\frac{9}{16}$ and $\frac{1}{16}$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{9}{0} (\X (a_1\wedge \X a_2))$ corresponds to the desired compositional property for the model, where $a_1,a_2$ range over all atomic propositions $\{Y,N\}$.
 
-We consider another simpler formula for comparision: $\dpriv{3}{0} (\X \X Y)$. In this case we donot have privacy lost, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
+We consider two other formulae for comparision: 
+(a) Formula $\dpriv{3}{0} (\X \X Y)$. In this case we donot have privacy lost, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
+(b) Formula $\dpriv{3}{0} (\X (Y\wedge \dpriv{3}{0}(\X Y)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{3}{0}(\X Y)$ states the one step differential privacy. Observe the inner formula is satisfied by all neighbours. Thus, the outer formula also has no privacy lost.
 
 \paragraph{Tighter Privacy Bounds for Compositional Properties.}
 One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider our survey example, and the property $\dpriv{1}{.5} (\X Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=1$ or $\delta_1=.5$ without increasing the other one.
@@ -81,20 +83,26 @@ One of the advantage of applying model checking is that we may get tighter bound
 
 Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X (Y\wedge \X Y))$ under the model in Figure~\ref{figure:2-dp-mc}. Applying the compositional theorem, one can choose $\epsilon_2=\epsilon_1^2=1$ and $\delta_2=2\delta_1=1$. However, we can check easily that one gets better privacy parameter $(1,0.5)$ or $(0,\frac{9}{16})$.
 
-\paragraph{Reachability Privacy}
-For our threshold \lz{to do} model, we have the desired privacy property $\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$. Here $\dpriv{\epsilon}{0}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of reaching $\top$.
+\paragraph{Reachability Privacy.}
+For our threshold \lz{to do} model, we have the differential privacy property $\wedge_{i=1}^{c} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$. Here $\dpriv{\epsilon}{0}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of eventually reaching $\top$.
 
-\paragraph{Infinite ...}
-Note that $\dpCTL$ generalizes differential privacy to infinite
+\paragraph{Infinite Differential Privacy.}
+Due to the power of linear temporal logic, our logic $\dpCTLstar$ generalizes differential privacy to infinite
 behaviors naturally. Classical differential privacy discusses properties about
 randomized terminating mechanisms. Sophisticated mechanisms for
 streaming data have also been discussed in social networks and
 internet of things. Such mechanisms inherently have infinite
 computation. Their privacy guarantees are approximated by those of the
 prefixes of computation.
-With \dpCTL, the subformula $\phi$ in $\dpriv{\epsilon}{\delta} \phi$
-can be an arbitrary $\dpCTL$ path formula. One can specify
-$(\epsilon, \delta)$-closedness over infinite behaviors naturally. For instance,
-$\dpriv{\epsilon}{\delta} (\G \PJ{[1,1]} (\F \mathit{high}))$ \lz{now we can use $G F high$}
+With $\dpCTLstar$, the subformula $\phi$ in $\dpriv{\epsilon}{\delta} \phi$
+can be an arbitrary $\dpCTLstar$ path formula. One can specify
+$(\epsilon, \delta)$-closedness over infinite behaviors naturally. 
+
+We consider the Bluetooth example from the PRISM benchmarks \cite{prism-bluetooth-page}. The model is a 
+Markov chain, and it ...
+
+For instance,
+$\dpriv{\epsilon}{\delta} (\G   \F \mathit{discovered})$ 
 specifies states having $(\epsilon, \delta)$-close
-infinitely often $\mathit{high}$ behaviors to its neighbors.
+infinitely often $\mathit{discovered}$ behaviors to its neighbors.
+
