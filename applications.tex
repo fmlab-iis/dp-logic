@@ -93,9 +93,9 @@ $\frac{1}{2} \cdot \Pr_B[f_a = x] \leq \Pr_U[f_a = x] \leq 2 \cdot
 \Pr_B[f_a = x]$. On neighboring observations, the distribution of
 $f_a$ can only be changed from $U$ to $B$, values of $f_a$ is $(2,
 0)$-differentially private and similarly for $f_b$. Finally, the
-$1/2$-geometric mechanism gives $(1/2, 0)$-differential privacy. By
+$1/2$-geometric mechanism gives $(2, 0)$-differential privacy. By
 composition theorem, the steaming data analysis mechanism in
-Algorithm~\ref{algorithm:frequency-estimator} is $(1,
+Algorithm~\ref{algorithm:frequency-estimator} is $(4,
 0)$-differentially private.
 
 To model Algorithm~\ref{algorithm:frequency-estimator}, let
@@ -298,18 +298,18 @@ distribution. Algorithm~\ref{algorithm:frequency-estimator} has three
 different outputs. By privacy analysis, the state $I$ satisfies the
 following $\dpCTLstar$ formula:
 \[
-\dpriv{1}{0} \F 0 \wedge \dpriv{1}{0} \F 1 \wedge \dpriv{1}{0} \F 2
+\dpriv{4}{0} \F 0 \wedge \dpriv{4}{0} \F 1 \wedge \dpriv{4}{0} \F 2
 \]
 For pan privacy, we moreover wish to measure privacy loss in internal
 states. For observations of length $k$, the probabilities of reaching
 each internal states need to be sufficiently close. The state $I$
 therefore must satisfy
 \[
-\dpriv{1}{0} \F 0 \wedge \dpriv{1}{0} \F 1 \wedge \dpriv{1}{0} \F 2
+\dpriv{4}{0} \F 0 \wedge \dpriv{4}{0} \F 1 \wedge \dpriv{4}{0} \F 2
 \wedge
 \bigwedge_{k \in \bbfN}
-\dpriv{2}{0} \X^k 00 \wedge 
-\dpriv{2}{0} \X^k 01 \wedge 
-\dpriv{2}{0} \X^k 10 \wedge 
-\dpriv{2}{0} \X^k 11.
+\dpriv{4}{0} \X^k 00 \wedge 
+\dpriv{4}{0} \X^k 01 \wedge 
+\dpriv{4}{0} \X^k 10 \wedge 
+\dpriv{4}{0} \X^k 11.
 \]
