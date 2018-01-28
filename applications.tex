@@ -25,8 +25,8 @@ Consider monitoring events of the types $a$ and $b$ continuously.
 A sequence of event types is said to be an observation. Two
 obsevations are {neighbors} if one can be obtained from the other 
 by replacing event types any number of times, that is, if they are of
-the same length. \bw{Later, we will consider a different definition of
-neighborhood by restricting the number of replacements.} 
+the same length. %\bw{Later, we will consider a different definition of
+%neighborhood by restricting the number of replacements.} 
 We would like to inquire the number of event types in
 observations. For instance, the query result result is $1$ 
 for observations $a \cdots a$ and $b \cdots b$ of arbitrary positive
@@ -58,29 +58,19 @@ $\frac{1}{6}$ (Algorithm~\ref{algorithm:frequency-estimator}).
       $\frac{1}{2}, \frac{1}{2}$ respectively}
     \Match{current event type $e$}
     \Comment{Processing}
-        \Case{$a$}
-          \State{$f_a \leftarrow 0, 1$ with probability
+        \lCase{$a$}{$f_a \leftarrow 0, 1$ with probability
             $\frac{3}{8}, \frac{5}{8}$ respectively}
-        \EndCase
-        \Case{$b$}
-          \State{$f_b \leftarrow 0, 1$ with probability
+        \lCase{$b$}{$f_b \leftarrow 0, 1$ with probability
             $\frac{3}{8}, \frac{5}{8}$ respectively}
-        \EndCase
     \EndMatch
     \Match{$f_a + f_b$}
     \Comment{Output}
-      \Case{0}
-        \State{$\mathit{out} \leftarrow 0, 1, 2$ with probability
+      \lCase{0}{$\mathit{out} \leftarrow 0, 1, 2$ with probability
           $\frac{2}{3}, \frac{1}{6}, \frac{1}{6}$ respectively}
-      \EndCase
-      \Case{1}
-        \State{$\mathit{out} \leftarrow 0, 1, 2$ with probability
+      \lCase{1}{$\mathit{out} \leftarrow 0, 1, 2$ with probability
           $\frac{1}{3}, \frac{1}{3}, \frac{1}{3}$ respectively}
-      \EndCase
-      \Case{2}
-        \State{$\mathit{out} \leftarrow 0, 1, 2$ with probability
+      \lCase{2}{$\mathit{out} \leftarrow 0, 1, 2$ with probability
           $\frac{1}{6}, \frac{1}{6}, \frac{2}{3}$ respectively}
-      \EndCase
     \EndMatch
     \State{\Return $\mathit{out}$}
   \EndProcedure
