@@ -25,11 +25,11 @@ $s$. Define the satisfaction relation $K, \neighbor{S}, s
   K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
-      p(s) \leq \epsilon p(t) + \delta \textmd{ and }
-      p(t) \leq \\
-  & & \epsilon p(s)  + \delta  \textmd{ where } p(x) = \Pr [\{
-      \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with}\\
-  & &  \pi_0 = x \}]
+      p(s) \leq e^{\epsilon} p(t) + \delta \textmd{ and }
+      p(t) \leq e^{\epsilon} p(s)  +  \\
+  & &  \delta \textmd{ where } p(x) = \Pr [\{
+      \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with}
+      \pi_0 = x \}]
 \end{eqnarray*}
 
 Moreover, the relation $K, \neighbor{S}, \pi \models \phi$ is defined as
@@ -68,9 +68,9 @@ differentially private operator hence becomes
   K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
-      \myPr{s}{K}{N}{\phi} \leq \epsilon \myPr{t}{K}{N}{\phi} + \delta
+      \myPr{s}{K}{N}{\phi} \leq e^{\epsilon} \myPr{t}{K}{N}{\phi} + \delta
       \textmd{ and }\\
-  & &  \myPr{t}{K}{N}{\phi} \leq \epsilon \myPr{s}{K}{N}{\phi} + \delta
+  & &  \myPr{t}{K}{N}{\phi} \leq e^{\epsilon} \myPr{s}{K}{N}{\phi} + \delta
 \end{eqnarray*}
 
 Other than the differentially private operator, the semantics of
@@ -155,8 +155,8 @@ The algorithm requires at most $O
     \State{$R \leftarrow S$}
     \For{$s \in S$}
       \For{$t$ with $s \neighbor{K} t$}
-        \If{$p(s) \not\leq \epsilon p(t) + \delta$ or
-            $p(t) \not\leq \epsilon p(s) + \delta$}
+        \If{$p(s) \not\leq e^{\epsilon} p(t) + \delta$ or
+            $p(t) \not\leq e^{\epsilon} p(s) + \delta$}
         {remove $s$ from $R$}
         \EndIf
       \EndFor

@@ -81,7 +81,7 @@ algorithm with inputs in $\mathcal{X}$ and outputs in $\{ Y, N
 Y] \leq 3/4 = 3 \cdot 1/4 \leq 3 \Pr[M (x') =
 Y]$. Similarly, $\Pr[M (x) = N] \leq 3 \Pr[M (x') = N]$ for any
 neighboring $x, x' \in \mathcal{X}$. The survey mechanism is
-$(3, 0)$-differentially private.
+$(\ln 3, 0)$-differentially private.
 
 \paragraph{Truncated $\alpha$-Geometric Mechanism.}
 More sophisticated differentially private mechanisms are
@@ -96,7 +96,7 @@ distribution~\cite{GRS:09:UUPM,GRS:12:UUPM} :
 \]
 The $\alpha$-geometric mechanism is oblivious since it has the same
 output distribution on any inputs $x, x'$ with $f (x) = f
-(x')$. Moreover, it is also $(\alpha^{\Delta (f)}, 0)$-differentially
+(x')$. Moreover, it is also $(- {\Delta (f)} \ln \alpha, 0)$-differentially
 private for any query $f$ with sensitivity $\Delta (f)$. The range of
 the mechanism
 however is $\bbfZ$. It may give nonsensical outputs such as
@@ -120,7 +120,7 @@ distribution:
 \]
 Note the range of the truncated $\alpha$-geometric mechanism is
 $\underline{n}$. The truncated $\alpha$-geometric mechanism is
-again oblivious; it is also $(\alpha^{\Delta (f)}, 0)$-differentially
+again oblivious; it is also $(- {\Delta (f)} \ln \alpha, 0)$-differentially
 private for any query $f$ with sensitivity $\Delta (f)$.
 The truncated $1/2$-geometric mechanism over $\underline{5}$ is
 given in Figure~\ref{figure:geometric-mechanism-table}.

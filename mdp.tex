@@ -66,7 +66,7 @@ Observe that $1/5 \leq \Pr[M_H(x) = Y] \leq 4/5$ for any $x
 \in \mathcal{X}$. Hence $\Pr[M_H (x) = Y] \leq 4/5 = 4 \cdot 1/5 \leq
 4 \Pr[M_H (x') = Y]$ for any neighboring $x, x' \in
 \mathcal{X}$. Similarly, $\Pr[M_H (x) = N] \leq 4 \Pr[M_H (x') =
-N]$. The high-accuracy mechanism is $(4,0)$-differentially private.
+N]$. The high-accuracy mechanism is $(\ln 4,0)$-differentially private.
 The privacy guarantees vary from accuracy requests.
 
 \subsection{Semantics}
@@ -96,14 +96,14 @@ relation $M, \neighbor{S}, s \models \Phi$ as follows.
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
-   scheduler } \\
-  & & \scheduler{S},
-   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq \epsilon \cdot
+   scheduler } \scheduler{S}, 
+   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq 
+  e^{\epsilon} \cdot
+   \\
+  & & 
    \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
    \textmd{ and }
-   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq \epsilon \cdot
-  \\
-  & &
+   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq e^{\epsilon} \cdot
    \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
 \end{eqnarray*}
 
@@ -135,10 +135,10 @@ might be:
   \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
   scheduler } \scheduler{S},
   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
-  \epsilon \cdot\\
+  e^{\epsilon} \cdot\\
   && \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta \textmd{ and }
   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
-  \epsilon \cdot \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+  e^{\epsilon} \cdot \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
   + \delta
 \end{eqnarray*}
 A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
@@ -157,14 +157,14 @@ Our next task is to compute $\{ M, \neighbor{S}, s \models
 \phi$. Given $s, t$ with $s \neighbor{M} t$ and a path formula
 $\phi$, we need to decide whether
 $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
-\epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta$
+e^{\epsilon} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta$
 for every scheduler $\scheduler{S}$.
 If the path formula only contain next operators, it is easy to deal with. For $\phi:=\X B$ with $B\subseteq S$ only one step behaviour needs to be considered, thus only the first action in the query sequence is needed to compute the maximum
 \begin{eqnarray}
   \label{eqn:max-nextB}
 \max_{\scheduler{S}}
 \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B} -
-\epsilon \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}
+e^{\epsilon} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}
 \end{eqnarray}
 with $s, t \in S$. It can be easily generalized to nested next operators:  one needs only to enumerate
 all actions query sequences of length obtained by the number of nexted $\X$ operators.

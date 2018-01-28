@@ -36,13 +36,14 @@ irrelevant to oblivious mechanisms. A database $x$ is
 \emph{$(\epsilon, \delta)$-close} to $x'$ in a mechanism
 $M_f$ if for every $\tilde{r} \in \tilde{R}$,
 \[
-\Pr[M_f (x) = \tilde{r}] \leq \epsilon \Pr[M_f (x') =
-\tilde{r}] + \delta.\footnote{The standard definition requires
-$\Pr[M_f (x) = \tilde{r}] \leq e^\epsilon \Pr[M_f (x') =
-\tilde{r}] + \delta$~\cite{DMNS:06:CNSPD,D:06:DP}.
-Since $\epsilon = e^{\ln \epsilon}$, our $(\epsilon, \delta)$-closedness is
-equivalent to the standard $(\ln \epsilon,
-\delta)$-closedness~\cite{GRS:09:UUPM,GRS:12:UUPM}.}
+\Pr[M_f (x) = \tilde{r}] \leq e^{\epsilon} \Pr[M_f (x') =
+\tilde{r}] + \delta.
+%\footnote{The standard definition requires
+%$\Pr[M_f (x) = \tilde{r}] \leq e^\epsilon \Pr[M_f (x') =
+%\tilde{r}] + \delta$~\cite{DMNS:06:CNSPD,D:06:DP}.
+%Since $\epsilon = e^{\ln \epsilon}$, our $(\epsilon, \delta)$-closedness is
+%equivalent to the standard $(\ln \epsilon,
+%\delta)$-closedness~\cite{GRS:09:UUPM,GRS:12:UUPM}.}
 \]
 A mechanism $M_f$ is \emph{$(\epsilon, \delta)$-differentially
   private} % $(\epsilon, \delta \approx 0)$
