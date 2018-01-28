@@ -102,7 +102,12 @@ lengths; and it is $2$ for other non-empty observations.
 
 Based on the density estimation algorithm in \cite{DNPRY:10:PPSA}, we
 consider the following mechanism for event type streams. Our mechanism
-keeps a flag for each event type. 
+keeps a flag for each event type. The flags are initialized to $0$ or
+$1$ uniformly. On observing an event type in the input stream, the
+flag for the event type is set to $0$ and $1$ with probability
+$\frac{3}{8}$ and $\frac{5}{8}$ respectively. The mechanism continues
+to update its flags until it is asked to return the number of observed
+event types. 
 
 
 \begin{algorithm}
