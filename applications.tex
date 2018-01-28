@@ -89,6 +89,25 @@ $\frac{1}{6}$ (Algorithm~\ref{algorithm:frequency-estimator}).
   \label{algorithm:frequency-estimator}
 \end{algorithm}
 
+\indent
+\emph{Privacy analysis}.
+In the processing phase, the bit $f_a$ for an event type $a$ can only
+have two different distributions $U$ and $B$. If the event type is
+never observed, $\Pr_U[f_a = 0] = \Pr_U[f_a = 1] = \frac{1}{2}$; if
+the event type has been observed, we have $\Pr_B[f_a = 0] =
+\frac{3}{8}$ and $\Pr_B[f_a = 1] = \frac{5}{8}$. Note that
+$\frac{1}{2} \cdot \frac{3}{8} \leq \frac{1}{2} \leq 2 \cdot
+\frac{3}{8}$ and $\frac{1}{2} \cdot \frac{5}{8} \leq \frac{1}{2} \leq
+2 \cdot \frac{5}{8}$. For every $x \in \{ 0, 1 \}$, we have
+$\frac{1}{2} \cdot \Pr_B[f_a = x] \leq \Pr_U[f_a = x] \leq 2 \cdot
+\Pr_B[f_a = x]$. On neighboring observations, the distribution of
+$f_a$ can only be changed from $U$ to $B$, values of $f_a$ is $(2,
+0)$-differentially private and similarly for $f_b$. Finally, the
+$1/2$-geometric mechanism gives $(1/2, 0)$-differential privacy. By
+composition theorem, the steaming data analysis mechanism in
+Algorithm~\ref{algorithm:frequency-estimator} is $(1,
+0)$-differentially private.
+
 To model Algorithm~\ref{algorithm:frequency-estimator}, let
 us start with the formalization of observations. Note that the
 lengths of observations are finite but unbounded. An infinite Markov
@@ -285,16 +304,22 @@ Markov decision process (Figure~\ref{figure:frequency-estimator}).
 \noindent
 \emph{Privacy Specification}.
 For classical differential privacy, we are interested in the output
-distribution. 
+distribution. Algorithm~\ref{algorithm:frequency-estimator} has three
+different outputs. By privacy analysis, the state $I$ satisfies the
+following $\dpCTLstar$ formula:
 \[
 \dpriv{1}{0} \F 0 \wedge \dpriv{1}{0} \F 1 \wedge \dpriv{1}{0} \F 2
 \]
+For pan privacy, we moreover wish to measure privacy loss in internal
+states. For observations of length $k$, the probabilities of reaching
+each internal states need to be sufficiently close. The state $I$
+therefore must satisfy
 \[
 \dpriv{1}{0} \F 0 \wedge \dpriv{1}{0} \F 1 \wedge \dpriv{1}{0} \F 2
 \wedge
 \bigwedge_{k \in \bbfN}
-\dpriv{1}{0} \X^k 00 \wedge 
-\dpriv{1}{0} \X^k 01 \wedge 
-\dpriv{1}{0} \X^k 10 \wedge 
-\dpriv{1}{0} \X^k 11
+\dpriv{2}{0} \X^k 00 \wedge 
+\dpriv{2}{0} \X^k 01 \wedge 
+\dpriv{2}{0} \X^k 10 \wedge 
+\dpriv{2}{0} \X^k 11.
 \]
