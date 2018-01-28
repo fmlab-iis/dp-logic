@@ -1,10 +1,9 @@
 \subsection{Markov Decision Processes}
 
 
-\begin{figure}
+\begin{wrapfigure}{r}{.5\columnwidth}
   \centering
-  \begin{subfigure}{.40\columnwidth}
-    \resizebox{\columnwidth}{!}{
+    \resizebox{.4\columnwidth}{!}{
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
       distance=2cm,node/.style={circle,draw}]
       \node[node] (p) at ( 0,  1.5) { $+$ };
@@ -29,89 +28,8 @@
       \end{tikzpicture}
     }
     \caption{Markov Decision Process}
-    \label{figure:simple-mdp-mdp}
-  \end{subfigure}
-  \begin{subfigure}{.58\columnwidth}
-    \resizebox{\columnwidth}{!}{
-    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
-      distance=2cm,node/.style={circle,draw,inner sep=1pt}]
-      \node[node] (pq) at (-2.1, 2.1) { $+-$ };
-      \node[node] (qp) at ( 2.1,-2.1) { $-+$ };
-      \node[node] (RR) at (-2.1,-2.1) { $YY$ };
-      \node[node] (BB) at ( 2.1, 2.1) { $NN$ };
-      \node[node] (RB) at (- .7,- .7) { $YN$ };
-      \node[node] (BR) at (  .7,  .7) { $NY$ };
-
-      \path
-      (pq) edge [bend right=5] node [left=1,below=12,rotate=270] { $L, .1875$ } (RR)
-      (pq) edge [bend left=5]  node [above=5,right=1] { $L, .1875$ } (BB)
-
-      (pq) edge [bend left=5]  node [right=4,rotate=270] { $H, .16$ } (RR)
-      (pq) edge [bend right=5] node [below=5,right=1] { $H, .16$ } (BB)
-
-      (pq) edge [bend left=5]  node [left,below=10,rotate=295]  { $L, .5625$ } (RB)
-      (pq) edge [bend right=5] node [left,below,rotate=330]  { $L, .0625$ } (BR)
-
-      (pq) edge [bend right=5] node [right=2,above,rotate=300] { $H, .64$ } (RB)
-      (pq) edge [bend left=5]  node [right,above,rotate=340] { $H, .04$ } (BR)
-
-
-
-      (qp) edge [bend right=5] node [above=5,left=1] { $L, .1875$ } (RR)
-      (qp) edge [bend left=5]  node [above=30,left=5,rotate=90] { $L, .1875$ } (BB)
-
-      (qp) edge [bend left=5]  node [below=5,left=1] { $H, .16$ } (RR)
-      (qp) edge [bend right=5] node [above,right=5,rotate=90] { $H, .16$ } (BB)
-
-      (qp) edge [bend left=5]  node [left,below,rotate=330]  { $L, .0625$ } (RB)
-      (qp) edge [bend right=5] node [left=3,below=3,rotate=295]  { $L, .5625$ } (BR)
-
-      (qp) edge [bend right=5] node [left=5,above,rotate=330] { $H, .04$ } (RB)
-      (qp) edge [bend left=5]  node [right=1,above=1,rotate=295] { $H, .64$ } (BR)
-
-
-      (RR) edge [loop left] node [above] { $-, 1$ } (RR)
-      (BB) edge [loop right] node [above] { $-, 1$ } (BB)
-      (RB) edge [loop below] node [left] { $-, 1$ } (RB)
-      (BR) edge [loop above] node [right] { $-, 1$ } (BR)
-      ;
-      \end{tikzpicture}
-\hide{
-    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
-      distance=2cm,node/.style={circle,draw,inner sep=1pt}]
-      \node[node] (pq) at (   0,   0) { $+-$ };
-      \node[node] (RR) at (-  2,   0) { $YY$ };
-      \node[node] (BB) at (   2,   0) { $NN$ };
-      \node[node] (RB) at (   0, 1.5) { $YN$ };
-      \node[node] (BR) at (   0,-1.5) { $NY$ };
-
-      \path
-      (pq) edge [bend right=15] node [above] { $L, .1875$ } (RR)
-      (pq) edge [bend left=15]  node [above] { $L, .1875$ } (BB)
-
-      (pq) edge [bend left=15]  node [below] { $H, .16$ } (RR)
-      (pq) edge [bend right=15] node [below] { $H, .16$ } (BB)
-
-      (pq) edge [bend left=15]  node [left]  { $L, .5625$ } (RB)
-      (pq) edge [bend right=15] node [left]  { $L, .0625$ } (BR)
-
-      (pq) edge [bend right=15] node [right] { $H, .64$ } (RB)
-      (pq) edge [bend left=15]  node [right] { $H, .04$ } (BR)
-
-      (RR) edge [loop below] node [below] { $-, 1$ } (RR)
-      (BB) edge [loop above] node [above] { $-, 1$ } (BB)
-      (RB) edge [loop left] node [left] { $-, 1$ } (RB)
-      (BR) edge [loop right] node [right] { $-, 1$ } (BR)
-      ;
-      \end{tikzpicture}
-}
-    }
-    \caption{Product Markov Decision Process}
-    \label{figure:simple-mdp-product}
-  \end{subfigure}
-  \caption{Markov Decision Process and its Self-Product\lz{in the current formulation, self loops in this example are not needed}}
-  \label{figure:simple-mdp}
-\end{figure}
+    \label{figure:simple-mdp}
+\end{wrapfigure}
 
 \hide{Mechanisms are not necessarily closed randomized algorithms; they may
 perform different compution on users' requests.
