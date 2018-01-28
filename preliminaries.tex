@@ -76,13 +76,18 @@ in $K$ is an infinite sequence $\pi = \pi_0 \pi_1 \cdots \pi_n \cdots$
 of states with $\wp (\pi_i, \pi_{i+1}) > 0$ for all $i \geq 0$. We write
 $\pi[j]$ for the suffix $\pi_j \pi_{j+1} \cdots$. % Thus $\pi[0] = \pi$.
 
-Let $\Act$ denote a finite set of \emph{actions}.
-A \emph{(finite) Markov decision process} $M = (S, \Act, \wp, L)$ consists
-of a \emph{transition probability function} $\wp : S \times \Act
+A \emph{(finite) Markov decision process} 
+(MDP)~\footnote{The MDP we consider is \emph{reactive} in the sense that 
+all actions are enabled in every state. If equipped with a set of final states $F\subseteq S$, such model is
+referred to as \emph{probabilistic automaton} in the literature~\cite{Rabin63}, and language equivalence/inclusion
+problems have been investigated. In the model checking context, the notion MDPs is mostly used.}
+ $M = (S, \Act, \wp, L)$ consists
+of 
+a finite set of \emph{actions} $\Act$,
+a \emph{transition probability function} $\wp : S \times \Act
 \times S \rightarrow [0, 1]$ with $\sum_{t \in S} \wp(s, \alpha, t)
 = 1$ for every $s \in S$ and $\alpha \in \Act$ and $S$,
-$L$ as for Markov chains. Note the model we consider is \emph{reactive}\footnote{In the literature, such model is referred to as \emph{probabilistic automata}\cite{}. In the model checking context, the notion MDPs is more popular.} as $\Act(s) = \Act$
-for every $s \in S$.
+$L$ as for Markov chains.
 A \emph{path} $\pi$ in $M$ is an infinite sequence $\pi_0 \alpha_1
 \pi_1 \cdots \pi_n \alpha_{n+1} \cdots$ with
 $\wp(\pi_i, \alpha_{i+1}, \pi_{i+1}) > 0$ for all $i \geq 0$.
@@ -93,13 +98,13 @@ For any measurable set $\Pi$ of paths, we
 write $\Pr[\Pi]$ for the \emph{probability measure} of $\Pi$.
 }
 
-Let $M = (S, \Act, \wp, L)$ be a Markov decision process. A
+Let $M = (S, \Act, \wp, L)$ be an MDP. A
 \emph{scheduler} for $M$ is simply an infinite sequence  $\scheduler{S}\in \Act^\omega$.
 A path $\pi =
 \pi_0 \alpha_1 \pi_1 \cdots \pi_n \alpha_{n+1} \cdots$ is an
 \emph{$\scheduler{S}$-path} if $\alpha_{i+1} = \scheduler{S}(\pi_0
 \pi_1 \cdots \pi_i)$ for all $i \geq 0$.
-Note that a Markov decision process with a
+Note that an MDP with a
 scheduler $\scheduler{S}$ induces a Markov chain $M_{\scheduler{S}} =
 (S^+, \wp_{\scheduler{S}}, L')$ where $L' (\sigma s) = L (s)$,
 $\wp_{\scheduler{S}} (\sigma s, \sigma s t) = \wp (s,

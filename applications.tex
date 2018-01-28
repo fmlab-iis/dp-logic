@@ -15,7 +15,7 @@ are in their internal states, privacy is still lost if an intrusion
 occurs.
 
 In pan privacy, data analysis mechanisms are required to respect
-privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}. 
+privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}.
 The idea is to show reachability probabilities are similar on
 neighboring observations. In the following, we model a discrete
 variant of the mechanisms by Markov decision processes. We will also
@@ -23,14 +23,14 @@ specify pan privacy in our model using $\dpCTL$.
 
 Consider monitoring events of the types $a$ and $b$ continuously.
 A sequence of event types is said to be an observation. Two
-obsevations are {neighbors} if one can be obtained from the other 
+obsevations are {neighbors} if one can be obtained from the other
 by replacing event types any number of times, that is, if they are of
 the same length. %\bw{Later, we will consider a different definition of
-%neighborhood by restricting the number of replacements.} 
+%neighborhood by restricting the number of replacements.}
 We would like to inquire the number of event types in
-observations. For instance, the query result result is $1$ 
+observations. For instance, the query result is $1$
 for observations $a \cdots a$ and $b \cdots b$ of arbitrary positive
-lengths; and it is $2$ for other non-empty observations. 
+lengths; and it is $2$ for other non-empty observations.
 
 Based on the density estimation algorithm in \cite{DNPRY:10:PPSA}, we
 consider the following mechanism for event type streams. Our mechanism
@@ -51,7 +51,7 @@ $\frac{1}{6}$ (Algorithm~\ref{algorithm:frequency-estimator}).
 \begin{algorithm}
   \begin{algorithmic}[1]
   \Procedure{FrequencyEstimator}{}
-    \State{$f_a \leftarrow 0, 1$ with probability 
+    \State{$f_a \leftarrow 0, 1$ with probability
       $\frac{1}{2}, \frac{1}{2}$ respectively}
     \Comment{Initialization}
     \State{$f_b \leftarrow 0, 1$ with probability
@@ -93,7 +93,7 @@ $\frac{1}{2} \cdot \Pr_B[f_a = x] \leq \Pr_U[f_a = x] \leq 2 \cdot
 \Pr_B[f_a = x]$. On neighboring observations, the distribution of
 $f_a$ can only be changed from $U$ to $B$, values of $f_a$ is $(2,
 0)$-differentially private and similarly for $f_b$. Finally, the
-$1/2$-geometric mechanism gives $(\ln 2, 0)$-differential privacy. 
+$1/2$-geometric mechanism gives $(\ln 2, 0)$-differential privacy.
 Recall $2\ln 2 = \ln 4$,
 the steaming data analysis mechanism in
 Algorithm~\ref{algorithm:frequency-estimator} is $(\ln 4,
@@ -103,11 +103,11 @@ composition theorem.
 To model Algorithm~\ref{algorithm:frequency-estimator}, let
 us start with the formalization of observations. Note that the
 lengths of observations are finite but unbounded. An infinite Markov
-chain would be necessary if observations were formalized as states. 
+chain would be necessary if observations were formalized as states.
 Recall that neighbors are observations of the same length. If we
 furthermore consider the formalization of neighbors, it is not clear
 how to construct a finite Markov chain for
-Algorithm~\ref{algorithm:frequency-estimator}. 
+Algorithm~\ref{algorithm:frequency-estimator}.
 
 In order to obtain a finite model, we formalize neighbors as action
 sequences in Markov decision processes. Consider the action set $\{
@@ -131,7 +131,7 @@ distribution. Consider the internal state $01$. If the actions $a[a]$
 or $a[b]$ are chosen, they denote that the event type $a$ is currently
 observed. The Markov decision process moves to the internal state $01$
 and $11$ with probability $.375 = \frac{3}{8}$ and $.625 =
-\frac{5}{8}$ respectively. Other transitions are defined similarly. 
+\frac{5}{8}$ respectively. Other transitions are defined similarly.
 
 On the other hand, the initialization state $\underline{I}$
 corresponds to the computation on neighbors. The Markov decision
@@ -148,7 +148,7 @@ $1$, or $2$ by the truncated $\frac{1}{2}$-geometric mechanism over
 $\underline{2}$ (Figure~\ref{figure:randomized-frequency}, \`{a} la
 Figure~\ref{figure:geometric-mechanism}). For any action sequence,
 observe that paths from the state $I$ and those from $\underline{I}$
-formalize the computation of Algorithm~\ref{algorithm:frequency-estimator} 
+formalize the computation of Algorithm~\ref{algorithm:frequency-estimator}
 on an observation and its neighbor represented by the sequence. We
 hence say the states $I$ and $\underline{I}$ are neighbors in the
 Markov decision process (Figure~\ref{figure:frequency-estimator}).
@@ -180,17 +180,17 @@ Markov decision process (Figure~\ref{figure:frequency-estimator}).
       (10) edge [bend left=10] node { $a[\uscore]$, .375 } (00)
       (10) edge [loop right] node [above=1,rotate=270] { $b[\uscore]$, .375 } (10)
       (10) edge [bend left=10] node [above=1,rotate=270] { $b[\uscore]$, .625 } (11)
-     
+
       (11) edge [loop below] node { $a[\uscore]$, .625 } (11)
       (11) edge [bend left=10] node { $a[\uscore]$, .375 } (01)
       (11) edge [loop right] node [above=1,rotate=270] { $b[\uscore]$, .625 } (11)
       (11) edge [bend left=10] node [left=-3,above=1,rotate=90] { $b[\uscore]$, .375 } (10)
-     
+
       (01) edge [loop below] node { $a[\uscore]$, .375 } (01)
       (01) edge [bend left=10] node { $a[\uscore]$, .625 } (11)
       (01) edge [loop left] node [above=1,rotate=90] { $b[\uscore]$, .625 } (01)
       (01) edge [bend left=10] node [left=-3,above=1,rotate=90] { $b[\uscore]$, .375 } (00)
-     
+
       ;
 
 
@@ -216,17 +216,17 @@ Markov decision process (Figure~\ref{figure:frequency-estimator}).
       (10') edge [bend left=10] node { $\uscore[a]$, .375 } (00')
       (10') edge [loop right] node [above=1,rotate=270] { $\uscore[b]$, .375 } (10')
       (10') edge [bend left=10] node [above=1,rotate=270] { $\uscore[b]$, .625 } (11')
-     
+
       (11') edge [loop below] node { $\uscore[a]$, .625 } (11')
       (11') edge [bend left=10] node { $\uscore[a]$, .375 } (01')
       (11') edge [loop right] node [above=1,rotate=270] { $\uscore[b]$, .625 } (11')
       (11') edge [bend left=10] node [left=-3,above=1,rotate=90] { $\uscore[b]$, .375 } (10')
-     
+
       (01') edge [loop below] node { $\uscore[a]$, .375 } (01')
       (01') edge [bend left=10] node { $\uscore[a]$, .625 } (11')
       (01') edge [loop left] node [above=1,rotate=90] { $\uscore[b]$, .625 } (01')
       (01') edge [bend left=10] node [left=-3,above=1,rotate=90] { $\uscore[b]$, .375 } (00')
-     
+
       ;
       \end{tikzpicture}
       \caption{Adjacent Inputs}
@@ -300,7 +300,7 @@ distribution. Algorithm~\ref{algorithm:frequency-estimator} has three
 different outputs. By privacy analysis, the state $I$ satisfies the
 following $\dpCTLstar$ formula:
 \[
-\dpriv{\ln 4}{0} \F 0 \wedge \dpriv{\ln 4}{0} \F 1 \wedge 
+\dpriv{\ln 4}{0} \F 0 \wedge \dpriv{\ln 4}{0} \F 1 \wedge
 \dpriv{\ln 4}{0} \F 2
 \]
 For pan privacy, we moreover wish to measure privacy loss in internal
@@ -308,12 +308,12 @@ states. For observations of length $k$, the probabilities of reaching
 each internal states need to be sufficiently close. The state $I$
 therefore must satisfy
 \[
-\dpriv{\ln 4}{0} \F 0 \wedge \dpriv{2\ln 4}{0} \F 1 \wedge 
+\dpriv{\ln 4}{0} \F 0 \wedge \dpriv{2\ln 4}{0} \F 1 \wedge
 \dpriv{\ln 4}{0} \F 2
 \wedge
 \bigwedge_{k \in \bbfN}
-\dpriv{\ln 4}{0} \X^k 00 \wedge 
-\dpriv{\ln 4}{0} \X^k 01 \wedge 
-\dpriv{\ln 4}{0} \X^k 10 \wedge 
+\dpriv{\ln 4}{0} \X^k 00 \wedge
+\dpriv{\ln 4}{0} \X^k 01 \wedge
+\dpriv{\ln 4}{0} \X^k 10 \wedge
 \dpriv{\ln 4}{0} \X^k 11.
 \]

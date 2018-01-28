@@ -28,6 +28,11 @@ Dwork, C., Naor, M., Pitassi, T., Rothblum, G.N.: Differential privacy under
 Dwork, C., Naor, M., Pitassi, T., Rothblum, G.N., Yekhanin, S.: Pan-private
   streaming algorithms. In: Innovations in Computer Science. pp. 66--80 (2010)
 
+\bibitem{FengZ13}
+Feng, Y., Zhang, L.: When equivalence and bisimulation join forces in
+  probabilistic automata. In: FM, Lecture Notes in Computer Science, vol. 8442,
+  pp. 247--262. Springer (2014)
+
 \bibitem{FWC:10:PPDP}
 Fung, B.C.M., Wang, K., Chen, R., Yu, P.S.: Privacy-preserving data publish: A
   survey of recent developments. ACM Computing Surveys  42(4),  14:1--14:53
@@ -51,10 +56,18 @@ Mironov, I.: On significance of the least significant bits for differential
   privacy. In: Yu, T., Danezis, G., Gligor, V.D. (eds.) ACM Conference on
   Computer and Communications Security. pp. 650--661 (2012)
 
+\bibitem{Rabin63}
+Rabin, M.: {Probabilistic automata}. Information and Control  6(3),  230--245
+  (1963)
+
 \bibitem{TKBW:17:PLAI}
 Tang, J., Korolova, A., Bai, X., Wang, X., Wang, X.: Privacy loss in apple's
   implementation of differential privacy on {MacOS} 10.12. CoRR  abs/1709.02753
   (2017), \url{http://arxiv.org/abs/1709.02753}
+
+\bibitem{Tzeng92}
+Tzeng, W.: {A polynomial-time algorithm for the equivalence of probabilistic
+  automata}. SIAM Journal on Computing  21(2),  216--227 (1992)
 
 \bibitem{A:16:EPYU}
 WWDC: Engineering privacy for your users (2016),

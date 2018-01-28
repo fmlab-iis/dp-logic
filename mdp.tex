@@ -39,7 +39,7 @@ actions. Behaviors associated with different inputs are modeled by
 distributions associated with actions.
 }
 
-As we describe earlier, the user has the possibility of asking different mechanisms.
+As we describe earlier, the user has the possibility of querying multiple mechanisms.
 We use Markov decision processes to model such
 interactive mechanisms. Specifically, external inputs are modeled by
 actions. Behaviors associated with different inputs are modeled by
@@ -76,19 +76,13 @@ are trivially distinguishable; no privacy can be preserved. Without
 loss of generality, we consider reactive Markov decision processes.
 Let $M = (S, \Act, \wp, L)$ be a reactive Markov
 decision process. Define the satisfaction
-relation $M, \neighbor{S}, s \models \Phi$ as follows.
+relation $M, \neighbor{S}, s \models \Phi$ for $\PJ{J}$ and $\dpriv{\epsilon}{\delta} \phi$ (others are standard) as follows.
 \begin{eqnarray*}
-  M, \neighbor{S}, s \models \top\\
-  M, \neighbor{S}, s \models p
-  & \textmd{ if } &
-  p \in L(s)\\
-  M, \neighbor{S}, s \models \neg \Phi
-  & \textmd{ if } &
-  M, \neighbor{S}, s \not\models \Phi\\
-  M, \neighbor{S}, s \models \Phi_0 \wedge \Phi_1
-  & \textmd{ if } &
-  M, \neighbor{S}, s \models \Phi_0 \textmd{ and }
-  M, \neighbor{S}, s \models \Phi_1\\
+%  M, \neighbor{S}, s \models \top\\
+%  M, \neighbor{S}, s \models p  & \textmd{ if } &  p \in L(s)\\
+%  M, \neighbor{S}, s \models \neg \Phi  & \textmd{ if } &  M, \neighbor{S}, s \not\models \Phi\\
+%  M, \neighbor{S}, s \models \Phi_0 \wedge \Phi_1  & \textmd{ if } &  M, \neighbor{S}, s \models \Phi_0 \textmd{ and }
+%  M, \neighbor{S}, s \models \Phi_1\\
   M, \neighbor{S}, s \models \PJ{J} \phi
   & \textmd{ if } &
   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \in J
@@ -96,11 +90,11 @@ relation $M, \neighbor{S}, s \models \Phi$ as follows.
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
-   scheduler } \scheduler{S}, 
-   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq 
+   scheduler } \scheduler{S},
+   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
   e^{\epsilon} \cdot
    \\
-  & & 
+  & &
    \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
    \textmd{ and }
    \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq e^{\epsilon} \cdot
@@ -122,13 +116,8 @@ probabilistically distinguishable behaviors.
 
 \noindent
 \emph{Justification of the scheduler class.}
-\lz{related to language equivalence...}
-
-\noindent
-\emph{Discussion.}
-\lz{this part not needed?}
-Another definition of the differentially private operator
-might be:
+For MDPs a richer class of scheduler classes have been considered in the literature, see \cite{BK:08:PMC}. It may depend on the full history of state and action sequences, and the decision can be randomised. If we use such scheduler, another definition of the differentially private operator
+might be:\lz{put $bad$ on $\models$?}
 \begin{eqnarray*}
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
   & \textmd{ if } &
@@ -145,8 +134,12 @@ A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
 no scheduler could differentiate the probabilities of paths satisfying
 $\phi$ from neighbors. Such a definition would allow strategies to
 take different actions from different states. It might need different
-action sequences to distinguish neighbors. Two neighbors could still be
-differentiated by a action sequence and lose their privacy. We hence
+action sequences to distinguish \lz{or mimic?} neighbors. \lz{add However,?}Two neighbors could still be
+differentiated by an action sequence and lose their privacy. 
+
+We consider only sequences $\scheduler{S}\in Act^\omega$, which correspond to the query sequences. In the differential privacy context, neighbor states exhibit same action behaviours. And we will see later that 
+our semantics agrees with the notion of differential privacy in the literature for such systems.
+Wpe hence
 prefer the original definition.
 
 \paragraph{Model Checking Algorithm.}
@@ -169,10 +162,10 @@ e^{\epsilon} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}
 with $s, t \in S$. It can be easily generalized to nested next operators:  one needs only to enumerate
 all actions query sequences of length obtained by the number of nexted $\X$ operators.
 
-In general, the computation of the maximal probability for MDPs is non-trivial. \lz{we argue that it is difficult and leave as future work}
-
-Finally, we the property
-$\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$ that is used to express the privacy for our threshold Markov chains. It is only a valid formula if we would allow infinite conjunctions. However, it is interesting to note the relation to language equivalence for probabilistic automata\lz{to be discussed}
+In general, the problem is non-trivial. We consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
+$\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{F B} -
+\myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
+becomes a metric version of the language equivalence problem, see \cite{FengZ13} for the definition. To the best of our knowledge, it has not be investigated in the literature. Thus we leave the general model checking algorithm as future works. \lz{see this}
 
 \hide{
 Since the scheduler attaining the maximally probable
