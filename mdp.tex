@@ -113,14 +113,20 @@
   \label{figure:simple-mdp}
 \end{figure}
 
-Mechanisms are not necessarily closed randomized algorithms; they may
+\hide{Mechanisms are not necessarily closed randomized algorithms; they may
 perform different compution on users' requests.
 We use Markov decision processes to model such
 interactive mechanisms. Specifically, external inputs are modeled by
 actions. Behaviors associated with different inputs are modeled by
 distributions associated with actions.
+}
 
-\lz{assume that we need reactive MDPs with absorbing states}
+As we describe earlier, the user has the possibility of asking different mechanisms.
+We use Markov decision processes to model such
+interactive mechanisms. Specifically, external inputs are modeled by
+actions. Behaviors associated with different inputs are modeled by
+distributions associated with actions.
+
 
 Consider again the survey mechanism. Suppose we would like to design
 an interactive mechanism which adjusts random noises on surveyers'
@@ -172,7 +178,7 @@ relation $M, \neighbor{S}, s \models \Phi$ as follows.
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
-   position-independent scheduler } \\
+   scheduler } \\
   & & \scheduler{S},
    \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq \epsilon \cdot
    \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
@@ -183,22 +189,26 @@ relation $M, \neighbor{S}, s \models \Phi$ as follows.
    \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
 \end{eqnarray*}
 
-\lz{how about using "query sequence" instead of position-independent scheduler, and then argue that it makes sense for the resulting MDP model from differential privacy? This corresponds to a special scheduler that is applied on both neighboring states. }
 Recall that $M_{\scheduler{S}}$ is but a Markov chain. The semantics
 of $M_{\scheduler{S}}, \neighbor{S}, \pi \models \phi$ and hence the
 probability $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ are
 defined as in Markov chains.
-The semantics of $\dpCTL$ on reactive Markov decision processes
+The semantics of $\dpCTLstar$ on Markov decision processes
 is again standard except the differentially private operator
 $\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
 $\dpriv{\epsilon}{\delta} \phi$ specifies states which are $(\epsilon,
 \delta)$-close to all its neighbors in having paths satisfying $\phi$
-for arbitrary position-independent schedulers. That is, no
+for arbitrary schedulers. That is, no
 position-independent scheduler can force any of neighbors to have
 probabilistically distinguishable behaviors.
 
 \noindent
+\emph{Justification of the scheduler class.}
+\lz{related to language equivalence...}
+
+\noindent
 \emph{Discussion.}
+\lz{this part not needed?}
 Another definition of the differentially private operator
 might be:
 \begin{eqnarray*}
