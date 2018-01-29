@@ -143,9 +143,9 @@ Wpe hence
 prefer the original definition.
 
 \paragraph{Discussion about the Model Checking Algorithm.}
-Our next task is to compute $\{ M, \neighbor{S}, s \models
-\dpriv{\epsilon}{\delta} \phi \}$ for a Markov decision process $M =
-(S, \Act, \wp, L)$. Recall the semantics of $\dpriv{\epsilon}{\delta}
+For an MDP $M =
+(S, \Act, \wp, L)$, we want to compute $\{ M, \neighbor{S}, s \models
+\dpriv{\epsilon}{\delta} \phi \}$ . Recall the semantics of $\dpriv{\epsilon}{\delta}
 \phi$. Given $s, t$ with $s \neighbor{M} t$ and a path formula
 $\phi$, we need to decide whether
 $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
@@ -157,7 +157,7 @@ all actions query sequences of length obtained by the number of nexted $\X$ oper
 In general, the problem is non-trivial. For instance, we consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
 $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{F B} -
 \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
-becomes a metric version of the language equivalence problem, see \cite{FengZ13} for the definition. To the best of our knowledge, the decision problem has not be investigated in the literature. If in addition $\epsilon>0$, it seems to be a problem that has not been considered in the MDP model checking community before. Thus we leave the general model checking algorithm as future works. \lz{see this}
+becomes an approximate version of the language equivalence problem~\cite{Tzeng92}. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}. If in addition $\epsilon>0$, it seems to be a problem that has not been considered in the MDP model checking community before. Thus we leave the general model checking algorithm as future works. \lz{see this}
 
 \hide{
 Since the scheduler attaining the maximally probable
