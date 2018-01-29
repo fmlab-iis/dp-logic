@@ -55,8 +55,8 @@ probability $4/5$ and \textit{No} with probability $1/5$ when she has
 positive diagnosis. She answers \textit{Yes} with probability $1/5$
 and \textit{No} with probability $4/5$ when she is not
 diagnosed with the disease X. This gives an interactive mechanism
-corresponding to the Markov decision process shown in
-Figure~\ref{figure:simple-mdp-mdp}.
+corresponding to the MDP shown in
+Figure~\ref{figure:simple-mdp}.\lz{remove the loops}
 
 In the figure, the states $+$,
 $-$, $Y$, and $N$ are interpreted as before. The actions $L$ and $H$
@@ -70,12 +70,9 @@ N]$. The high-accuracy mechanism is $(\ln 4,0)$-differentially private.
 The privacy guarantees vary from accuracy requests.
 
 \subsection{Semantics}
-The semantics over Markov chains generalizes to Markov decision
-processes as well. Note that two states with different enabled actions
-are trivially distinguishable; no privacy can be preserved. Without
-loss of generality, we consider reactive Markov decision processes.
-Let $M = (S, \Act, \wp, L)$ be a reactive Markov
-decision process. Define the satisfaction
+The logic $\dpCTLstar$ can be interpreted over MDPs. Semantics over Markov chains generalizes to MDPs as well. Note that two states with different enabled actions
+are trivially distinguishable; no privacy can be preserved.
+Let $M = (S, \Act, \wp, L)$ be an MDP. Define the satisfaction
 relation $M, \neighbor{S}, s \models \Phi$ for $\PJ{J}$ and $\dpriv{\epsilon}{\delta} \phi$ (others are standard) as follows.
 \begin{eqnarray*}
 %  M, \neighbor{S}, s \models \top\\
@@ -105,7 +102,7 @@ Recall that $M_{\scheduler{S}}$ is but a Markov chain. The semantics
 of $M_{\scheduler{S}}, \neighbor{S}, \pi \models \phi$ and hence the
 probability $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ are
 defined as in Markov chains.
-The semantics of $\dpCTLstar$ on Markov decision processes
+The semantics of $\dpCTLstar$ on MDPs
 is again standard except the differentially private operator
 $\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
 $\dpriv{\epsilon}{\delta} \phi$ specifies states which are $(\epsilon,
@@ -142,7 +139,7 @@ our semantics agrees with the notion of differential privacy in the literature f
 Wpe hence
 prefer the original definition.
 
-\paragraph{Discussion about the Model Checking Algorithm.}
+\subsection{Model Checking Algorithm}
 For an MDP $M =
 (S, \Act, \wp, L)$, we want to compute $\{ M, \neighbor{S}, s \models
 \dpriv{\epsilon}{\delta} \phi \}$ . Recall the semantics of $\dpriv{\epsilon}{\delta}
@@ -153,8 +150,47 @@ e^{\epsilon} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta$
 for every scheduler $\scheduler{S}$.
 If the path formula only contain next operators, it is easy to deal with. For $\phi:=\X B$ with $B\subseteq S$ only one step behaviour needs to be considered, thus only the first action in the query sequence is needed. It can also be easily generalized to nested next operators:  one needs only to enumerate
 all actions query sequences of length obtained by the number of nexted $\X$ operators.
+In general, the problem is undecidable.
 
-In general, the problem is non-trivial. For instance, we consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
+\begin{theorem}
+The $\dpCTLstar$ model checking problem for MDPs  is undecidable.
+\end{theorem}
+\begin{proof}
+The proof follows by a reduction from the \emph{threshold} problem for probabilistic automata.
+A \emph{probabilistic automaton}~\cite{Rabin63} is a tuple $\mathcal{A}= (S,\Sigma,M,s_0,F)$ where
+\begin{itemize}
+  \item $S$ is a finite set of states,
+  \item $\Sigma$ is the finite set of input alphabet,
+  \item $M: S\times\Sigma\times S \to [0,1]$ such that $\sum_{t\in S} M(s,\alpha,t)=1$ for all $s\in S$ and $\alpha\in \Sigma$,
+  \item $s_0\in S$ is the initial state,
+  \item $F\subseteq S$ is a set of accepting states.
+\end{itemize}
+
+Each input alphabet $\alpha$ induces a stochastic matrix $M(\alpha)$ in the obvious way. Let $\lambda$ denote the empty string. For $\eta\in\Sigma^*$ we define $M(\eta)$ inductively by: $M(\lambda)$ is the identity matrix, $M(x\eta')=M(x)M(\eta')$. Thus, $M(\eta)(s,s')$ denotes the probability of going from $s$ to $s'$ after reading $\eta$. Let $v_F$ denote the characteristic row vector for the set $F$, and $v_{s_0}$ denote the characteristic row vector for the set $\{s_0\}$. Then, the accepting probably of $\eta$ by $\mathcal{A}$ is defined as $v_{s_0}\cdot M(\eta)\cdot (v_F)^c$ where $(v_F)^c$ denotes the transpose of $v_F$. The following \emph{emptyness problem} is know to be undecidable~\cite{Paz71}
+%~\cite{Worrell08}:
+
+\paragraph{Emptiness problem:} Given a probabilistic automaton $\mathcal{A}= (S,\Sigma,M,s_0,F)$, whether there exists $\eta\in\Sigma^*$ such that $v_{s_0}\cdot M(\eta)\cdot (v_F)^c > 0$?
+
+Now we establish the proof by reducing the threshold problem to our $\dpCTLstar$ model checking problem. Given the probabilistic automaton  $\mathcal{A}= (S,\Sigma,M,s_0,F)$, assume we have a \emph{primed} copy $\mathcal{A}¡¯= (S¡¯,\Sigma,M',s_0¡¯,\emptyset)$.
+
+Now we construct our MDP  $M =
+(S\cupdot S', \Sigma, \wp, L)$ where $\wp(s,a,t)$ equals to $M(s,a,t)$ if $s,t\in S$ and to $M'(s,a,t)$ if $s,t\in S'$. We define the neighbor relation $N_S:=\{(s_0,s_0')\}$ by relating states $s_0,s_0'$. The labelling function $L$ is defined by $L(s)=at_F$ if $s\in F$ and $L(s)=\empty$ otherwise.
+
+\lz{shall we use $\diamond$ for finally?}
+Now we consider the formula  $\Phi = \dpriv{1}{0} (\diamond at_F)$. For the reduction we prove $s_0\models \dpriv{1}{0} (\diamond at_F)$ iff for all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_F)^c \leq 0$.
+
+\lz{remember explain meaning of $\Sigma^\omega$}
+First we assume $s_0\models \dpriv{1}{0} (\diamond at_F)$. By $\dpCTLstar$ semantics we have that for all $\scheduler{S}\in\Sigma^\omega$,
+$\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F} \leq
+  e \cdot
+  \myPr{s_0'}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F}$. Observe $\myPr{s_0'}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F}=0$ by construction, thus we have
+$\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F} \leq
+ 0$. This implies  $v_{s_0}\cdot M(\eta)\cdot (v_F)^c \leq 0$ for all $\eta\in\Sigma^*$.
+ 
+ For the other direction, 
+\end{proof}
+
+For instance, we consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
 $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{F B} -
 \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
 becomes an approximate version of the language equivalence problem~\cite{Tzeng92}. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}. If in addition $\epsilon>0$, it seems to be a problem that has not been considered in the MDP model checking community before. Thus we leave the general model checking algorithm as future works. \lz{see this}
