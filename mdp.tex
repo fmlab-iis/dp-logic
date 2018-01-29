@@ -135,15 +135,14 @@ no scheduler could differentiate the probabilities of paths satisfying
 $\phi$ from neighbors. Such a definition would allow strategies to
 take different actions from different states. It might need different
 action sequences to distinguish \lz{or mimic?} neighbors. \lz{add However,?}Two neighbors could still be
-differentiated by an action sequence and lose their privacy. 
+differentiated by an action sequence and lose their privacy.
 
-We consider only sequences $\scheduler{S}\in Act^\omega$, which correspond to the query sequences. In the differential privacy context, neighbor states exhibit same action behaviours. And we will see later that 
+We consider only sequences $\scheduler{S}\in Act^\omega$, which correspond to the query sequences. In the differential privacy context, neighbor states exhibit same action behaviours. And we will see later that
 our semantics agrees with the notion of differential privacy in the literature for such systems.
 Wpe hence
 prefer the original definition.
 
-\paragraph{Model Checking Algorithm.}
-
+\paragraph{Discussion about the Model Checking Algorithm.}
 Our next task is to compute $\{ M, \neighbor{S}, s \models
 \dpriv{\epsilon}{\delta} \phi \}$ for a Markov decision process $M =
 (S, \Act, \wp, L)$. Recall the semantics of $\dpriv{\epsilon}{\delta}
@@ -152,20 +151,13 @@ $\phi$, we need to decide whether
 $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
 e^{\epsilon} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta$
 for every scheduler $\scheduler{S}$.
-If the path formula only contain next operators, it is easy to deal with. For $\phi:=\X B$ with $B\subseteq S$ only one step behaviour needs to be considered, thus only the first action in the query sequence is needed to compute the maximum
-\begin{eqnarray}
-  \label{eqn:max-nextB}
-\max_{\scheduler{S}}
-\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B} -
-e^{\epsilon} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\gX B}
-\end{eqnarray}
-with $s, t \in S$. It can be easily generalized to nested next operators:  one needs only to enumerate
+If the path formula only contain next operators, it is easy to deal with. For $\phi:=\X B$ with $B\subseteq S$ only one step behaviour needs to be considered, thus only the first action in the query sequence is needed. It can also be easily generalized to nested next operators:  one needs only to enumerate
 all actions query sequences of length obtained by the number of nexted $\X$ operators.
 
-In general, the problem is non-trivial. We consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
+In general, the problem is non-trivial. For instance, we consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
 $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{F B} -
 \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
-becomes a metric version of the language equivalence problem, see \cite{FengZ13} for the definition. To the best of our knowledge, it has not be investigated in the literature. Thus we leave the general model checking algorithm as future works. \lz{see this}
+becomes a metric version of the language equivalence problem, see \cite{FengZ13} for the definition. To the best of our knowledge, the decision problem has not be investigated in the literature. If in addition $\epsilon>0$, it seems to be a problem that has not been considered in the MDP model checking community before. Thus we leave the general model checking algorithm as future works. \lz{see this}
 
 \hide{
 Since the scheduler attaining the maximally probable

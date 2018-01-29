@@ -33,7 +33,7 @@ $s$. Define the satisfaction relation $K, \neighbor{S}, s
 \end{eqnarray*}
 
 Moreover, the relation $K, \neighbor{S}, \pi \models \phi$ is defined as
-for the standard LTL formulas. We only give the semantics for $\X$ and $\until$ as follows.
+for the standard LTL formulas~\cite{which-to-cite?}. We only recall the semantics for $\X$ and $\until$ as follows.
 \begin{eqnarray*}
   K, \neighbor{S}, \pi \models \X \phi
   & \textmd{ if } &
@@ -114,7 +114,7 @@ theorem~\cite{BK:08:PMC}:
 \end{lemma}
 
 In Lemma~\ref{lemma:PJ-subroutines}, we abuse the notation slightly to
-admit path formulae of the form $\gX B$ (next $B$) and
+admit path formulae of the form $\gX B$ (next $B$) and\lz{what is $\guntil$?}
 $B \guntil C$ ($B$ until $C$) with $B, C \subseteq S$ as
 in~\cite{BK:08:PMC}. They are interpreted by introducing new atomic
 propositions $B$ and $C$ for each $s \in B$ and $s \in C$
@@ -183,4 +183,4 @@ The algorithm requires at most $O
 
 The model checking algorithm for $\dpCTLstar$ can be treated as in the classical setting \cite{BK:08:PMC}, as all we need is to  compute the  probability
   $\myPr{s}{K}{\neighbor{S}}{\phi}$ with general path formula $\phi$. For this purpose one first constructs a deterministic $\omega$-automaton $R$, such as deterministic Rabin automaton. Then, the probability reduces to a
-  reachability probability in the product Markov chain obtained from $K$ and $R$. There are more efficient algorithms without the product construction, see \cite{} for details.
+  reachability probability in the product Markov chain obtained from $K$ and $R$. There are more efficient algorithms without the product construction, see \cite{CY95,CSS03,BaierKKKMW16} for details.

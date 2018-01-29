@@ -1,7 +1,7 @@
 In this section we describe how properties in the differential privacy literature can be expressed using $\dpCTLstar$ formulae.
 
 \paragraph{Standard Differential Privacy.}
-The formula $\dpriv{\ln 3}{0} (\X Y)$ holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X Y$ from $s$ and $t$ satisfy:
+The formula $\dpriv{\ln 3}{0} (\X Y)$ \lz{$\X Y$ looks a bit weired?} holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X Y$ from $s$ and $t$ satisfy:
 $\myPr{s}{K}{N}{\X Y}\le 3\myPr{t}{K}{N}{\X Y}$. The formula $\dpriv{\ln 3}{0} (\X Y)\wedge \dpriv{\ln 3}{0} (\X N)$ thus specifies the differential privacy property for states $+$ and $-$ in Example~\ref{exa:survey}.
 
  Define the formula
