@@ -1,12 +1,12 @@
 In this section we describe how properties in the differential privacy literature can be expressed using $\dpCTLstar$ formulae.
 
 \paragraph{Standard Differential Privacy.}
-The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)$ \lz{$\X Y$ looks a bit weired?} holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X Y$ from $s$ and $t$ satisfy:
-$\myPr{s}{K}{N}{\X Y}\le 3\myPr{t}{K}{N}{\X Y}$. The formula $\dpriv{\ln 3}{0} (\X Y)\wedge \dpriv{\ln 3}{0} (\X N)$ thus specifies the differential privacy property for states $+$ and $-$ in Example~\ref{exa:survey}.
+The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)$ holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X \mathit{out}_Y$ from $s$ and $t$ satisfy:
+$\myPr{s}{K}{N}{\X \mathit{out}_Y}\le 3\myPr{t}{K}{N}{\X \mathit{out}_Y}$. The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)\wedge \dpriv{\ln 3}{0} (\X \mathit{out}_N)$ thus specifies the differential privacy property for states $+$ and $-$ in Example~\ref{exa:survey}.
 
  Define the formula
 $\psi = \dpriv{\ln 2}{0} (\X out_0) \wedge \dpriv{\ln 2}{0} (\X out_1) \wedge
-\cdots \wedge \dpriv{\ln 2}{0} (\X out_5)$. If the state $in_k$ satisfies
+\cdots \wedge \dpriv{\ln 2}{0} (\X out_5)$. If the state $s_k$ satisfies
 $\psi$ for $k = 0, \ldots, 5$, then the $.5$-geometric mechanism is
 $(\ln 2, 0)$-differentially private.
 
@@ -14,7 +14,8 @@ $(\ln 2, 0)$-differentially private.
 \paragraph{Compositional Properties.}
 Compositional aspect is one of the building block for differentially private algorithms. According to the compositional theorem \cite[Theorem 3.16]{DR:14:AFDP}, for $(\epsilon_1,\delta_1)$-differentially private algorithm $M_1$ and
 $(\epsilon_2,\delta_2)$-differentially private algorithm $M_2$, their combination $M$ defined by $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1 + \epsilon_2,\delta_1+\delta_2)$-differentially private. The degradation is rooted in the repeated computation. To illustrate this property, we consider the extended survey example below where the curator allows two consequent queries.
-The corresponding model is depicted in Figure~\ref{figure:2-dp-mc}, where states $Y_1,Y_2$ are labelled by $Y$, and $N_1,N_2$ are labelled by $N$.
+The model is depicted in Figure~\ref{figure:2-dp-mc}.
+%where states $Y_1,Y_2$ are labelled by $Y$, and $N_1,N_2$ are labelled by $N$.
 
 \begin{figure}
     \centering
@@ -23,10 +24,14 @@ The corresponding model is depicted in Figure~\ref{figure:2-dp-mc}, where states
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
     distance=1cm,node/.style={circle,draw}]
     \node[node] (p) at ( -1.5,  0) { $+$ };
-    \node[node] (Y1) at ( 0, .8) { $Y_1$ };
-    \node[node] (N1) at ( 0, -.8) { $N_1$ };
-    \node[node] (Y2) at (1.5,  .8) { $Y_2$ };
-    \node[node] (N2) at ( 1.5, -.8) { $N_2$ };
+    \node[node] (Y1) at ( 0, .8) { $s_1$ };
+    \node at (0, 1.3) { $\mathit{out}_Y$ };
+    \node[node] (N1) at ( 0, -.8) { $t_1$ };
+    \node at (0, -.3) { $\mathit{out}_N$ };
+    \node[node] (Y2) at (1.5,  .8) { $s_2$ };
+    \node at (1.5, 1.3) { $\mathit{out}_Y$ };
+    \node[node] (N2) at ( 1.5, -.8) { $t_2$ };
+    \node at (1.5, -.3) { $\mathit{out}_N$ };
 
     \path
     (p) edge node [above] { $\frac{3}{4}$ } (Y1)
@@ -47,10 +52,14 @@ The corresponding model is depicted in Figure~\ref{figure:2-dp-mc}, where states
             \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
     distance=1cm,node/.style={circle,draw}]
     \node[node] (n) at ( -1.5,  0) { $-$ };
-    \node[node] (Y1) at ( 0, .8) { $Y_1$ };
-    \node[node] (N1) at ( 0, -.8) { $N_1$ };
-    \node[node] (Y2) at (1.5,  .8) { $Y_2$ };
-    \node[node] (N2) at ( 1.5, -.8) { $N_2$ };
+    \node[node] (Y1) at ( 0, .8) { $s_1$ };
+    \node at (0, 1.3) { $\mathit{out}_Y$ };
+    \node[node] (N1) at ( 0, -.8) { $t_1$ };
+    \node at (0, -.3) { $\mathit{out}_N$ };
+    \node[node] (Y2) at (1.5,  .8) { $s_2$ };
+    \node at (1.5, 1.3) { $\mathit{out}_Y$ };
+    \node[node] (N2) at ( 1.5, -.8) { $t_2$ };
+    \node at (1.5, -.3) { $\mathit{out}_N$ };
 
     \path
     (n) edge node [above] { $\frac{1}{4}$ } (Y1)
@@ -71,18 +80,19 @@ The corresponding model is depicted in Figure~\ref{figure:2-dp-mc}, where states
 
 
 
-We consider the formula $\dpriv{\ln 9}{0} (\X (Y\wedge \X Y))$. A path satisfies $\X (Y\wedge \X Y)$ if the second state satisfies $Y$ and the third state satisfies $Y$ as well. We verify that this formula is satisfied  for state $+$ and $-$. Moreover, the bound $\epsilon=\ln 9$ is tight, since the probability of satisfying $\X (Y\wedge \X Y)$ from states $+$ and $-$ are $\frac{9}{16}$ and $\frac{1}{16}$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{\ln 9}{0} (\X (a_1\wedge \X a_2))$ corresponds to the desired compositional property for the model, where $a_1,a_2$ range over all atomic propositions $\{Y,N\}$.
+We consider the formula $\dpriv{\ln 9}{0} (\X (\mathit{out}_Y\wedge \X \mathit{out}_Y))$. A path satisfies $\X (\mathit{out}_Y\wedge \X \mathit{out}_Y)$ if the second state satisfies $\mathit{out}_Y$ and the third state satisfies $\mathit{out}_Y$ as well. We verify that this formula is satisfied for states $+$ and $-$. Moreover, the bound $\epsilon=\ln 9$ is tight, since the probability of satisfying $\X (\mathit{out}_Y\wedge \X \mathit{out}_Y)$ from states $+$ and $-$ are $\frac{9}{16}$ and $\frac{1}{16}$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{\ln 9}{0} (\X (a_1\wedge \X a_2))$ corresponds to the desired compositional property for the model, where $a_1,a_2$ range over all atomic propositions $\{\mathit{out}_Y, \mathit{out}_N\}$.
 
 We consider two other formulae for comparision:
-(a) Formula $\dpriv{\ln 3}{0} (\X \X Y)$. In this case we donot have privacy lost, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
-(b) Formula $\dpriv{\ln 3}{0} (\X (Y\wedge \dpriv{\ln 3}{0}(\X Y)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X Y)$ states the one step differential privacy. Observe the inner formula is satisfied by all neighbours. Thus, the outer formula also has no privacy lost.
+(a) Formula $\dpriv{\ln 3}{0} (\X \X \mathit{out}_Y)$. In this case we donot have privacy lost, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
+(b) Formula $\dpriv{\ln 3}{0} (\X (\mathit{out}_Y\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_Y)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_Y)$ states the one step differential privacy. Observe the inner formula is satisfied by all neighbours. Thus, the outer formula also has no privacy lost.
 
 \paragraph{Tighter Privacy Bounds for Compositional Properties.}
-One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider our survey example, and the property $\dpriv{0}{.5} (\X Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=0$ or $\delta_1=.5$ without increasing the other one.
+One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider our survey example, and the property $\dpriv{0}{.5} (\X \mathit{out}_Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=0$ or $\delta_1=.5$ without increasing the other one.
 
 
-Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X (Y\wedge
-\X Y))$ under the model in Figure~\ref{figure:2-dp-mc}. Applying the
+Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X 
+(\mathit{out}_Y\wedge \X \mathit{out}_Y))$ under the model in 
+Figure~\ref{figure:2-dp-mc}. Applying the
 compositional theorem, one can choose $\epsilon_2=2\epsilon_1=0$ and
 $\delta_2=2\delta_1=1$. However, we can check easily that one gets
 better privacy parameter $(0,0.5)$.
