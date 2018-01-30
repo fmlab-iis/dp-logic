@@ -84,7 +84,10 @@ One of the advantage of applying model checking is that we may get tighter bound
 Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X (Y\wedge \X Y))$ under the model in Figure~\ref{figure:2-dp-mc}. Applying the compositional theorem, one can choose $\epsilon_2=2\epsilon_1=0$ and $\delta_2=2\delta_1=1$. However, we can check easily that one gets better privacy parameter $(0,0.5)$ or $(-\infty,\frac{9}{16})$. \bw{use $-\infty$ instead of $\ln 0$. is it okay?}\lz{lets just remove it ;)}
 
 \paragraph{Reachability Privacy.}
-For our threshold \lz{to do} model, we have the differential privacy property $\wedge_{i=1}^{c} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$. Here $\dpriv{\epsilon}{0}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of eventually reaching $\top$.
+The formula $\dpriv{\epsilon}{\delta}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of eventually reaching $\top$. Note neighbor states may reach the goal state $\top$ with 
+
+
+For our threshold \lz{to do} model, we have the differential privacy property $\wedge_{i=1}^{c} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$. 
 
 Finally, we the property
 $\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$ that is used to express the privacy for our threshold Markov chains. It is only a valid formula if we would allow infinite conjunctions. However, it is interesting to note the relation to language equivalence for probabilistic automata\lz{to be discussed}

@@ -156,7 +156,7 @@ In general, the problem is undecidable.
 The $\dpCTLstar$ model checking problem for MDPs  is undecidable.
 \end{theorem}
 \begin{proof}
-The proof follows by a reduction from the \emph{threshold} problem for probabilistic automata.
+The proof follows by a reduction from the \emph{emptiness} problem for probabilistic automata.
 A \emph{probabilistic automaton}~\cite{Rabin63} is a tuple $\mathcal{A}= (S,\Sigma,M,s_0,F)$ where
 \begin{itemize}
   \item $S$ is a finite set of states,
@@ -166,7 +166,7 @@ A \emph{probabilistic automaton}~\cite{Rabin63} is a tuple $\mathcal{A}= (S,\Sig
   \item $F\subseteq S$ is a set of accepting states.
 \end{itemize}
 
-Each input alphabet $\alpha$ induces a stochastic matrix $M(\alpha)$ in the obvious way. Let $\lambda$ denote the empty string. For $\eta\in\Sigma^*$ we define $M(\eta)$ inductively by: $M(\lambda)$ is the identity matrix, $M(x\eta')=M(x)M(\eta')$. Thus, $M(\eta)(s,s')$ denotes the probability of going from $s$ to $s'$ after reading $\eta$. Let $v_F$ denote the characteristic row vector for the set $F$, and $v_{s_0}$ denote the characteristic row vector for the set $\{s_0\}$. Then, the accepting probably of $\eta$ by $\mathcal{A}$ is defined as $v_{s_0}\cdot M(\eta)\cdot (v_F)^c$ where $(v_F)^c$ denotes the transpose of $v_F$. The following \emph{emptyness problem} is know to be undecidable~\cite{Paz71}
+Each input alphabet $\alpha$ induces a stochastic matrix $M(\alpha)$ in the obvious way. Let $\lambda$ denote the empty string. For $\eta\in\Sigma^*$ we define $M(\eta)$ inductively by: $M(\lambda)$ is the identity matrix, $M(x\eta')=M(x)M(\eta')$. Thus, $M(\eta)(s,s')$ denotes the probability of going from $s$ to $s'$ after reading $\eta$. Let $v_F$ denote the characteristic row vector for the set $F$, and $v_{s_0}$ denote the characteristic row vector for the set $\{s_0\}$. Then, the accepting probably of $\eta$ by $\mathcal{A}$ is defined as $v_{s_0}\cdot M(\eta)\cdot (v_F)^c$ where $(v_F)^c$ denotes the transpose of $v_F$. The following \emph{emptiness problem} is know to be undecidable~\cite{Paz71}
 %~\cite{Worrell08}:
 
 \paragraph{Emptiness problem:} Given a probabilistic automaton $\mathcal{A}= (S,\Sigma,M,s_0,F)$, whether there exists $\eta\in\Sigma^*$ such that $v_{s_0}\cdot M(\eta)\cdot (v_F)^c > 0$?
@@ -187,14 +187,14 @@ $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F} \leq
 $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F} \leq
  0$. This implies  $v_{s_0}\cdot M(\eta)\cdot (v_F)^c \leq 0$ for all $\eta\in\Sigma^*$.
  
- For the other direction, 
+ For the other direction, assume that all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_F)^c \leq 0$. For the sake of contradiction, assume that $s_0\not\models \dpriv{1}{0} (\diamond at_F)$. Since the relation $N_S$ contains only one pair, it implies that there exists a scheduler $\scheduler{S}\in\Sigma^\omega$ such that $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F} >0$. It is then easy to construct a finite sequence $\eta\in\Sigma^*$ with  $v_{s_0}\cdot M(\eta)\cdot (v_F)^c > 0$, a contradiction.
 \end{proof}
 
-For instance, we consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
+We consider some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
 $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{F B} -
 \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
-becomes an approximate version of the language equivalence problem~\cite{Tzeng92}. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}. If in addition $\epsilon>0$, it seems to be a problem that has not been considered in the MDP model checking community before. Thus we leave the general model checking algorithm as future works. \lz{see this}
-
+becomes an approximate version of the language equivalence problem~\cite{Tzeng92}. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}. 
+p
 \hide{
 Since the scheduler attaining the maximally probable
 behavior from a state may be different from the scheduler attaining
