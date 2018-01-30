@@ -105,11 +105,11 @@ With $\dpCTLstar$, the subformula $\phi$ in $\dpriv{\epsilon}{\delta} \phi$
 can be an arbitrary $\dpCTLstar$ path formula. One can specify
 $(\epsilon, \delta)$-closedness over infinite behaviors naturally.
 
-We consider the Bluetooth example from the PRISM benchmarks \cite{prism-bluetooth-page}. The model is a
-Markov chain, and it ...
-
-For instance,
-$\dpriv{\epsilon}{\delta} (\G   \F \mathit{discovered})$
-specifies states having $(\epsilon, \delta)$-close
-infinitely often $\mathit{discovered}$ behaviors to its neighbors.
+Consider the Bluetooth example in~\cite{prism-bluetooth-page} and the
+formula $\dpriv{\epsilon}{\delta}{\F \G \mathit{timeout}}$. Let us say
+two states are neighbors if the number of slave devices differs by at
+most one. Then the formula holds if the probability of having
+continuous time out (say, in the denial of service attack) is
+$(\epsilon, \delta)$-close for all neighbors. That is, adding a slave
+device cannot increase the chance of service failure significantly.
 
