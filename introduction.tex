@@ -77,7 +77,7 @@ $(\epsilon, \delta)$-differentially private at the state.
 An important byproduct of this work is to analyze privacy over
 infinite behaviors. Consider the formula $\dpriv{\epsilon}{\delta}
 (\G \F \mathit{high})$. A state satisfies the formula if it
-is probabilistically similar to always almost surely
+is probabilistically similar to always almost surely\lz{infinitely often}
 answer $\mathit{high}$ as similar states. Compared to the unbounded
 but finite behavior specified by $\F \mathit{high}$,
 $\G \F \mathit{high}$ specifies an infinite behavior.
@@ -93,16 +93,16 @@ satisfying a subformula $\dpriv{\epsilon}{\delta} \phi$ are computed
 by a simple variant of the algorithm for Markov chains.
 The time complexity of our model checking algorithm is the same as
 those of $\PCTLstar$ for Markov chains. The logic $\dpCTLstar$ obtains its
-expressiveness for free. 
+expressiveness for free.
 For Markov decision processes, we show that checking whether a state
 satisfies $\dpriv{\epsilon}{\delta} \phi$ is undecidable.
 
 % analyze mechanism
 
 \paragraph{Contributions.} Our main contributions are three folds. (i)
-We introduce the logic $\dpCTLstar$ for reasoning about properties in 
+We introduce the logic $\dpCTLstar$ for reasoning about properties in
 differential privacy. We use the logic to express classical
-differential privacy properties, and moreover, complex properties such as those 
-involving infinite behaviors can also be expressed. (ii) We model several differential privacy mechanisms, including the streaming process, in Markov chains or MDPs.
-(iii) We show that the model checking problem 
-problem for Markov chains is standard. For MDPs we show that it is undecidable.  
+differential privacy properties, and moreover, complex properties such as those
+involving infinite behaviors can also be expressed. (ii) We model several differential privacy mechanisms, including the streaming process, in Markov chains or Markov decision processes.
+(iii) We show that the model checking problem
+problem for Markov chains is standard. For MDPs we show that it is undecidable.

@@ -1,6 +1,6 @@
 
 Let $\bbfZ$ and $\bbfZ^{\geq 0}$ be the sets of integers and
-non-negative integers respectively. 
+non-negative integers respectively.
 % For $n \geq 0$, $\underline{n} = \{ 0, 1, \ldots, n \} \subseteq
 % \bbfZ^{\geq 0}$.
 %\lz{not so often used: can we do withuot this notatin?}
@@ -11,7 +11,6 @@ definitions of Markov chains and Markov decision processes are adopted
 from~\cite{BK:08:PMC}.
 
 \subsection{Differential Privacy}
-
 We denote the data universe by $\mathcal{X}$; $x \in \mathcal{X}^n$ is
 a database with $n$ rows from the data universe. Two databases $x$ and
 $x'$ are \emph{neighbors} (denoted by $d(x, x') \leq 1$) if they are
@@ -76,13 +75,13 @@ in $K$ is an infinite sequence $\pi = \pi_0 \pi_1 \cdots \pi_n \cdots$
 of states with $\wp (\pi_i, \pi_{i+1}) > 0$ for all $i \geq 0$. We write
 $\pi[j]$ for the suffix $\pi_j \pi_{j+1} \cdots$. % Thus $\pi[0] = \pi$.
 
-A \emph{(finite) Markov decision process} 
-(MDP)~\footnote{The MDP we consider is \emph{reactive} in the sense that 
+A \emph{(finite) Markov decision process}
+(MDP)~\footnote{The MDP we consider is \emph{reactive} in the sense that
 all actions are enabled in every state. If equipped with a set of final states $F\subseteq S$, such model is
 referred to as \emph{probabilistic automaton} in the literature~\cite{Rabin63}, and language equivalence/inclusion
 problems have been investigated. In the model checking context, the notion MDPs is mostly used.}
  $M = (S, \Act, \wp, L)$ consists
-of 
+of
 a finite set of \emph{actions} $\Act$,
 a \emph{transition probability function} $\wp : S \times \Act
 \times S \rightarrow [0, 1]$ with $\sum_{t \in S} \wp(s, \alpha, t)

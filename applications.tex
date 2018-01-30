@@ -1,6 +1,6 @@
 
-Streaming processing gives a motivating example for Markov
-decision processes. In stream processing, input data are retrieved and
+Streaming processing gives a motivating example for MDPs. In stream 
+processing, input data are retrieved and
 analyzed continuously. Such continual observation is commonly found
 in social media, service providers, or even electronic surveillance
 systems. To protect privacy, privacy-respecting mechanisms must be
@@ -18,7 +18,7 @@ In pan privacy, data analysis mechanisms are required to respect
 privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}.
 The idea is to show reachability probabilities are similar on
 neighboring observations. In the following, we model a discrete
-variant of the mechanisms by Markov decision processes. We will also
+variant of the mechanisms by MDPs. We will also
 specify pan privacy in our model using $\dpCTLstar$.
 
 Consider monitoring events of the types $a$ and $b$ continuously.
@@ -110,7 +110,7 @@ how to construct a finite Markov chain for
 Algorithm~\ref{algorithm:frequency-estimator}.
 
 In order to obtain a finite model, we formalize neighbors as action
-sequences in Markov decision processes. Consider the action set $\{
+sequences in MDPs. Consider the action set $\{
 a[a], a[b], b[a], b[b] \}$. Informally, the action $x[y]$ means the
 event type $x$ is replaced by the event type $y$ in a neighbor. An
 action sequence thus represents an observation and one of its
@@ -120,33 +120,31 @@ $x_1x_2\cdots x_n$ and its neighbor $y_1y_2\cdots y_n$. For instance,
 the action sequence $a[a]a[b]a[a]b[a]b[b]$ represents the observation
 $aaabb$ and a neighbor $abaab$.
 
-Similar to Algorithm~\ref{algorithm:frequency-estimator}, our Markov
-decision process has internal states $s_{00}$, $s_{01}$, $s_{10}$,
+Similar to Algorithm~\ref{algorithm:frequency-estimator}, our MDP has internal states $s_{00}$, $s_{01}$, $s_{10}$,
 $s_{11}$ for the two bits $f_a$ and $f_b$ of observed event types
 (Figure~\ref{figure:adjacent-inputs}). The internal state $s_{01}$
 represents $(f_a, f_b) = (0, 1)$, for instance. Moreover, let $xy \in
 L (s_{xy})$ for $x, y \in \{ 0, 1 \}$. From the
-initialization state $s$, the Markov decision process moves to one of
+initialization state $s$, the MDP moves to one of
 the four internal states randomly with the uniform
 distribution. Consider the internal state $s_{01}$. If the actions $a[a]$
 or $a[b]$ are chosen, they denote that the event type $a$ is currently
-observed. The Markov decision process moves to the internal state $s_{01}$
+observed. The MDP moves to the internal state $s_{01}$
 and $s_{11}$ with probability $.375 = \frac{3}{8}$ and $.625 =
 \frac{5}{8}$ respectively. Other transitions are defined similarly.
 
 On the other hand, the initialization state $t$
-corresponds to the computation on neighbors. The Markov decision
-process moves to the interal states $t_{00}$,
+corresponds to the computation on neighbors. The MDP moves to the internal states $t_{00}$,
 $t_{01}$, $t_{10}$, $t_{11}$ randomly with
 the uniform distribution. Similarly, $xy \in L (t_{xy})$ for $x, y \in
 \{ 0, 1 \}$.
 Consider, for example, the internal state
 $t_{10}$. If the action $a[a]$ or $b[a]$ are chosen, they
 denote that the current event type is replaced with the eveny type
-$a$. The Markov decision process moves to the internal state
+$a$. The MDP moves to the internal state
 $t_{00}$ and $t_{10}$ with probability $.375 =
 \frac{3}{8}$ and $.625 = \frac{5}{8}$ respectively. At an internal
-state, the Markov decision process can move to the output states $0$,
+state, the MDP can move to the output states $0$,
 $1$, or $2$ by the truncated $\frac{1}{2}$-geometric mechanism over
 $\{ 0, 1, 2 \}$ (Figure~\ref{figure:randomized-frequency}, \`{a} la
 Figure~\ref{figure:geometric-mechanism}). For any action sequence,
@@ -154,9 +152,9 @@ observe that paths from the state $s$ and those from $t$
 formalize the computation of Algorithm~\ref{algorithm:frequency-estimator}
 on an observation and its neighbor represented by the sequence. We
 hence say the states $s$ and $t$ are neighbors in the
-Markov decision process (Figure~\ref{figure:frequency-estimator}).
+MDP (Figure~\ref{figure:frequency-estimator}).
 
-\begin{figure}
+\begin{figure}[tbh]
   \centering
   \begin{subfigure}{\columnwidth}
     \centering
@@ -308,7 +306,7 @@ Markov decision process (Figure~\ref{figure:frequency-estimator}).
       \caption{Randomized Frequency}
       \label{figure:randomized-frequency}
     \end{subfigure}
-  \caption{Frequency Estimator (some states are drawed twice).}
+  \caption{Frequency Estimator (some states are drawn twice).}
   \label{figure:frequency-estimator}
 \end{figure}
 
@@ -318,10 +316,10 @@ For classical differential privacy, we are interested in the output
 distribution. Algorithm~\ref{algorithm:frequency-estimator} has three
 different outputs. By privacy analysis, the state $I$ satisfies the
 following $\dpCTLstar$ formula:
-\[
+$
 \Psi = \dpriv{\ln 4}{0} (\F \mathit{at}_0) \wedge \dpriv{\ln 4}{0} (\F
 \mathit{at}_1) \wedge \dpriv{\ln 4}{0} (\F \mathit{at}_2)
-\]
+$.
 For pan privacy, we moreover wish to measure privacy loss in internal
 states. For observations of length $k$, the probabilities of reaching
 each internal states need to be sufficiently close. The state $I$

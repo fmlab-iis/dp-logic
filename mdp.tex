@@ -1,4 +1,4 @@
-\subsection{Markov Decision Processes}
+%\subsection{Markov Decision Processes}
 
 \begin{wrapfigure}{r}{.5\columnwidth}
   \centering
@@ -41,7 +41,7 @@ distributions associated with actions.
 }
 
 As we describe earlier, the user has the possibility of querying multiple mechanisms.
-We use Markov decision processes to model such
+We use MDPs to model such
 interactive mechanisms. Specifically, external inputs are modeled by
 actions. Behaviors associated with different inputs are modeled by
 distributions associated with actions.
@@ -71,8 +71,8 @@ N]$. The high-accuracy mechanism is $(\ln 4,0)$-differentially private.
 The privacy guarantees vary from accuracy requests.
 
 \subsection{Semantics}
-The logic $\dpCTLstar$ can be interpreted over MDPs. Semantics over Markov chains generalizes to MDPs as well. Note that two states with different enabled actions
-are trivially distinguishable; no privacy can be preserved.
+The logic $\dpCTLstar$ can be interpreted over MDPs. Semantics over Markov chains generalizes to MDPs as well. %Note that two states with different enabled actions
+%are trivially distinguishable; no privacy can be preserved.
 Let $M = (S, \Act, \wp, L)$ be an MDP. Define the satisfaction
 relation $M, \neighbor{S}, s \models \Phi$ for $\PJ{J}$ and $\dpriv{\epsilon}{\delta} \phi$ (others are standard) as follows.
 \begin{eqnarray*}
@@ -153,7 +153,7 @@ If the path formula only contain next operators, it is easy to deal with. For $\
 all actions query sequences of length obtained by the number of nexted $\X$ operators.
 In general, the problem is undecidable.
 
-\begin{theorem}
+\begin{theorem}\label{theorem:mdp-model-checking}
 The $\dpCTLstar$ model checking problem for MDPs  is undecidable.
 \end{theorem}
 
