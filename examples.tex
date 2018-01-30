@@ -66,11 +66,15 @@ uniformly~\cite{DR:14:AFDP}.
 mechanism and its corresponding Markov chain. In the figure, the states
 $+$ and $-$ denote the diagnoses are positive or negative
 respectively; the states $Y$ and $N$ denote answers to the survey
-question. We have $AP=\{Y,N\}$, $L(Y)=\{Y\}$, $L(N)=\{N\}$, and $L(+)=L(-)=\emptyset$. States $+$ and $-$ are neighbors. 
+question. For each state $s$, we associate an atomic predicate
+$\mathit{at}_s$ (not shown in the figure).
+States $+$ and $-$ are neighbors. 
 The random noise boosts the probability of answering
 \textit{Yes} or \textit{No} to at least $1/4$ regardless of
 diagnoses. Inferences on individual diagnosis can be plausibly denied.
-{In general, we omit a special state $\dagger$ with $L(\dagger)=\emptyset$, and all omitted transitions in the picture lead to this state.}
+In general, missing transitions (such as those from $Y$ and $N$) lead
+to a special state $\dagger$ with a self-loop. We omit the transitions
+and the state $\dagger$ for clarity.
 \end{example}
 
 Let us recall briefly the analysis of the survey mechanism. The data universe
@@ -102,7 +106,8 @@ the mechanism
 however is $\bbfZ$. It may give nonsensical outputs such as
 negative integers for queries with positive ranges.
 
-The \emph{truncated $\alpha$-geometric mechanism over $\underline{n}$}
+The \emph{truncated $\alpha$-geometric mechanism over $\{ 0, 1,
+  \ldots, n \}$}
 outputs $f (x) + Z$ where $Z$ is a random variable with the following
 distribution:
 \[
@@ -119,10 +124,10 @@ distribution:
 \right.
 \]
 Note the range of the truncated $\alpha$-geometric mechanism is
-$\underline{n}$. The truncated $\alpha$-geometric mechanism is
+$\{ 0, 1, \ldots, n \}$. The truncated $\alpha$-geometric mechanism is
 again oblivious; it is also $(- {\Delta (f)} \ln \alpha, 0)$-differentially
 private for any query $f$ with sensitivity $\Delta (f)$.
-The truncated $1/2$-geometric mechanism over $\underline{5}$ is
+The truncated $1/2$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$ is
 given in Figure~\ref{figure:geometric-mechanism-table}.
 
 \begin{figure}
@@ -227,13 +232,13 @@ mechanisms as Markov chains.
 \begin{example}
 Let the state $in_k$ and $out_l$
 denote the input value $k$ and output value $l$ respectively. Define
-the state set $S = \{ in_k, out_k : k \in \underline{n} \}$.
+the state set $S = \{ in_k, out_k : k \in \{ 0, 1, \ldots, n \} \}$.
 The probability transition $\wp (in_k, out_l)$ is the probability of the
 output value $l$ on the input value $k$ as defined in the
 mechanism. Figure~\ref{figure:geometric-mechanism-markov-chain} gives
 the Markov chain of the truncated
-$1/2$-geometric mechanism over $\underline{5}$. Further, assume
-$L(out_i) = \{ out_i \}$ and $\Delta (f) = 1$. Then $in_k$ and $in_l$ are
+$1/2$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$. Assume
+$\Delta (f) = 1$. Then $in_k$ and $in_l$ are
 neighbors iff $| k - l | \leq 1$.
 \end{example}
 
@@ -251,7 +256,7 @@ In the offline (or \emph{non-interactive}) model the curator releases the output
 Below we describe an online model adapted from \cite{}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which
 are above a given threshold. Other queries below the threshold are considered "irrelevent" and might be discarded. In \cite{}, since the model is set for continuous database, the Laplace mechanism is applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanism is applied.
 
-We consider the database set $D = \{0,1,2,3,4,5\}$, a threshold $t \in \{0,1,2,3,4,5\}$, queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, a truncated $1/2-$geometric mechanisms over $\underline{5}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that they are all neighbours. The modeling can be done in guarded command language and some fragments are shown below.\todo{the algorithm seems redundant}
+We consider the database set $D = \{0,1,2,3,4,5\}$, a threshold $t \in \{0,1,2,3,4,5\}$, queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, a truncated $1/2-$geometric mechanisms over $\{ 0, 1, \ldots, 5 \}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that they are all neighbours. The modeling can be done in guarded command language and some fragments are shown below.\todo{the algorithm seems redundant}
 
 \lz{use $\frac{2}{3}$, not $2/3$, and use $t'$, not $\hat{t}$}
 \begin{algorithm}
