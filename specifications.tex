@@ -90,8 +90,8 @@ We consider two other formulae for comparision:
 One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider our survey example, and the property $\dpriv{0}{.5} (\X \mathit{out}_Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=0$ or $\delta_1=.5$ without increasing the other one.
 
 
-Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X 
-(\mathit{out}_Y\wedge \X \mathit{out}_Y))$ under the model in 
+Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X
+(\mathit{out}_Y\wedge \X \mathit{out}_Y))$ under the model in
 Figure~\ref{figure:2-dp-mc}. Applying the
 compositional theorem, one can choose $\epsilon_2=2\epsilon_1=0$ and
 $\delta_2=2\delta_1=1$. However, we can check easily that one gets
@@ -118,7 +118,7 @@ With $\dpCTLstar$, the subformula $\phi$ in $\dpriv{\epsilon}{\delta} \phi$
 can be an arbitrary $\dpCTLstar$ path formula. One can specify
 $(\epsilon, \delta)$-closedness over infinite behaviors naturally.
 
-Consider the Bluetooth example in~\cite{prism-bluetooth-page} and the
+Consider the Bluetooth example in~\cite{DKNP04} and the
 formula $\dpriv{\epsilon}{\delta}{\F \G \mathit{timeout}}$. Let us say
 two states are neighbors if a slave device in a state is replaced by
 another device in the other state.
