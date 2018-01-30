@@ -145,7 +145,7 @@ $\underline{00}$ and $\underline{10}$ with probability $.375 =
 \frac{3}{8}$ and $.625 = \frac{5}{8}$ respectively. At an internal
 state, the Markov decision process can move to the output states $0$,
 $1$, or $2$ by the truncated $\frac{1}{2}$-geometric mechanism over
-$\underline{2}$ (Figure~\ref{figure:randomized-frequency}, \`{a} la
+$\{ 0, 1, 2 \}$ (Figure~\ref{figure:randomized-frequency}, \`{a} la
 Figure~\ref{figure:geometric-mechanism}). For any action sequence,
 observe that paths from the state $I$ and those from $\underline{I}$
 formalize the computation of Algorithm~\ref{algorithm:frequency-estimator}
@@ -300,20 +300,19 @@ distribution. Algorithm~\ref{algorithm:frequency-estimator} has three
 different outputs. By privacy analysis, the state $I$ satisfies the
 following $\dpCTLstar$ formula:
 \[
-\dpriv{\ln 4}{0} \F 0 \wedge \dpriv{\ln 4}{0} \F 1 \wedge
-\dpriv{\ln 4}{0} \F 2
+\Psi = \dpriv{\ln 4}{0} \F \mathit{at}_0 \wedge \dpriv{\ln 4}{0} \F
+\mathit{at}_1 \wedge \dpriv{\ln 4}{0} \F \mathit{at}_2
 \]
 For pan privacy, we moreover wish to measure privacy loss in internal
 states. For observations of length $k$, the probabilities of reaching
 each internal states need to be sufficiently close. The state $I$
 therefore must satisfy
 \[
-\dpriv{\ln 4}{0} \F 0 \wedge \dpriv{\ln 4}{0} \F 1 \wedge
-\dpriv{\ln 4}{0} \F 2
+\Psi
 \wedge
 \bigwedge_{k \in \bbfN}
-\dpriv{\ln 4}{0} \X^k 00 \wedge
-\dpriv{\ln 4}{0} \X^k 01 \wedge
-\dpriv{\ln 4}{0} \X^k 10 \wedge
-\dpriv{\ln 4}{0} \X^k 11.
+\dpriv{\ln 4}{0} \X^k \mathit{at}_{00} \wedge
+\dpriv{\ln 4}{0} \X^k \mathit{at}_{01} \wedge
+\dpriv{\ln 4}{0} \X^k \mathit{at}_{10} \wedge
+\dpriv{\ln 4}{0} \X^k \mathit{at}_{11}.
 \]

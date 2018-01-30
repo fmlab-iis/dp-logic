@@ -1,6 +1,5 @@
 \subsection{Markov Decision Processes}
 
-
 \begin{wrapfigure}{r}{.5\columnwidth}
   \centering
     \resizebox{.4\columnwidth}{!}{
@@ -22,8 +21,8 @@
       (q) edge [bend right=45] node [left=12,below] { $H, .2$ } (F)
       (q) edge [bend left=45] node [right=12,below] { $H, .8$ } (T)
 
-      (F) edge [loop left] node [below] { $-, 1$ } (F)
-      (T) edge [loop right] node [below] { $-, 1$ } (T)
+%      (F) edge [loop left] node [below] { $-, 1$ } (F)
+%      (T) edge [loop right] node [below] { $-, 1$ } (T)
       ;
       \end{tikzpicture}
     }
@@ -56,7 +55,7 @@ positive diagnosis. She answers \textit{Yes} with probability $1/5$
 and \textit{No} with probability $4/5$ when she is not
 diagnosed with the disease X. This gives an interactive mechanism
 corresponding to the MDP shown in
-Figure~\ref{figure:simple-mdp}.\lz{remove the loops}
+Figure~\ref{figure:simple-mdp}.
 
 In the figure, the states $+$,
 $-$, $Y$, and $N$ are interpreted as before. The actions $L$ and $H$
@@ -114,7 +113,7 @@ probabilistically distinguishable behaviors.
 \noindent
 \emph{Justification of the scheduler class.}
 For MDPs a richer class of scheduler classes have been considered in the literature, see \cite{BK:08:PMC}. It may depend on the full history of state and action sequences, and the decision can be randomised. If we use such scheduler, another definition of the differentially private operator
-might be:\lz{put $bad$ on $\models$?}
+might be:
 \begin{eqnarray*}
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
   & \textmd{ if } &
@@ -131,7 +130,7 @@ A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
 no scheduler could differentiate the probabilities of paths satisfying
 $\phi$ from neighbors. Such a definition would allow strategies to
 take different actions from different states. It might need different
-action sequences to distinguish \lz{or mimic?} neighbors. \lz{add However,?}Two neighbors could still be
+action sequences to distinguish neighbors. Two neighbors could still be
 differentiated by an action sequence and lose their privacy.
 
 We consider only sequences $\scheduler{S}\in Act^\omega$, which correspond to the query sequences. In the differential privacy context, neighbor states exhibit same action behaviours. And we will see later that
@@ -171,7 +170,7 @@ Each input alphabet $\alpha$ induces a stochastic matrix $M(\alpha)$ in the obvi
 
 \paragraph{Emptiness problem:} Given a probabilistic automaton $\mathcal{A}= (S,\Sigma,M,s_0,F)$, whether there exists $\eta\in\Sigma^*$ such that $v_{s_0}\cdot M(\eta)\cdot (v_F)^c > 0$?
 
-Now we establish the proof by reducing the threshold problem to our $\dpCTLstar$ model checking problem. Given the probabilistic automaton  $\mathcal{A}= (S,\Sigma,M,s_0,F)$, assume we have a \emph{primed} copy $\mathcal{A}¡¯= (S¡¯,\Sigma,M',s_0¡¯,\emptyset)$.
+Now we establish the proof by reducing the threshold problem to our $\dpCTLstar$ model checking problem. Given the probabilistic automaton  $\mathcal{A}= (S,\Sigma,M,s_0,F)$, assume we have a \emph{primed} copy $\mathcal{A}'= (S',\Sigma,M',s_0',\emptyset)$.
 
 Now we construct our MDP  $M =
 (S\cupdot S', \Sigma, \wp, L)$ where $\wp(s,a,t)$ equals to $M(s,a,t)$ if $s,t\in S$ and to $M'(s,a,t)$ if $s,t\in S'$. We define the neighbor relation $N_S:=\{(s_0,s_0')\}$ by relating states $s_0,s_0'$. The labelling function $L$ is defined by $L(s)=at_F$ if $s\in F$ and $L(s)=\empty$ otherwise.

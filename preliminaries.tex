@@ -1,11 +1,12 @@
 
 Let $\bbfZ$ and $\bbfZ^{\geq 0}$ be the sets of integers and
-non-negative integers respectively. For $n \geq 0$, $\underline{n} =
-\{ 0, 1, \ldots, n \} \subseteq \bbfZ^{\geq 0}$.\lz{not so often used: can we do withuot this notatin?}
-
+non-negative integers respectively. 
+% For $n \geq 0$, $\underline{n} = \{ 0, 1, \ldots, n \} \subseteq
+% \bbfZ^{\geq 0}$.
+%\lz{not so often used: can we do withuot this notatin?}
 We briefly review the definitions of differential privacy, Markov
 chains, and Markov decision processes. For differential privacy, we
-follow the non-standard \todo{why?} definition in~\cite{GRS:09:UUPM,GRS:12:UUPM}. Our
+follow the standard definition in~\cite{DR:14:AFDP,GRS:09:UUPM,GRS:12:UUPM}. Our
 definitions of Markov chains and Markov decision processes are adopted
 from~\cite{BK:08:PMC}.
 
@@ -55,14 +56,13 @@ similar behaviors;
 the smaller they are, the behaviors are more similar.
 Informally, a differentially private mechamism has probabilistically
 similar behabiors on neighboring databases. It will have similar
-output distributions when a row is added, deleted, or replaced by
-another in a given
+output distributions when a row is replaced by another in a given
 database. Consider, for instance, a database contains the row
 corresponding to an individual. A differentially private mechanism
 will have a similar output distribution when the individual is not in
 the database. Regardless of the presence of the individual, such
 mechanisms will behave similarly. Privacy of the individual is thus
-preserved by differentially private mechanisms. \todo{not clear}
+preserved by differentially private mechanisms.
 
 \subsection{Markov Chains and Markov Decision Processes}
 
