@@ -101,7 +101,7 @@ better privacy parameter $(0,0.5)$.
 \paragraph{Reachability Privacy.}
 The formula $\dpriv{\epsilon}{\delta}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of eventually reaching $\top$. Reachability privacy is often used in combination with other properties.
 
-As an example, for our threshold \lz{to do} model, we consider the property $\wedge_{i=1}^{c} \dpriv{\epsilon}{0}(\X^k \top) \wedge \PJ{\le 10^{-6}}(\X^c F T) \wedge \dpriv{\epsilon}{0}(\X^c F \top)$.
+As an example, for our threshold \lz{to do} model, we consider the property $\wedge_{i=1}^{7} \dpriv{3}{0}(\X^i \top) \wedge \PJ{\le .1}(\X^7 F T) \wedge \dpriv{3}{0}(\X^7 F \top)$.
 that is used to express the privacy for our threshold Markov chains. It is only a valid formula if we would allow infinite conjunctions. However, it is interesting to note the relation to language equivalence for probabilistic automata\lz{to be discussed}
 
 Later we shall illustrate how reachability privacy can be used to specify differential privacy property for MDPs.
