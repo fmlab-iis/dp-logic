@@ -162,37 +162,35 @@ A \emph{probabilistic automaton}~\cite{Rabin63} is a tuple $\mathcal{A}= (S,\Sig
   \item $\Sigma$ is the finite set of input alphabet,
   \item $M: S\times\Sigma\times S \to [0,1]$ such that $\sum_{t\in S} M(s,\alpha,t)=1$ for all $s\in S$ and $\alpha\in \Sigma$,
   \item $s_0\in S$ is the initial state,
-  \item $F\subseteq S$ is a set of accepting states.
+  \item $B\subseteq S$ is a set of accepting states.
 \end{itemize}
 
-Each input alphabet $\alpha$ induces a stochastic matrix $M(\alpha)$ in the obvious way. Let $\lambda$ denote the empty string. For $\eta\in\Sigma^*$ we define $M(\eta)$ inductively by: $M(\lambda)$ is the identity matrix, $M(x\eta')=M(x)M(\eta')$. Thus, $M(\eta)(s,s')$ denotes the probability of going from $s$ to $s'$ after reading $\eta$. Let $v_F$ denote the characteristic row vector for the set $F$, and $v_{s_0}$ denote the characteristic row vector for the set $\{s_0\}$. Then, the accepting probably of $\eta$ by $\mathcal{A}$ is defined as $v_{s_0}\cdot M(\eta)\cdot (v_F)^c$ where $(v_F)^c$ denotes the transpose of $v_F$. The following \emph{emptiness problem} is know to be undecidable~\cite{Paz71}
+Each input alphabet $\alpha$ induces a stochastic matrix $M(\alpha)$ in the obvious way. Let $\lambda$ denote the empty string. For $\eta\in\Sigma^*$ we define $M(\eta)$ inductively by: $M(\lambda)$ is the identity matrix, $M(x\eta')=M(x)M(\eta')$. Thus, $M(\eta)(s,s')$ denotes the probability of going from $s$ to $s'$ after reading $\eta$. Let $v_B$ denote the characteristic row vector for the set $F$, and $v_{s_0}$ denote the characteristic row vector for the set $\{s_0\}$. Then, the accepting probably of $\eta$ by $\mathcal{A}$ is defined as $v_{s_0}\cdot M(\eta)\cdot (v_B)^c$ where $(v_B)^c$ denotes the transpose of $v_B$. The following \emph{emptiness problem} is know to be undecidable~\cite{Paz71}:
 %~\cite{Worrell08}:
 
-\paragraph{Emptiness problem:} Given a probabilistic automaton $\mathcal{A}= (S,\Sigma,M,s_0,F)$, whether there exists $\eta\in\Sigma^*$ such that $v_{s_0}\cdot M(\eta)\cdot (v_F)^c > 0$?
+\paragraph{Emptiness problem:} Given a probabilistic automaton $\mathcal{A}= (S,\Sigma,M,s_0,B)$, whether there exists $\eta\in\Sigma^*$ such that $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$?
 
-Now we establish the proof by reducing the threshold problem to our $\dpCTLstar$ model checking problem. Given the probabilistic automaton  $\mathcal{A}= (S,\Sigma,M,s_0,F)$, assume we have a \emph{primed} copy $\mathcal{A}'= (S',\Sigma,M',s_0',\emptyset)$.
+Now we establish the proof by reducing the threshold problem to our $\dpCTLstar$ model checking problem. Given the probabilistic automaton  $\mathcal{A}= (S,\Sigma,M,s_0,B)$, assume we have a \emph{primed} copy $\mathcal{A}'= (S',\Sigma,M',s_0',\emptyset)$.
 
 Now we construct our MDP  $M =
-(S\cupdot S', \Sigma, \wp, L)$ where $\wp(s,a,t)$ equals to $M(s,a,t)$ if $s,t\in S$ and to $M'(s,a,t)$ if $s,t\in S'$. We define the neighbor relation $N_S:=\{(s_0,s_0')\}$ by relating states $s_0,s_0'$. The labelling function $L$ is defined by $L(s)=at_F$ if $s\in F$ and $L(s)=\empty$ otherwise.
+(S\cupdot S', \Sigma, \wp, L)$ where $\wp(s,a,t)$ equals to $M(s,a,t)$ if $s,t\in S$ and to $M'(s,a,t)$ if $s,t\in S'$. We define the neighbor relation $N_S:=\{(s_0,s_0'),(s_0',s_0)\}$ by relating states $s_0,s_0'$. The labelling function $L$ is defined by $L(s)=at_B$ if $s\in F$ and $L(s)=\empty$ otherwise.
 
-\lz{shall we use $\diamond$ for finally?}
-Now we consider the formula  $\Phi = \dpriv{1}{0} (\diamond at_F)$. For the reduction we prove $s_0\models \dpriv{1}{0} (\diamond at_F)$ iff for all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_F)^c \leq 0$.
+Now we consider the formula  $\Phi = \dpriv{1}{0} (F at_B)$. For the reduction we prove $s_0\models \dpriv{1}{0} (F at_B)$ iff for all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$.
 
-\lz{remember explain meaning of $\Sigma^\omega$}
-First we assume $s_0\models \dpriv{1}{0} (\diamond at_F)$. By $\dpCTLstar$ semantics we have that for all $\scheduler{S}\in\Sigma^\omega$,
-$\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F} \leq
+First we assume $s_0\models \dpriv{1}{0} (F at_B)$. By $\dpCTLstar$ semantics we have that for all $\scheduler{S}\in\Sigma^\omega$,
+$\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} \leq
   e \cdot
-  \myPr{s_0'}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F}$. Observe $\myPr{s_0'}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F}=0$ by construction, thus we have
-$\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F} \leq
- 0$. This implies  $v_{s_0}\cdot M(\eta)\cdot (v_F)^c \leq 0$ for all $\eta\in\Sigma^*$.
- 
- For the other direction, assume that all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_F)^c \leq 0$. For the sake of contradiction, assume that $s_0\not\models \dpriv{1}{0} (\diamond at_F)$. Since the relation $N_S$ contains only one pair, it implies that there exists a scheduler $\scheduler{S}\in\Sigma^\omega$ such that $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{\diamond at_F} >0$. It is then easy to construct a finite sequence $\eta\in\Sigma^*$ with  $v_{s_0}\cdot M(\eta)\cdot (v_F)^c > 0$, a contradiction.
+  \myPr{s_0'}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B}$. Observe $\myPr{s_0'}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B}=0$ by construction, thus we have
+$\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} \leq
+ 0$. This implies  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$ for all $\eta\in\Sigma^*$.
+
+ For the other direction, assume that all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$. For the sake of contradiction, assume that $s_0\not\models \dpriv{1}{0} (F at_B)$. Since the relation $N_S$ contains only one pair, it implies that there exists a scheduler $\scheduler{S}\in\Sigma^\omega$ such that $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} >0$. It is then easy to construct a finite sequence $\eta\in\Sigma^*$ with  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$, a contradiction.
 \end{proof}
 
 We consider some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
 $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{F B} -
 \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
-becomes an approximate version of the language equivalence problem~\cite{Tzeng92}. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}. 
+becomes an approximate version of the language equivalence problem~\cite{Tzeng92}. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}.
 
 \hide{
 Since the scheduler attaining the maximally probable

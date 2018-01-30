@@ -19,7 +19,7 @@ privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}.
 The idea is to show reachability probabilities are similar on
 neighboring observations. In the following, we model a discrete
 variant of the mechanisms by Markov decision processes. We will also
-specify pan privacy in our model using $\dpCTL$.
+specify pan privacy in our model using $\dpCTLstar$.
 
 Consider monitoring events of the types $a$ and $b$ continuously.
 A sequence of event types is said to be an observation. Two
@@ -300,8 +300,8 @@ distribution. Algorithm~\ref{algorithm:frequency-estimator} has three
 different outputs. By privacy analysis, the state $I$ satisfies the
 following $\dpCTLstar$ formula:
 \[
-\Psi = \dpriv{\ln 4}{0} \F \mathit{at}_0 \wedge \dpriv{\ln 4}{0} \F
-\mathit{at}_1 \wedge \dpriv{\ln 4}{0} \F \mathit{at}_2
+\Psi = \dpriv{\ln 4}{0} (\F \mathit{at}_0) \wedge \dpriv{\ln 4}{0} (\F
+\mathit{at}_1) \wedge \dpriv{\ln 4}{0} (\F \mathit{at}_2)
 \]
 For pan privacy, we moreover wish to measure privacy loss in internal
 states. For observations of length $k$, the probabilities of reaching

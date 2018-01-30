@@ -89,14 +89,12 @@ better privacy parameter $(0,0.5)$.
 % or $(-\infty,\frac{9}{16})$. \bw{use $-\infty$ instead of $\ln 0$. is it okay?}\lz{lets just remove it ;)}
 
 \paragraph{Reachability Privacy.}
-The formula $\dpriv{\epsilon}{\delta}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of eventually reaching $\top$. Note neighbor states may reach the goal state $\top$ with 
+The formula $\dpriv{\epsilon}{\delta}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of eventually reaching $\top$. Reachability privacy is often used in combination with other properties.
 
+As an example, for our threshold \lz{to do} model, we consider the property $\wedge_{i=1}^{c} \dpriv{\epsilon}{0}(\X^k \top) \wedge \PJ{\le 10^{-6}}(\X^c F T) \wedge \dpriv{\epsilon}{0}(\X^c F \top)$.
+that is used to express the privacy for our threshold Markov chains. It is only a valid formula if we would allow infinite conjunctions. However, it is interesting to note the relation to language equivalence for probabilistic automata\lz{to be discussed}
 
-For our threshold \lz{to do} model, we have the differential privacy property $\wedge_{i=1}^{c} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$. 
-
-Finally, we the property
-$\wedge_{i\in N} \dpriv{\epsilon}{0}(\X^k \top) \wedge \dpriv{\epsilon}{0}(F \top)$ that is used to express the privacy for our threshold Markov chains. It is only a valid formula if we would allow infinite conjunctions. However, it is interesting to note the relation to language equivalence for probabilistic automata\lz{to be discussed}
-
+Later we shall illustrate how reachability privacy can be used to specify differential privacy property for MDPs.
 
 \paragraph{Infinite Differential Privacy.}
 Due to the power of linear temporal logic, our logic $\dpCTLstar$ generalizes differential privacy to infinite
