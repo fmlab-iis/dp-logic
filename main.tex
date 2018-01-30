@@ -110,7 +110,7 @@ Section~\ref{section:conclusions} concludes our presentation.
 \label{section:conclusions}
 We have introduced $\dpCTLstar$ to reason about properties in differential privacy, and have investigated the model checking problem. For Markov chains, the model checking problem has polynomial complexity. The general MDP model checking problem is undecidable. We have discussed that some special cases are decidable. An interesting work is to identify more
 decidable subclass. As an example, consider the formula $\bigwedge_{k \in \bbfN}
-\dpriv{\epsilon}{\delta} \X^k \mathit{at}_{00}$ which was used in specifying the pan privacy. For the case $\epsilon=\delta=0$, it reduces to a language equivalence problem for probabilistic automata. It is interesting to characterise other cases as well.
+\dpriv{\epsilon}{\delta} (\X^k  00)$ which was used in specifying the pan privacy. For the case $\epsilon=\delta=0$, it reduces to a language equivalence problem for probabilistic automata. It is interesting to characterise other cases as well.
  Another interesting line of further works is to consider continuous perturbation (such as Laplace distribution used in \cite{DR:14:AFDP}) -- we would need Markov models with continuous state space for the modelling.
 
 

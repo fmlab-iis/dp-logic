@@ -1,6 +1,6 @@
 \begin{proof}
 The proof follows by a reduction from the \emph{emptiness} problem for probabilistic automata.
-A \emph{probabilistic automaton}~\cite{Rabin63} is a tuple $\mathcal{A}= (S,\Sigma,M,s_0,F)$ where
+A \emph{probabilistic automaton}~\cite{Rabin63} is a tuple $\mathcal{A}= (S,\Sigma,M,s_0,B)$ where
 \begin{itemize}
   \item $S$ is a finite set of states,
   \item $\Sigma$ is the finite set of input alphabet,
@@ -9,15 +9,15 @@ A \emph{probabilistic automaton}~\cite{Rabin63} is a tuple $\mathcal{A}= (S,\Sig
   \item $B\subseteq S$ is a set of accepting states.
 \end{itemize}
 
-Each input alphabet $\alpha$ induces a stochastic matrix $M(\alpha)$ in the obvious way. Let $\lambda$ denote the empty string. For $\eta\in\Sigma^*$ we define $M(\eta)$ inductively by: $M(\lambda)$ is the identity matrix, $M(x\eta')=M(x)M(\eta')$. Thus, $M(\eta)(s,s')$ denotes the probability of going from $s$ to $s'$ after reading $\eta$. Let $v_B$ denote the characteristic row vector for the set $F$, and $v_{s_0}$ denote the characteristic row vector for the set $\{s_0\}$. Then, the accepting probably of $\eta$ by $\mathcal{A}$ is defined as $v_{s_0}\cdot M(\eta)\cdot (v_B)^c$ where $(v_B)^c$ denotes the transpose of $v_B$. The following \emph{emptiness problem} is know to be undecidable~\cite{Paz71}:
+Each input alphabet $\alpha$ induces a stochastic matrix $M(\alpha)$ in the obvious way. Let $\lambda$ denote the empty string. For $\eta\in\Sigma^*$ we define $M(\eta)$ inductively by: $M(\lambda)$ is the identity matrix, $M(x\eta')=M(x)M(\eta')$. Thus, $M(\eta)(s,s')$ denotes the probability of going from $s$ to $s'$ after reading $\eta$. Let $v_B$ denote the characteristic row vector for the set $B$, and $v_{s_0}$ denote the characteristic row vector for the set $\{s_0\}$. Then, the accepting probably of $\eta$ by $\mathcal{A}$ is defined as $v_{s_0}\cdot M(\eta)\cdot (v_B)^c$ where $(v_B)^c$ denotes the transpose of $v_B$. The following \emph{emptiness problem} is know to be undecidable~\cite{Paz71}:
 %~\cite{Worrell08}:
 
 \paragraph{Emptiness problem:} Given a probabilistic automaton $\mathcal{A}= (S,\Sigma,M,s_0,B)$, whether there exists $\eta\in\Sigma^*$ such that $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$?
 
 Now we establish the proof by reducing the threshold problem to our $\dpCTLstar$ model checking problem. Given the probabilistic automaton  $\mathcal{A}= (S,\Sigma,M,s_0,B)$, assume we have a \emph{primed} copy $\mathcal{A}'= (S',\Sigma,M',s_0',\emptyset)$.
 
-Now we construct our MDP  $M =
-(S\cupdot S', \Sigma, \wp, L)$ where $\wp(s,a,t)$ equals to $M(s,a,t)$ if $s,t\in S$ and to $M'(s,a,t)$ if $s,t\in S'$. We define the neighbor relation $N_S:=\{(s_0,s_0'),(s_0',s_0)\}$ by relating states $s_0,s_0'$. The labelling function $L$ is defined by $L(s)=at_B$ if $s\in F$ and $L(s)=\empty$ otherwise.
+Let $AP:=\{at_B\}$. Now we construct our MDP  $M =
+(S\cupdot S', \Sigma, \wp, L)$ where $\wp(s,a,t)$ equals to $M(s,a,t)$ if $s,t\in S$ and to $M'(s,a,t)$ if $s,t\in S'$. We define the neighbor relation $N_S:=\{(s_0,s_0'),(s_0',s_0)\}$ by relating states $s_0,s_0'$. The labelling function $L$ is defined by $L(s)=\{at_B\}$ if $s\in B$ and $L(s)=\emptyset$ otherwise.
 
 Now we consider the formula  $\Phi = \dpriv{1}{0} (F at_B)$. For the reduction we prove $s_0\models \dpriv{1}{0} (F at_B)$ iff for all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$.
 
@@ -28,5 +28,5 @@ $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} \leq
 $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} \leq
  0$. This implies  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$ for all $\eta\in\Sigma^*$.
 
- For the other direction, assume that all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$. For the sake of contradiction, assume that $s_0\not\models \dpriv{1}{0} (F at_B)$. Since the relation $N_S$ contains only one pair, it implies that there exists a scheduler $\scheduler{S}\in\Sigma^\omega$ such that $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} >0$. It is then easy to construct a finite sequence $\eta\in\Sigma^*$ with  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$, a contradiction.
+ For the other direction, assume that all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$. We prove by contradiction. Assume that $s_0\not\models \dpriv{1}{0} (F at_B)$. Since the relation $N_S$ contains only one pair, it implies that there exists a scheduler $\scheduler{S}\in\Sigma^\omega$ such that $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} >0$. It is then easy to construct a finite sequence $\eta\in\Sigma^*$ with  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$, a contradiction.
 \end{proof}

@@ -319,7 +319,9 @@ following $\dpCTLstar$ formula:
 $
 \Psi = \dpriv{\ln 4}{0} (\F \mathit{at}_0) \wedge \dpriv{\ln 4}{0} (\F
 \mathit{at}_1) \wedge \dpriv{\ln 4}{0} (\F \mathit{at}_2)
-$.
+$
+(Here 
+$\mathit{at}_i$, i=1,2,3, is an atomic proposition satisfied only at state $i$, which is not shown in the figure).
 For pan privacy, we moreover wish to measure privacy loss in internal
 states. For observations of length $k$, the probabilities of reaching
 each internal states need to be sufficiently close. The state $I$
@@ -328,8 +330,8 @@ therefore must satisfy
 \Psi
 \wedge
 \bigwedge_{k \in \bbfN}
-\dpriv{\ln 4}{0} \X^k {00} \wedge
-\dpriv{\ln 4}{0} \X^k {01} \wedge
-\dpriv{\ln 4}{0} \X^k {10} \wedge
-\dpriv{\ln 4}{0} \X^k {11}.
+\dpriv{\ln 4}{0} (\X^k {00}) \wedge
+\dpriv{\ln 4}{0} (\X^k {01}) \wedge
+\dpriv{\ln 4}{0} (\X^k {10}) \wedge
+\dpriv{\ln 4}{0} (\X^k {11}).
 \]
