@@ -36,8 +36,10 @@ Thus, in this section, we discuss how to model differentially private mechanisms
       distance=2cm,node/.style={circle,draw}]
       \node[node] (p) at ( 0,  .5) { $+$ };
       \node[node] (n) at ( 0, -.5) { $-$ };
-      \node[node] (Y) at (-1.5,  0) { $Y$ };
-      \node[node] (N) at ( 1.5,  0) { $N$ };
+      \node[node] (Y) at (-1.5,  0) { $s$ };
+      \node at (-1.5, .5) { $\mathit{out}_Y$ };
+      \node[node] (N) at ( 1.5,  0) { $t$ };
+      \node at ( 1.5, .5) { $\mathit{out}_N$ };
 
       \path
       (p) edge node [above] { $\frac{3}{4}$ } (Y)
@@ -65,9 +67,11 @@ uniformly~\cite{DR:14:AFDP}.
   Figure~\ref{figure:2-dp} shows the survey
 mechanism and its corresponding Markov chain. In the figure, the states
 $+$ and $-$ denote the diagnoses are positive or negative
-respectively; the states $Y$ and $N$ denote answers to the survey
-question. For each state $s$, we associate an atomic predicate
-$\mathit{at}_s$ (not shown in the figure).
+respectively; the states $s$ and $t$ denote answers to the survey
+question and hence let $\mathit{out}_Y \in L (s)$ and $\mathit{out}_N
+\in L (t)$.
+For each state $x$, we moreover associate an atomic predicate
+$\mathit{at}_x$ (not shown in the figure). 
 States $+$ and $-$ are neighbors. 
 The random noise boosts the probability of answering
 \textit{Yes} or \textit{No} to at least $1/4$ regardless of
