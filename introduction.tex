@@ -95,8 +95,14 @@ The time complexity of our model checking algorithm is
 still polynomial. The logic $\dpCTLstar$ essentially obtains its
 expressiveness for free. \bw{double check}
 For Markov decision processes, we show that checking whether a state
-satisfies $\dpriv{\epsilon}{\delta} \phi$ is undecidable. 
+satisfies $\dpriv{\epsilon}{\delta} \phi$ is undecidable.
 
 % analyze mechanism
 
-
+\paragraph{Contributions.} Our main contributions are three folds. (i)
+We introduce the logic $\dpCTLstar$ for reasoning about properties in 
+differential privacy. We use the logic to express classical
+differential privacy properties, and moreover, complex properties such as those 
+involving infinite behaviors can also be expressed. (ii) We model several differential privacy mechanisms, including the streaming process, in Markov chains or MDPs.
+(iii) We show that the model checking problem 
+problem for Markov chains is standard. For MDPs we show that it is undecidable.  
