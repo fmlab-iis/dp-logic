@@ -254,7 +254,7 @@ the Markov chain of the truncated
 $1/2$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 \end{example}
 
-\begin{algorithm}
+\begin{algorithm}[tbh]
 	\begin{algorithmic}[1]
 		\Function{OnlineModel}{$d$, $t$}
 		\Match{the input threshold $t$}
@@ -322,7 +322,7 @@ $1/2$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 		\EndFunction
 		
 	\end{algorithmic}
-	\caption{Input is a private database $d \in \{0,1,2,3,4,5\}$, an adaptively chosen stream of sensitivity 1 queries $f_1$, . . ., a threshold $t \in \{0,1,2,3,4,5\}$.Output is a stream of answers $a_1$,...}
+	\caption{Input is a private database $d \in \{0,1,\ldots,5\}$, an adaptively chosen stream of sensitivity 1 queries $f_1,f_2$,\ldots, a threshold $t \in \{0,1,\ldots,5\}$.Output is a stream of answers $a_1,a_2$,\ldots}
 	\label{algorithm:online-model}
 \end{algorithm}
 
@@ -337,9 +337,9 @@ In the offline (or \emph{non-interactive}) model the curator releases the output
 
 \paragraph{Online Model.}
 Below we describe an online model adapted from~\cite{DR:14:AFDP}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which
-are above a given threshold. Other queries below the threshold are considered "irrelevent" and might be discarded. In ~\cite{DR:14:AFDP}, since the model is set for continuous database, the Laplace mechanism is applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanism is applied.
+are above a given threshold. Other queries below the threshold are considered \emph{irrelevant} and might be discarded. In~\cite{DR:14:AFDP}, the model is set for continuous database, and the Laplace mechanism is applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanism is applied.
 
-We consider the database set $D = \{0,1,2,3,4,5\}$, a threshold $t \in \{0,1,2,3,4,5\}$, queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, truncated $\alpha$-geometric mechanisms over $\underline{5}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that a pair of data $d,d'$are neighbours, if $|d-d'|\le 1$. The algorithm is shown in Algorithm~\ref{algorithm:online-model}.
+We consider the database set $D = \{0,1\ldots,5\}$, a threshold $t \in \{0,1\ldots,5\}$, and queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, truncated $\alpha$-geometric mechanisms over $\{0,1\ldots,5\}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that a pair of data $d,d'$are neighbours, if $|d-d'|\le 1$. The algorithm is shown in Algorithm~\ref{algorithm:online-model}.
 
 
 

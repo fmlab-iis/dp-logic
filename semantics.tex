@@ -1,6 +1,6 @@
 
-Given a finite discrete-time Markov chain $K = (S, \wp, L)$, a
-\emph{neighborhood relation on $S$} $\neighbor{S} \subseteq S \times S$
+Given a finite Markov chain $K = (S, \wp, L)$, a
+\emph{neighborhood relation} $\neighbor{S} \subseteq S \times S$
 is a reflexive and symmetric relation on $S$. We will write $s
 \neighbor{S} t$ when $(s, t) \in \neighbor{S}$. If $s \neighbor{S} t$,
 we say $s$ and $t$ are \emph{neighbors} or $t$ is a \emph{neighbor} of
@@ -98,18 +98,18 @@ states satisfying the subformula $\PJ{J} \phi$ are obtained by
 computing $\myPr{s}{K}{\neighbor{S}}{\phi}$ for state $s \in S$.
 These probabilities can be computed by solving linear equations or
 through iterative approximations. We summarize it in the following
-theorem~\cite{BK:08:PMC}:
+theorem (details see~\cite{BK:08:PMC}):
 
 \begin{lemma}
   Let $K = (S, \wp, L)$ be a Markov chain, $s
   \in S$, and $B, C \subseteq S$. The probabilities
   $\myPr{s}{K}{\neighbor{S}}{\gX B}$ and
-  $\myPr{s}{K}{\neighbor{S}}{B \mho C}$
+  $\myPr{s}{K}{\neighbor{S}}{B \mho C}$ 
 \hide{
   $\Pr[\{ \pi : K, \neighbor{K}, \pi \models B \buntil{n} C \textmd{
     with } \pi_0 = s \}]$
 } are computable within time polynomial in
-  $|S|$.
+  $|S|$.\lz{and $|\wp|$?}
   \label{lemma:PJ-subroutines}
 \end{lemma}
 
@@ -118,7 +118,7 @@ admit path formulae of the form $\gX B$ (next $B$) and
 $B \guntil C$ ($B$ until $C$) with $B, C \subseteq S$ as
 in~\cite{BK:08:PMC}. They are interpreted by introducing new atomic
 propositions $B$ and $C$ for each $s \in B$ and $s \in C$
-respectively. 
+respectively.
 \hide{
 We will also use graphical symbols $\gF C$ ($C$ in
 the future) and $\gG C$ (globally $C$) in such path formulae
@@ -185,5 +185,5 @@ The algorithm requires at most $O
 \end{corollary}
 
 The model checking algorithm for $\dpCTLstar$ can be treated as in the classical setting~\cite{BK:08:PMC}:  all we need is to  compute the  probability
-  $\myPr{s}{K}{\neighbor{S}}{\phi}$ with general path formula $\phi$. For this purpose one first constructs a deterministic $\omega$-automaton $R$, such as deterministic Rabin automaton. Then, the probability reduces to a
+  $\myPr{s}{K}{\neighbor{S}}{\phi}$ with general path formula $\phi$. For this purpose one first constructs a deterministic $\omega$-automaton $R$ corresponding to $\phi$, such as deterministic Rabin automaton. Then, the probability reduces to a
   reachability probability in the product Markov chain obtained from $K$ and $R$. There are more efficient algorithms without the product construction, see \cite{CY95,CSS03,BaierKKKMW16} for details.
