@@ -256,6 +256,78 @@ the Markov chain of the truncated
 $1/2$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 \end{example}
 
+\begin{algorithm}
+	\begin{algorithmic}[1]
+		\Function{OnlineModel}{$d$, $t$}
+		\Match{the input threshold $t$}
+		\Comment{Assignments of $t'$ by $\frac{1}{4}$-geometric mechanism}
+		\lCase{$0$}{$t' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{4}{5}$,$\frac{3}{20}$,
+			$\frac{3}{80}$,$\frac{3}{320}$,
+			$\frac{3}{1280}$,$\frac{1}{1280}$ respectively}
+		\lCase{$1$}{$t' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{5}$,$\frac{3}{5}$,
+			$\frac{3}{20}$,$\frac{3}{80}$,
+			$\frac{3}{320}$,$\frac{1}{320}$ respectively}
+		\lCase{$2$}{$t' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{20}$,$\frac{3}{20}$,
+			$\frac{3}{5}$,$\frac{3}{20}$,
+			$\frac{3}{80}$,$\frac{1}{80}$ respectively}
+		\lCase{$3$}{$t' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{80}$,$\frac{3}{80}$,
+			$\frac{3}{20}$,$\frac{3}{5}$,
+			$\frac{3}{20}$,$\frac{1}{20}$ respectively}
+		\lCase{$4$}{$t' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{320}$,$\frac{3}{320}$,
+			$\frac{3}{80}$,$\frac{3}{20}$,
+			$\frac{3}{5}$,$\frac{1}{5}$ respectively}
+		\lCase{$5$}{$t' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{1280}$,$\frac{3}{1280}$,
+			$\frac{3}{320}$,$\frac{3}{80}$,
+			$\frac{3}{20}$,$\frac{4}{5}$ respectively}
+		\EndMatch
+		\For{each query $f_i$}
+		\Match{the input databese $d$}
+		\Comment{Assignments of $f_{i}'$ by $\frac{1}{2}$-geometric mechanism}
+		\lCase{$0$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{2}{3}$,$\frac{1}{6}$,
+			$\frac{1}{12}$,$\frac{1}{24}$,
+			$\frac{1}{48}$,$\frac{1}{48}$ respectively}
+		\lCase{$1$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{3}$,$\frac{1}{3}$,
+			$\frac{1}{6}$,$\frac{1}{12}$,
+			$\frac{1}{24}$,$\frac{1}{24}$ respectively}
+		\lCase{$2$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{6}$,$\frac{1}{6}$,
+			$\frac{1}{3}$,$\frac{1}{6}$,
+			$\frac{1}{12}$,$\frac{1}{12}$ respectively}
+		\lCase{$3$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{12}$,$\frac{1}{12}$,
+			$\frac{1}{6}$,$\frac{1}{3}$,
+			$\frac{1}{6}$,$\frac{1}{6}$ respectively}
+		\lCase{$4$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{24}$,$\frac{1}{24}$,
+			$\frac{1}{12}$,$\frac{1}{6}$,
+			$\frac{1}{3}$,$\frac{1}{3}$ respectively}
+		\lCase{$5$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+			$\frac{1}{48}$,$\frac{1}{48}$,
+			$\frac{1}{24}$,$\frac{1}{12}$,
+			$\frac{1}{6}$,$\frac{2}{3}$ respectively}
+		\EndMatch
+		\If{$f_{i}'>t'$}
+		\State{$a_i=\top$}
+		\State{\Return}
+		\Else
+		\State{$a_i=\bot$}
+		\EndIf
+		\EndFor
+		\EndFunction
+		
+	\end{algorithmic}
+	\caption{Input is a private database $d \in \{0,1,2,3,4,5\}$, an adaptively chosen stream of sensitivity 1 queries $f_1$, . . ., a threshold $t \in \{0,1,2,3,4,5\}$.Output is a stream of answers $a_1$,...}
+	\label{algorithm:online-model}
+\end{algorithm}
+
 \subsection{Markov Chains for Differentially Private Mechanisms}
 Now we describe our main ideas for  modelling differentially private mechanisms.
 A state $s$ stores at least the a database $x\in \mathcal{X}^n$, which is the data hold by a trusted \emph{curator}. A transition corresponds to the data analysis mechanisms.
@@ -265,46 +337,13 @@ the curator generates.
 In the differentially privacy context, we differentiate between \emph{offline} and \emph{online} models.
 In the offline (or \emph{non-interactive}) model the curator releases the outputs only once and plays no further role. Thus the models we constructed in previous section are offline models. On the contrary, in the online (or \emph{interactive}) model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differentially privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
 
-
 \paragraph{Online Model.}
-Below we describe an online model adapted from \cite{}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which
-are above a given threshold. Other queries below the threshold are considered "irrelevent" and might be discarded. In \cite{}, since the model is set for continuous database, the Laplace mechanism is applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanism is applied.
+Below we describe an online model adapted from~\cite{DR:14:AFDP}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which
+are above a given threshold. Other queries below the threshold are considered "irrelevent" and might be discarded. In ~\cite{DR:14:AFDP}, since the model is set for continuous database, the Laplace mechanism is applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanism is applied.
 
-We consider the database set $D = \{0,1,2,3,4,5\}$, a threshold $t \in \{0,1,2,3,4,5\}$, queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, a truncated $1/2-$geometric mechanisms over $\{ 0, 1, \ldots, 5 \}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that they are all neighbours. The modeling can be done in guarded command language and some fragments are shown below.\todo{the algorithm seems redundant}
-
-\lz{use $\frac{2}{3}$, not $2/3$, and use $t'$, not $\hat{t}$}
-\begin{algorithm}
-    \begin{algorithmic}[1]
-
-        \Function{OnlineModel}{$d$, $t$}
+We consider the database set $D = \{0,1,2,3,4,5\}$, a threshold $t \in \{0,1,2,3,4,5\}$, queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, truncated $\alpha$-geometric mechanisms over $\underline{5}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that a pair of data $d,d'$are neighbours, if $|d-d'|\le 1$. The algorithm is shown in Algorithm~\ref{algorithm:online-model}.
 
 
-        \State{$\mathbf{If}$  $t=0$ $\rightarrow   2/3 : (\hat{t} = 0) + 1/6 : (\hat{t} = 1) + 1/12 : (\hat{t} = 2)$ }
-        \State{$+ 1/24 : (\hat{t} = 3) + 1/48 : (\hat{t} = 4) + 1/48: (\hat{t} = 5);$}
-        \State{$| $ $ t=1\rightarrow   1/3 : (\hat{t} = 0) + 1/3 : (\hat{t} = 1) + 1/6 : (\hat{t} = 2)$}
-        \State{$+ 1/12 : (\hat{t} = 3) + 1/24 : (\hat{t} = 4) + 1/24: (\hat{t} = 5);$}
-        \State{$...$  $...$}
-        \Comment{Assignments of $\hat{t}$ by the geometric mechanism}
-        \State{$\mathbf{Fi}$}
-
-        \For{each query $f_i$}
-        \State{$\mathbf{If}$  $d=0$ $\rightarrow   2/3 : (\hat{f} = 0) + 1/6 : (\hat{f} = 1) + 1/12 : (\hat{f} = 2)$ }
-        \State{$+ 1/24 : (\hat{f} = 3) + 1/48 : (\hat{f} = 4) + 1/48: (\hat{f} = 5);$}
-        \State{$| $ $ d=1\rightarrow   1/3 : (\hat{f} = 0) + 1/3 : (\hat{f} = 1) + 1/6 : (\hat{f} = 2)$}
-        \State{$+ 1/12 : (\hat{f} = 3) + 1/24 : (\hat{f} = 4) + 1/24: (\hat{f} = 5);$}
-        \State{$...$  $...$}
-        \Comment{Assignments of $\hat{f}$ by the geometric mechanism}
-        \State{$\mathbf{Fi}$}
-        \State{$\mathbf{If}$ $\hat{f}\ge \hat{t}$ $a_i=\top$ \Return }
-        \State{$|$   $\hat{f} < \hat{t}$ $a_i=\bot$}
-        \State{$\mathbf{Fi}$}
-        \EndFor
-        \EndFunction
-
-    \end{algorithmic}
-    \caption{Input is a private database $d \in \{0,1,2,3,4,5\}$, an adaptively chosen stream of sensitivity 1 queries $f_1$, . . ., a threshold $t \in \{0,1,2,3,4,5\}$.Output is a stream of answers $a_1$,...}
-    \label{algorithm:online-model}
-\end{algorithm}
 
 
 
