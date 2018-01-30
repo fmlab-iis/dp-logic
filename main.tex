@@ -18,7 +18,11 @@
 
 \input{macros}
 
+\newif\ifpublic
+%\publictrue
+
 \title{Model Checking Differentially Private Properties}
+\ifpublic
 \author{
 Depeng Liu\inst{1}
 \and
@@ -30,6 +34,10 @@ Chinese Academy of Sciences
 \and
 Academia Sinica
 }
+\else
+\author{\vspace*{-1.2cm}}
+\institute{\vspace*{-1.2cm}\ }
+\fi
 
 \begin{document}
 
