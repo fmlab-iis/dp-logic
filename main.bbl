@@ -5,6 +5,20 @@
 \bibitem{BK:08:PMC}
 Baier, C., Katoen, J.P.: Principles of Model Checking. The MIT Press (2008)
 
+\bibitem{BaierKKKMW16}
+Baier, C., Kiefer, S., Klein, J., Kl\"uppelholz, S., M\"uller, D., Worrell, J.:
+  {Markov} chains and unambiguous {B\"uchi} automata. In: CAV. Lecture Notes in
+  Computer Science, vol. 9779, pp. 23--42. Springer (2016)
+
+\bibitem{CY95}
+Courcoubetis, C., Yannakakis, M.: The complexity of probabilistic verification.
+  J. of the ACM  42(4),  857--907 (1995)
+
+\bibitem{CSS03}
+Couvreur, J.M., Saheb, N., Sutre, G.: An optimal automata approach to {LTL}
+  model checking of probabilistic systems. In: LPAR. LNCS, vol. 2850, pp.
+  361--375 (2003)
+
 \bibitem{DMNS:06:CNSPD}
 Dwork, C., McSherry, F., Nissim, K., Smith, A.: Calibrating noise to
   sensitivity in private data analysis. In: Halevi, S., Rabin, T. (eds.) Theory
@@ -27,11 +41,6 @@ Dwork, C., Naor, M., Pitassi, T., Rothblum, G.N.: Differential privacy under
 \bibitem{DNPRY:10:PPSA}
 Dwork, C., Naor, M., Pitassi, T., Rothblum, G.N., Yekhanin, S.: Pan-private
   streaming algorithms. In: Innovations in Computer Science. pp. 66--80 (2010)
-
-\bibitem{FengZ13}
-Feng, Y., Zhang, L.: When equivalence and bisimulation join forces in
-  probabilistic automata. In: FM, Lecture Notes in Computer Science, vol. 8442,
-  pp. 247--262. Springer (2014)
 
 \bibitem{FWC:10:PPDP}
 Fung, B.C.M., Wang, K., Chen, R., Yu, P.S.: Privacy-preserving data publish: A
