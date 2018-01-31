@@ -37,13 +37,13 @@ implementations with our techniques. Most interestingly, our
 techniques can be adopted easily by existing probabilistic
 model checkers. Privacy checking with existing tools is attainable
 with minimal efforts. More interaction
-between model checking and privacy analysis hopefully will follow.
+between model checking~\cite{ManneP92,BK:08:PMC} and privacy analysis hopefully will follow.
 
 % Markov chains and MDP as formal models, actions made by adversary
 
 In order to illusrtrate applicability of our techniques, we give
 detailed formalizations of several data analysis mechanisms in this
-paper. 
+paper.
 In differential privacy, data analysis mechanisms are
 but randomized algorithms. We follow the standard practice in
 probabilistic model checking to formalize such mechanisms by
@@ -93,7 +93,7 @@ privacy analysis through our techniques.
 
 We moreover extend the standard probabilistic model checking
 algorithms to verify $\dpCTLstar$ properties automatically. For Markov
-chains, states 
+chains, states
 satisfying a subformula $\dpriv{\epsilon}{\delta} \phi$ are computed
 by a simple variant of the model checking algorithm for Markov chains.
 The time complexity of our algorithm is the same as
@@ -127,5 +127,5 @@ We introduce the logic $\dpCTLstar$ for reasoning about properties in
 differential privacy. We use the logic to express classical
 differential privacy properties, and moreover, complex properties such as those
 involving infinite behaviors can also be expressed. (II) We model several differentially private mechanisms, including stream processing, in Markov chains or Markov decision processes.
-(III) We show that the model checking 
+(III) We show that the model checking
 problem for Markov chains is standard. For Markov decision processes we show that it is undecidable.

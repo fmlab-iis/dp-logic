@@ -33,7 +33,7 @@ $s$. Define the satisfaction relation $K, \neighbor{S}, s
 \end{eqnarray*}
 
 Moreover, the relation $K, \neighbor{S}, \pi \models \phi$ is defined as
-for the standard LTL formulas~\cite{which-to-cite?}. We only recall the semantics for $\X$ and $\until$ as follows:
+for the standard LTL formulas~\cite{ManneP92}. We only recall the semantics for $\X$ and $\until$ as follows:
 \begin{eqnarray*}
   K, \neighbor{S}, \pi \models \X \phi
   & \textmd{ if } &
@@ -139,7 +139,7 @@ is removed from the result. Hence
 Algorithm~\ref{algorithm:sat-dpriv-dtmc} returns all states which are
 $(\epsilon, \delta)$-close to their neighbors.
 The algorithm requires at most $O
-(|S|^2)$ additional steps. 
+(|S|^2)$ additional steps.
 We hence have the following results:
 
 \begin{algorithm}[tbh]
