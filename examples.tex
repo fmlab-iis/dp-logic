@@ -1,8 +1,19 @@
-As discussed in previous section, a simple way to design differentially private mechanisms is to add
+A simple way to design differentially private mechanisms is to add
 random noises.
-Thus, in this section, we discuss how to model differentially private mechanisms using Markov chains. We explain the main idea first with some examples.
+Now we describe our main ideas for  modelling differentially private mechanisms.
+A state $s$ stores at least the a database $x\in \mathcal{X}^n$, which is the data hold by a trusted \emph{curator}. A transition corresponds to the data analysis mechanisms.
+States are typically labelled with the corresponding outputs
+the curator generates. We explain the main idea with some examples.
 
-\paragraph{Survey Mechanisms.}
+\subsection{Survey Mechanisms}
+\label{subsec:survey}
+
+Consider the survey question: have you been diagnosed
+with the disease $X$? In order to protect surveyees' privacy, each
+answers the question as follows. The surveyee first flips a
+coin. If it is tail, she answers the question truthfully. Otherwise,
+she randomly answers \textit{Yes} or \textit{No}
+uniformly~\cite{DR:14:AFDP}.
 
 \begin{figure}
   \centering
@@ -56,16 +67,13 @@ Thus, in this section, we discuss how to model differentially private mechanisms
   \label{figure:2-dp}
 \end{figure}
 
-Consider the survey question: have you been diagnosed
-with the disease $X$? In order to protect surveyees' privacy, each
-answers the question as follows. The surveyee first flips a
-coin. If it is tail, she answers the question truthfully. Otherwise,
-she randomly answers \textit{Yes} or \textit{No}
-uniformly~\cite{DR:14:AFDP}.
-
 \begin{example}\label{exa:survey}
   Figure~\ref{figure:2-dp} shows the survey
-mechanism and its corresponding Markov chain. In the figure, the states
+mechanism and its corresponding Markov chain. 
+The data universe
+$\mathcal{X}$ is $\{ +, - \}$. The mechanism $M$ is a randomized
+algorithm with inputs in $\mathcal{X}$ and outputs in $\{ Y, N
+\}$. In the figure, the states
 $+$ and $-$ denote the diagnoses are positive or negative
 respectively; the states $s$ and $t$ denote answers to the survey
 question and hence let $\mathit{out}_Y \in L (s)$ and $\mathit{out}_N
@@ -79,17 +87,8 @@ to a special state $\dagger$ with a self-loop. We omit the transitions
 and the state $\dagger$ for clarity.
 \end{example}
 
-Let us recall briefly the analysis of the survey mechanism. The data universe
-$\mathcal{X}$ is $\{ +, - \}$. The mechanism $M$ is a randomized
-algorithm with inputs in $\mathcal{X}$ and outputs in $\{ Y, N
-\}$. For any $x \in \mathcal{X}$, we have $1/4 \leq \Pr[M(x) = Y] \leq
-3/4$. Hence for any neighboring $x, x' \in \mathcal{X}$, $\Pr[M(x) =
-Y] \leq 3/4 = 3 \cdot 1/4 \leq 3 \Pr[M (x') =
-Y]$. Similarly, $\Pr[M (x) = N] \leq 3 \Pr[M (x') = N]$ for any
-neighboring $x, x' \in \mathcal{X}$. The survey mechanism is
-$(\ln 3, 0)$-differentially private.
 
-\paragraph{Truncated $\alpha$-Geometric Mechanism.}
+\subsection{Truncated $\alpha$-Geometric Mechanism}\label{subsec:geometric}
 More sophisticated differentially private mechanisms are
 available. Consider a query
 $f : \mathcal{X}^n \rightarrow \bbfZ^{\geq 0}$. Let $\alpha \in (0, 1)$.
@@ -132,7 +131,7 @@ private for any query $f$ with sensitivity $\Delta (f)$.
 The truncated $1/2$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$ is
 given in Figure~\ref{figure:geometric-mechanism-table}.
 
-\begin{figure}
+\begin{figure}[tbh]
   \centering
   \begin{subfigure}{.40\columnwidth}
     \[
@@ -230,9 +229,8 @@ given in Figure~\ref{figure:geometric-mechanism-table}.
     \caption{Markov Chain}
     \label{figure:geometric-mechanism-markov-chain}
   \end{subfigure}
-
   \caption{A Markov Chain for $1/2$-Geometric Mechanism}
-  \label{figure:geometric-mechanism}
+  \label{figure:geometric-mechanism}\vspace*{-.5cm}
 \end{figure}
 
 Similar to the survey mechanism, it is
@@ -326,12 +324,7 @@ $1/2$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 	\label{algorithm:online-model}
 \end{algorithm}
 
-\subsection{Markov Chains for Differentially Private Mechanisms}
-Now we describe our main ideas for  modelling differentially private mechanisms.
-A state $s$ stores at least the a database $x\in \mathcal{X}^n$, which is the data hold by a trusted \emph{curator}. A transition corresponds to the data analysis mechanisms.
-States are typically labelled with the corresponding outputs
-the curator generates.
-
+\subsection{Above Threshold Mechanisms}
 In the differentially privacy context, we differentiate between \emph{offline} and \emph{online} models.
 In the offline (or \emph{non-interactive}) model the curator releases the outputs only once and plays no further role. Thus the models we constructed in previous section are offline models. On the contrary, in the online (or \emph{interactive}) model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differentially privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
 
@@ -339,7 +332,8 @@ In the offline (or \emph{non-interactive}) model the curator releases the output
 Below we describe an online model adapted from~\cite{DR:14:AFDP}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which
 are above a given threshold. Other queries below the threshold are considered \emph{irrelevant} and might be discarded. In~\cite{DR:14:AFDP}, the model is set for continuous database, and the Laplace mechanism is applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanism is applied.
 
-We consider the database set $D = \{0,1\ldots,5\}$, a threshold $t \in \{0,1\ldots,5\}$, and queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, truncated $\alpha$-geometric mechanisms over $\{0,1\ldots,5\}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that a pair of data $d,d'$are neighbours, if $|d-d'|\le 1$. The algorithm is shown in Algorithm~\ref{algorithm:online-model}.
+We consider the database set $D = \{0,1\ldots,5\}$, a threshold $t \in \{0,1\ldots,5\}$, and queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, truncated $\alpha$-geometric mechanisms over $\{0,1\ldots,5\}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that a pair of data $d,d'$are neighbours, if $|d-d'|\le 1$. The algorithm 
+is shown in Algorithm~\ref{algorithm:online-model}.
 
 
 

@@ -1,13 +1,23 @@
 In this section we describe how properties in the differential privacy literature can be expressed using $\dpCTLstar$ formulae.
 
 \paragraph{Standard Differential Privacy.}
-The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)$ holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X \mathit{out}_Y$ from $s$ and $t$ satisfy:
+Consider the survey mechanism (Subsection~\ref{subsec:survey}). The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)$ holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X \mathit{out}_Y$ from $s$ and $t$ satisfy:
 $\myPr{s}{K}{N}{\X \mathit{out}_Y}\le 3\myPr{t}{K}{N}{\X \mathit{out}_Y}$. The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)\wedge \dpriv{\ln 3}{0} (\X \mathit{out}_N)$ thus specifies the differential privacy property for states $+$ and $-$ in Example~\ref{exa:survey}.
+The survey mechanism is
+$(\ln 3, 0)$-differentially private.
+
+
+\hide{Let us recall briefly the analysis of the survey mechanism. For any $x \in \mathcal{X}$, we have $1/4 \leq \Pr[M(x) = Y] \leq
+3/4$. Hence for any neighboring $x, x' \in \mathcal{X}$, $\Pr[M(x) =
+Y] \leq 3/4 = 3 \cdot 1/4 \leq 3 \Pr[M (x') =
+Y]$. Similarly, $\Pr[M (x) = N] \leq 3 \Pr[M (x') = N]$ for any
+neighboring $x, x' \in \mathcal{X}$. 
+}
 
  Define the formula
 $\psi = \dpriv{\ln 2}{0} (\X out_0) \wedge \dpriv{\ln 2}{0} (\X out_1) \wedge
 \cdots \wedge \dpriv{\ln 2}{0} (\X out_5)$. If the state $s_k$ satisfies
-$\psi$ for $k = 0, \ldots, 5$, then the $.5$-geometric mechanism is
+$\psi$ for $k = 0, \ldots, 5$, then the $.5$-geometric mechanism (Subsection~\ref{subsec:geometric}) is
 $(\ln 2, 0)$-differentially private.
 
 
