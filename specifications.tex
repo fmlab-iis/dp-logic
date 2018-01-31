@@ -11,7 +11,7 @@ $(\ln 3, 0)$-differentially private.
 3/4$. Hence for any neighboring $x, x' \in \mathcal{X}$, $\Pr[M(x) =
 Y] \leq 3/4 = 3 \cdot 1/4 \leq 3 \Pr[M (x') =
 Y]$. Similarly, $\Pr[M (x) = N] \leq 3 \Pr[M (x') = N]$ for any
-neighboring $x, x' \in \mathcal{X}$. 
+neighboring $x, x' \in \mathcal{X}$.
 }
 
  Define the formula
@@ -97,8 +97,7 @@ We consider two other formulae for comparision:
 (b) Formula $\dpriv{\ln 3}{0} (\X (\mathit{out}_Y\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_Y)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_Y)$ states the one step differential privacy. Observe the inner formula is satisfied by all neighbours. Thus, the outer formula also has no privacy loss.
 
 \paragraph{Tighter Privacy Bounds for Composition.}
-One of the advantage of applying model checking is that we may get tighter bounds for composition. Consider our survey example, and the property $\dpriv{0}{.5} (\X \mathit{out}_Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=0$ or $\delta_1=.5$ without increasing the other.
-
+One of the advantage of applying model checking is that we may get tighter bounds for composition. Consider our survey example, and the property $\dpriv{0}{.5} (\X \mathit{out}_Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease  $\delta_1=.5$ without increasing $\epsilon$.
 
 Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X
 (\mathit{out}_Y\wedge \X \mathit{out}_Y))$ under the model in
@@ -106,22 +105,22 @@ Figure~\ref{figure:2-dp-mc}. Applying the
 compositional theorem, one has $\epsilon_2=2\epsilon_1=0$ and
 $\delta_2=2\delta_1=1$. However, we can check easily that one gets
 better privacy parameter $(0,0.5)$.
-% or $(-\infty,\frac{9}{16})$. \bw{use $-\infty$ instead of $\ln 0$. is it okay?}\lz{lets just remove it ;)}
+
 
 \paragraph{Reachability Privacy.}
 The formula $\dpriv{\epsilon}{\delta}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of eventually reaching $\top$. Reachability privacy is often used in combination with other properties.
 
 As an example, for our threshold model (Algorithm~\ref{algorithm:online-model}), we consider the property $\Phi=\wedge_{i=1}^{6} \dpriv{3}{0}(\X^i \top) \wedge \PJ{\le 0.025}(\X^6 F \top) \wedge \dpriv{3}{0.025}(\X^6 F \top)$, to express the privacy. The state $s_{34}$ (with the input threshold $t=3$, and the database $d=4$) satisfies $\Phi$ by our computation. It means the probability of reaching $\top$  within $i$ steps with $i$ ranges over $\{1,\ldots,6\}$, is $(3, 0)$-differentially private for the database $d$ and its neighbours ($d=3$ and $d=5$). It also states that the probability of reaching $\top$ after no less than $6$ steps, is smaller than $0.025$ and is  $(3, 0.025)$-differentially private.
 
-Later we shall illustrate how reachability privacy can be used to specify differential privacy property for MDPs.
+Later we use reachability privacy to specify differential privacy property for MDPs.
 
 \paragraph{Infinite Differential Privacy.}
 Thanks to the expressiveness of linear temporal logic, our logic $\dpCTLstar$ generalizes differential privacy to infinite
 behaviors naturally. Classical differential privacy discusses properties about
-randomized terminating mechanisms. 
-% Sophisticated mechanisms for streaming data have also been discussed 
-% in social networks and internet of things. Such mechanisms inherently 
-% have infinite computation. Their privacy guarantees are approximated 
+randomized terminating mechanisms.
+% Sophisticated mechanisms for streaming data have also been discussed
+% in social networks and internet of things. Such mechanisms inherently
+% have infinite computation. Their privacy guarantees are approximated
 % by those of the prefixes of computation.
 With $\dpCTLstar$, the subformula $\phi$ in $\dpriv{\epsilon}{\delta} \phi$
 can be an arbitrary $\dpCTLstar$ path formula. One can specify

@@ -33,7 +33,7 @@ $s$. Define the satisfaction relation $K, \neighbor{S}, s
 \end{eqnarray*}
 
 Moreover, the relation $K, \neighbor{S}, \pi \models \phi$ is defined as
-for the standard LTL formulas~\cite{which-to-cite?}. We only recall the semantics for $\X$ and $\until$ as follows.
+for the standard LTL formulas~\cite{which-to-cite?}. We only recall the semantics for $\X$ and $\until$ as follows:
 \begin{eqnarray*}
   K, \neighbor{S}, \pi \models \X \phi
   & \textmd{ if } &
@@ -68,10 +68,10 @@ differentially private operator hence becomes
   K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
-      \myPr{s}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon} 
+      \myPr{s}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
       \myPr{t}{K}{\neighbor{S}}{\phi} + \delta
       \textmd{ and }\\
-  & &  \myPr{t}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon} 
+  & &  \myPr{t}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
        \myPr{s}{K}{\neighbor{S}}{\phi} + \delta
 \end{eqnarray*}
 
@@ -107,12 +107,12 @@ theorem (details see~\cite{BK:08:PMC}):
   neighborhood relation on $S$, $s
   \in S$, and $B, C \subseteq S$. The probabilities
   $\myPr{s}{K}{\neighbor{S}}{\gX B}$ and
-  $\myPr{s}{K}{\neighbor{S}}{B \mho C}$ 
+  $\myPr{s}{K}{\neighbor{S}}{B \mho C}$
 \hide{
   $\Pr[\{ \pi : K, \neighbor{K}, \pi \models B \buntil{n} C \textmd{
     with } \pi_0 = s \}]$
 } are computable within time polynomial in
-  $|S|$.\lz{and $|\wp|$?}
+  $|S|$.
   \label{lemma:PJ-subroutines}
 \end{lemma}
 
@@ -139,9 +139,10 @@ is removed from the result. Hence
 Algorithm~\ref{algorithm:sat-dpriv-dtmc} returns all states which are
 $(\epsilon, \delta)$-close to their neighbors.
 The algorithm requires at most $O
-(|S|^2)$ additional steps. We hence have the following results:
+(|S|^2)$ additional steps. 
+We hence have the following results:
 
-\begin{algorithm}
+\begin{algorithm}[tbh]
   \begin{algorithmic}[1]
     \Function{SAT}{$K$, $\neighbor{S}$, $\phi$}
     \Match{$\phi$}

@@ -21,12 +21,12 @@ Let $AP:=\{at_B\}$. Now we construct our MDP  $M =
 
 Now we consider the formula  $\Phi = \dpriv{1}{0} (F at_B)$. For the reduction we prove $s_0\models \dpriv{1}{0} (F at_B)$ iff for all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$.
 
-First we assume $s_0\models \dpriv{1}{0} (F at_B)$. By $\dpCTLstar$ semantics we have that for all $\scheduler{S}\in\Sigma^\omega$,
-$\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} \leq
+First we assume $s_0\models \dpriv{1}{0} (F at_B)$. By $\dpCTLstar$ semantics we have that for all query scheduler $\scheduler{Q}\in\Sigma^\omega$,
+$\myPr{s_0}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B} \leq
   e \cdot
-  \myPr{s_0'}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B}$. Observe $\myPr{s_0'}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B}=0$ by construction, thus we have
-$\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} \leq
+  \myPr{s_0'}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B}$. Since the set of accepting state in the primed copy is empty, we have $\myPr{s_0'}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B}=0$, thus we have
+$\myPr{s_0}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B} \leq
  0$. This implies  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$ for all $\eta\in\Sigma^*$.
 
- For the other direction, assume that all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$. We prove by contradiction. Assume that $s_0\not\models \dpriv{1}{0} (F at_B)$. Since the relation $N_S$ contains only one pair, it implies that there exists a scheduler $\scheduler{S}\in\Sigma^\omega$ such that $\myPr{s_0}{M_{\scheduler{S}}}{\neighbor{S}}{F at_B} >0$. It is then easy to construct a finite sequence $\eta\in\Sigma^*$ with  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$, a contradiction.
+ For the other direction, assume that all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$. We prove by contradiction. Assume that $s_0\not\models \dpriv{1}{0} (F at_B)$. Since the relation $N_S$ contains only one pair, it implies that there exists a query scheduler $\scheduler{Q}\in\Sigma^\omega$ such that $\myPr{s_0}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B} >0$. It is then easy to construct a finite sequence $\eta\in\Sigma^*$ with  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$, a contradiction.
 \end{proof}

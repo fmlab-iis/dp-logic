@@ -1,5 +1,5 @@
 
-Stream processing gives a motivating example for MDPs. In stream 
+Stream processing gives a motivating example for MDPs. In stream
 processing, input data are retrieved and
 analyzed continuously. Such continual observation is commonly found
 in social media, service providers, or even electronic surveillance
@@ -17,7 +17,7 @@ occurs.
 
 In pan privacy, data analysis mechanisms are required to respect
 privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}.
-The idea is to show reachability probabilities are similar on
+The idea is to show \emph{reachability probabilities} are similar on
 neighboring observations. In the following, we model a discrete
 variant of a stream processing mechanisms by MDPs. We will also
 specify pan privacy in our model using $\dpCTLstar$.
@@ -307,7 +307,7 @@ MDP (Figure~\ref{figure:frequency-estimator}).
       \caption{Randomized Frequency}
       \label{figure:randomized-frequency}
     \end{subfigure}
-  \caption{Frequency Estimator (some states are drawn twice).}
+  \caption{MDP for the Frequency Estimator (some states are drawn twice).}
   \label{figure:frequency-estimator}
 \end{figure}
 
@@ -321,7 +321,7 @@ $
 \Psi = \dpriv{\ln 4}{0} (\F \mathit{at}_0) \wedge \dpriv{\ln 4}{0} (\F
 \mathit{at}_1) \wedge \dpriv{\ln 4}{0} (\F \mathit{at}_2)
 $
-(Here 
+(Here
 $\mathit{at}_i$, i=1,2,3, is an atomic proposition satisfied only at state $i$, which is not shown in the figure).
 For pan privacy, we moreover wish to measure privacy loss in internal
 states. For observations of length $k$, the probabilities of reaching

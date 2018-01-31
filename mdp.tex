@@ -1,6 +1,5 @@
 %\subsection{Markov Decision Processes}
-
-\begin{wrapfigure}{r}{.5\columnwidth}
+\begin{wrapfigure}[14]{r}{.45\columnwidth}
   \centering
     \resizebox{.45\columnwidth}{!}{
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
@@ -40,8 +39,7 @@ actions. Behaviors associated with different inputs are modeled by
 distributions associated with actions.
 }
 
-As we describe earlier, the user has the possibility of querying multiple mechanisms.
-We use MDPs to model such
+We use MDPs to model 
 interactive mechanisms. Specifically, external inputs are modeled by
 actions. Behaviors associated with different inputs are modeled by
 distributions associated with actions.
@@ -110,7 +108,8 @@ probabilistically distinguishable behaviors.
 
 \noindent
 \emph{Justification of the scheduler class.}
-For MDPs a richer class of scheduler classes have been considered in the literature, see \cite{BK:08:PMC}. It may depend on the full history of state and action sequences, and the decision can be randomized. If we use such scheduler, another definition of the differentially private operator
+For defining semantics for the $\mathcal{D}$-operator, we used query scheduler.
+If we use such scheduler, another definition of the differentially private operator
 might be:
 \begin{eqnarray*}
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
@@ -131,7 +130,7 @@ take different actions from different states. It might need different
 action sequences to distinguish neighbors. Two neighbors could still be
 differentiated by an action sequence and lose their privacy.
 
-We consider only sequences $\scheduler{S}\in Act^\omega$, which correspond to the query sequences. In the differential privacy context, neighbor states exhibit same action behaviours. And we will see later that
+We consider only query scheduler $\scheduler{Q}\in Act^\omega$, which correspond to the query sequences. In the differential privacy context, neighbor states exhibit same action behaviours. And we will see later that
 our semantics agrees with the notion of differential privacy in the literature for such systems.
 We hence
 prefer the original definition.
