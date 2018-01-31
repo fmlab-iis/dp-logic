@@ -1,7 +1,7 @@
 A simple way to design differentially private mechanisms is to add
 random noises.
 Now we describe our main ideas for  modelling differentially private mechanisms.
-A state $s$ stores at least the a database $x\in \mathcal{X}^n$, which is the data hold by a trusted \emph{curator}. A transition corresponds to the data analysis mechanisms.
+A state $s$ stores at least a database $x\in \mathcal{X}^n$, which is the data held by a trusted \emph{curator}. A transition corresponds to a data analysis mechanism.
 States are typically labelled with the corresponding outputs
 the curator generates. We explain the main idea with some examples.
 
@@ -326,20 +326,18 @@ $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 		\EndFunction
 		
 	\end{algorithmic}
-	\caption{Input is a private database $d \in \{0,1,\ldots,5\}$, an adaptively chosen stream of sensitivity 1 queries $f_1,f_2$,\ldots, a threshold $t \in \{0,1,\ldots,5\}$.Output is a stream of answers $a_1,a_2$,\ldots}
+	\caption{Input is a private database $d \in \{0,1,\ldots,5\}$, an adaptively chosen stream of sensitivity 1 queries $f_1,f_2$,\ldots, a threshold $t \in \{0,1,\ldots,5\}$. Output is a stream of answers $a_1,a_2$,\ldots}
 	\label{algorithm:online-model}
 \end{algorithm}
 
 \subsection{Above Threshold Mechanisms}
 In the differentially privacy context, we differentiate between \emph{offline} and \emph{online} models.
-In the offline (or \emph{non-interactive}) model the curator releases the outputs only once and plays no further role. Thus the models we constructed in previous section are offline models. On the contrary, in the online (or \emph{interactive}) model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differentially privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
+In the offline (or \emph{non-interactive}) model the curator releases the outputs only once and plays no further role. Thus the models we constructed in previous section are offline models. On the contrary, in the online (or \emph{interactive}) model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differential privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
 
-\paragraph{Online Model.}
 Below we describe an online model adapted from~\cite{DR:14:AFDP}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which
-are above a given threshold. Other queries below the threshold are considered \emph{irrelevant} and might be discarded. In~\cite{DR:14:AFDP}, the model is set for continuous database, and the Laplace mechanism is applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanism is applied.
+are above a given threshold. Other queries below the threshold are considered \emph{irrelevant} and won't cause privacy disclosure. In~\cite{DR:14:AFDP}, the model is set for continuous database, and the Laplace mechanisms are applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanisms are applied.
 
-We consider the database set $D = \{0,1\ldots,5\}$, a threshold $t \in \{0,1\ldots,5\}$, and queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, truncated $\alpha$-geometric mechanisms over $\{0,1\ldots,5\}$ is applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differential privacy property of the data in $D$, assuming that a pair of data $d,d'$are neighbours, if $|d-d'|\le 1$. The algorithm
-is shown in Algorithm~\ref{algorithm:online-model}.
+We consider the database set $D = \{0,1\ldots,5\}$, a threshold $t \in \{0,1\ldots,5\}$, and queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, truncated $\alpha$-geometric mechanisms over $\{0,1\ldots,5\}$ are applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differentially private property of the data in $D$, assuming that a pair of data $d,d'$are neighbours, if $|d-d'|\le 1$. The algorithm is shown in Algorithm~\ref{algorithm:online-model} and a property will be specefied in Section~\ref{section:specifying-properties}.
 
 
 
