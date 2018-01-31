@@ -17,13 +17,13 @@ neighboring $x, x' \in \mathcal{X}$.
  Define the formula
 $\psi = \dpriv{\ln 2}{0} (\X out_0) \wedge \dpriv{\ln 2}{0} (\X out_1) \wedge
 \cdots \wedge \dpriv{\ln 2}{0} (\X out_5)$. If the state $s_k$ satisfies
-$\psi$ for $k = 0, \ldots, 5$, then the $.5$-geometric mechanism (Subsection~\ref{subsec:geometric}) is
+$\psi$ for $k = 0, \ldots, 5$, then the $\frac{1}{2}$-geometric mechanism (Subsection~\ref{subsec:geometric}) is
 $(\ln 2, 0)$-differentially private.
 
 
 \paragraph{Compositional Properties.}
 Compositional aspect is one of the building block for differentially private algorithms. According to the compositional theorem \cite[Theorem 3.16]{DR:14:AFDP}, for $(\epsilon_1,\delta_1)$-differentially private algorithm $M_1$ and
-$(\epsilon_2,\delta_2)$-differentially private algorithm $M_2$, their combination $M$ defined by $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1 + \epsilon_2,\delta_1+\delta_2)$-differentially private. The degradation is rooted in the repeated computation. To illustrate this property, we consider the extended survey example below where the curator allows two consequent queries.
+$(\epsilon_2,\delta_2)$-differentially private algorithm $M_2$, their combination $M$ defined by $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1 + \epsilon_2,\delta_1+\delta_2)$-differentially private. The degradation is rooted in the repeated computation. To illustrate this property, we consider the extended survey example below where the mechanism allows two consequent queries.
 The model is depicted in Figure~\ref{figure:2-dp-mc}.
 %where states $Y_1,Y_2$ are labelled by $Y$, and $N_1,N_2$ are labelled by $N$.
 
@@ -93,17 +93,17 @@ The model is depicted in Figure~\ref{figure:2-dp-mc}.
 We consider the formula $\dpriv{\ln 9}{0} (\X (\mathit{out}_Y\wedge \X \mathit{out}_Y))$. A path satisfies $\X (\mathit{out}_Y\wedge \X \mathit{out}_Y)$ if the second state satisfies $\mathit{out}_Y$ and the third state satisfies $\mathit{out}_Y$ as well. We verify that this formula is satisfied for states $+$ and $-$. Moreover, the bound $\epsilon=\ln 9$ is tight, since the probability of satisfying $\X (\mathit{out}_Y\wedge \X \mathit{out}_Y)$ from states $+$ and $-$ are $\frac{9}{16}$ and $\frac{1}{16}$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{\ln 9}{0} (\X (a_1\wedge \X a_2))$ corresponds to the desired compositional property for the model, where $a_1,a_2$ range over all atomic propositions $\{\mathit{out}_Y, \mathit{out}_N\}$.
 
 We consider two other formulae for comparision:
-(a) Formula $\dpriv{\ln 3}{0} (\X \X \mathit{out}_Y)$. In this case we donot have privacy lost, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
-(b) Formula $\dpriv{\ln 3}{0} (\X (\mathit{out}_Y\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_Y)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_Y)$ states the one step differential privacy. Observe the inner formula is satisfied by all neighbours. Thus, the outer formula also has no privacy lost.
+(a) Formula $\dpriv{\ln 3}{0} (\X \X \mathit{out}_Y)$. In this case we do not have privacy loss, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
+(b) Formula $\dpriv{\ln 3}{0} (\X (\mathit{out}_Y\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_Y)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_Y)$ states the one step differential privacy. Observe the inner formula is satisfied by all neighbours. Thus, the outer formula also has no privacy loss.
 
-\paragraph{Tighter Privacy Bounds for Compositional Properties.}
-One of the advantage of applying model checking is that we may get tighter bounds for compositional properties. Consider our survey example, and the property $\dpriv{0}{.5} (\X \mathit{out}_Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=0$ or $\delta_1=.5$ without increasing the other one.
+\paragraph{Tighter Privacy Bounds for Composition.}
+One of the advantage of applying model checking is that we may get tighter bounds for composition. Consider our survey example, and the property $\dpriv{0}{.5} (\X \mathit{out}_Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease the value of $\epsilon_1=0$ or $\delta_1=.5$ without increasing the other.
 
 
 Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X
 (\mathit{out}_Y\wedge \X \mathit{out}_Y))$ under the model in
 Figure~\ref{figure:2-dp-mc}. Applying the
-compositional theorem, one can choose $\epsilon_2=2\epsilon_1=0$ and
+compositional theorem, one has $\epsilon_2=2\epsilon_1=0$ and
 $\delta_2=2\delta_1=1$. However, we can check easily that one gets
 better privacy parameter $(0,0.5)$.
 % or $(-\infty,\frac{9}{16})$. \bw{use $-\infty$ instead of $\ln 0$. is it okay?}\lz{lets just remove it ;)}
@@ -116,13 +116,13 @@ As an example, for our threshold model (Algorithm~\ref{algorithm:online-model}),
 Later we shall illustrate how reachability privacy can be used to specify differential privacy property for MDPs.
 
 \paragraph{Infinite Differential Privacy.}
-Due to the power of linear temporal logic, our logic $\dpCTLstar$ generalizes differential privacy to infinite
+Thanks to the expressiveness of linear temporal logic, our logic $\dpCTLstar$ generalizes differential privacy to infinite
 behaviors naturally. Classical differential privacy discusses properties about
-randomized terminating mechanisms. Sophisticated mechanisms for
-streaming data have also been discussed in social networks and
-internet of things. Such mechanisms inherently have infinite
-computation. Their privacy guarantees are approximated by those of the
-prefixes of computation.
+randomized terminating mechanisms. 
+% Sophisticated mechanisms for streaming data have also been discussed 
+% in social networks and internet of things. Such mechanisms inherently 
+% have infinite computation. Their privacy guarantees are approximated 
+% by those of the prefixes of computation.
 With $\dpCTLstar$, the subformula $\phi$ in $\dpriv{\epsilon}{\delta} \phi$
 can be an arbitrary $\dpCTLstar$ path formula. One can specify
 $(\epsilon, \delta)$-closedness over infinite behaviors naturally.

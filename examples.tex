@@ -15,6 +15,15 @@ coin. If it is tail, she answers the question truthfully. Otherwise,
 she randomly answers \textit{Yes} or \textit{No}
 uniformly~\cite{DR:14:AFDP}.
 
+Let us analyze the mechanism briefly. The data universe $\mathcal{X}$
+is $\{ +, - \}$. The mechanism $M$ is a randomized algorithm with
+inputs in $\mathcal{X}$ and outputs in $\{ Y, N \}$. For any $x \in
+\mathcal{X}$, we have $\frac{1}{4} \leq \Pr[M (x) = Y] \leq
+\frac{3}{4}$. Hence $\Pr[M (x) = Y] \leq \frac{3}{4} = 3 \cdot
+\frac{1}{4} \leq e^{\ln 3} \Pr[M (x') = Y]$ for any neighboring $x, x'
+\in \mathcal{X}$. Similarly, $\Pr[M (x) = N] \leq e^{\ln 3} \Pr[M (x')
+= N]$. The survey mechanism is $(\ln 3, 0)$-differentially private.
+
 \begin{figure}
   \centering
   \begin{subfigure}{.48\columnwidth}
@@ -63,7 +72,7 @@ uniformly~\cite{DR:14:AFDP}.
     \caption{Corresponding Markov Chain}
     \label{figure:2-dp-mdp}
   \end{subfigure}
-  \caption{Survey Mechanism with 2-Differential Privacy}
+  \caption{Survey Mechanism with $\ln 3$-Differential Privacy}
   \label{figure:2-dp}
 \end{figure}
 
@@ -82,7 +91,7 @@ States $+$ and $-$ are neighbors.
 The random noise boosts the probability of answering
 \textit{Yes} or \textit{No} to at least $1/4$ regardless of
 diagnoses. Inferences on individual diagnosis can be plausibly denied.
-In general, missing transitions (such as those from $Y$ and $N$) lead
+Missing transitions (such as those from $s$ and $t$) lead
 to a special state $\dagger$ with a self-loop. We omit the transitions
 and the state $\dagger$ for clarity.
 \end{example}
@@ -101,7 +110,7 @@ distribution~\cite{GRS:09:UUPM,GRS:12:UUPM} :
 \]
 The $\alpha$-geometric mechanism is oblivious since it has the same
 output distribution on any inputs $x, x'$ with $f (x) = f
-(x')$. Moreover, it is also $(- {\Delta (f)} \ln \alpha, 0)$-differentially
+(x')$. Moreover, it is $(- {\Delta (f)} \ln \alpha, 0)$-differentially
 private for any query $f$ with sensitivity $\Delta (f)$. The range of
 the mechanism
 however is $\bbfZ$. It may give nonsensical outputs such as
@@ -128,7 +137,7 @@ Note the range of the truncated $\alpha$-geometric mechanism is
 $\{ 0, 1, \ldots, n \}$. The truncated $\alpha$-geometric mechanism is
 again oblivious; it is also $(- {\Delta (f)} \ln \alpha, 0)$-differentially
 private for any query $f$ with sensitivity $\Delta (f)$.
-The truncated $1/2$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$ is
+The truncated $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$ is
 given in Figure~\ref{figure:geometric-mechanism-table}.
 
 \begin{figure}[tbh]
@@ -229,12 +238,12 @@ given in Figure~\ref{figure:geometric-mechanism-table}.
     \caption{Markov Chain}
     \label{figure:geometric-mechanism-markov-chain}
   \end{subfigure}
-  \caption{A Markov Chain for $1/2$-Geometric Mechanism}
+  \caption{A Markov Chain for $\frac{1}{2}$-Geometric Mechanism}
   \label{figure:geometric-mechanism}\vspace*{-.5cm}
 \end{figure}
 
 Similar to the survey mechanism, it is
-straightfoward to model the truncated $1/2$-geometric
+straightfoward to model the truncated $\frac{1}{2}$-geometric
 mechanisms as Markov chains.
 
 \begin{example}
@@ -249,7 +258,7 @@ If $\Delta (f) = 1$, $s_k$ and $s_l$ are
 neighbors iff $| k - l | \leq 1$.
 Figure~\ref{figure:geometric-mechanism-markov-chain} gives
 the Markov chain of the truncated
-$1/2$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
+$\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 \end{example}
 
 \begin{algorithm}[tbh]

@@ -1,5 +1,5 @@
 
-Given a finite Markov chain $K = (S, \wp, L)$, a
+Given a Markov chain $K = (S, \wp, L)$, a
 \emph{neighborhood relation} $\neighbor{S} \subseteq S \times S$
 is a reflexive and symmetric relation on $S$. We will write $s
 \neighbor{S} t$ when $(s, t) \in \neighbor{S}$. If $s \neighbor{S} t$,
@@ -68,9 +68,11 @@ differentially private operator hence becomes
   K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
-      \myPr{s}{K}{N}{\phi} \leq e^{\epsilon} \myPr{t}{K}{N}{\phi} + \delta
+      \myPr{s}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon} 
+      \myPr{t}{K}{\neighbor{S}}{\phi} + \delta
       \textmd{ and }\\
-  & &  \myPr{t}{K}{N}{\phi} \leq e^{\epsilon} \myPr{s}{K}{N}{\phi} + \delta
+  & &  \myPr{t}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon} 
+       \myPr{s}{K}{\neighbor{S}}{\phi} + \delta
 \end{eqnarray*}
 
 Other than the differentially private operator, the semantics of
@@ -101,7 +103,8 @@ through iterative approximations. We summarize it in the following
 theorem (details see~\cite{BK:08:PMC}):
 
 \begin{lemma}
-  Let $K = (S, \wp, L)$ be a Markov chain, $s
+  Let $K = (S, \wp, L)$ be a Markov chain, $\neighbor{S}$ a
+  neighborhood relation on $S$, $s
   \in S$, and $B, C \subseteq S$. The probabilities
   $\myPr{s}{K}{\neighbor{S}}{\gX B}$ and
   $\myPr{s}{K}{\neighbor{S}}{B \mho C}$ 
@@ -173,14 +176,16 @@ The algorithm requires at most $O
 \end{algorithm}
 
 \begin{proposition}
-  Let $K = (S, \wp, L)$ be a Markov chain.
-  $\{ s : K, \neighbor{K}, s \models \dpriv{\epsilon}{\delta} \phi \}$ is
+  Let $K = (S, \wp, L)$ be a Markov chain and $\neighbor{S}$ a
+  neighborhood relation on $S$.
+  $\{ s : K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi \}$ is
   computable within time polynomial in $|S|$.
 \end{proposition}
 
 \begin{corollary}
-  Let $K = (S, \wp, L)$ be a Markov chain and $\Phi$ a $\dpCTL$
-  formula. $\{ s : K, \neighbor{K}, s \models \Phi \}$ is
+  Let $K = (S, \wp, L)$ be a Markov chain, $\neighbor{S}$ a
+  neighborhood relation on $S$, and $\Phi$ a $\dpCTL$
+  formula. $\{ s : K, \neighbor{S}, s \models \Phi \}$ is
   computable within time polynomial in $|S|$ and $|\Phi|$.
 \end{corollary}
 

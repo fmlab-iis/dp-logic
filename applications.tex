@@ -1,12 +1,13 @@
 
-Streaming processing gives a motivating example for MDPs. In stream 
+Stream processing gives a motivating example for MDPs. In stream 
 processing, input data are retrieved and
 analyzed continuously. Such continual observation is commonly found
 in social media, service providers, or even electronic surveillance
 systems. To protect privacy, privacy-respecting mechanisms must be
 formulated and designed. Classical differential privacy however is
-insufficient in streaming processing. Note that observations are of
-indefinite lengths in such applications. All differentially private
+insufficient in streaming processing. Note that data are collected
+continuously and outcomes are requested at an indefinite future
+in such applications. All differentially private
 mechanism necessarily stay in their internal states indefinitely
 before outcomes are produced. Although differential privacy demands
 privacy-respecting outcomes, internal states may reveal private
@@ -18,7 +19,7 @@ In pan privacy, data analysis mechanisms are required to respect
 privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}.
 The idea is to show reachability probabilities are similar on
 neighboring observations. In the following, we model a discrete
-variant of the mechanisms by MDPs. We will also
+variant of a stream processing mechanisms by MDPs. We will also
 specify pan privacy in our model using $\dpCTLstar$.
 
 Consider monitoring events of the types $a$ and $b$ continuously.
@@ -40,7 +41,7 @@ bit for the event type is set to $0$ and $1$ with probability
 $\frac{3}{8}$ and $\frac{5}{8}$ respectively. The mechanism continues
 to update its bits until it is asked to return the number of observed
 event types. To compute the number of observed event types, the
-mechanism adopts the truncated $1/2$-geometric mechanism on the sum of
+mechanism adopts the truncated $\frac{1}{2}$-geometric mechanism on the sum of
 two bits for event types. If the sum is $0$, the mechanism outputs $0$
 with probability $\frac{2}{3}$ and $1, 2$ each with probability
 $\frac{1}{6}$. If the sum is $1$, one of $0, 1, 2$ is returned with
@@ -91,9 +92,9 @@ $\frac{1}{2} \cdot \frac{3}{8} \leq \frac{1}{2} \leq 2 \cdot
 2 \cdot \frac{5}{8}$. For every $x \in \{ 0, 1 \}$, we have
 $\frac{1}{2} \cdot \Pr_B[f_a = x] \leq \Pr_U[f_a = x] \leq 2 \cdot
 \Pr_B[f_a = x]$. On neighboring observations, the distribution of
-$f_a$ can only be changed from $U$ to $B$, values of $f_a$ is $(2,
+$f_a$ can only be changed from $U$ to $B$, values of $f_a$ is $(\ln 2,
 0)$-differentially private and similarly for $f_b$. Finally, the
-$1/2$-geometric mechanism gives $(\ln 2, 0)$-differential privacy.
+$\frac{1}{2}$-geometric mechanism gives $(\ln 2, 0)$-differential privacy.
 Recall $2\ln 2 = \ln 4$,
 the steaming data analysis mechanism in
 Algorithm~\ref{algorithm:frequency-estimator} is $(\ln 4,
@@ -314,7 +315,7 @@ MDP (Figure~\ref{figure:frequency-estimator}).
 \emph{Privacy Specification}.
 For classical differential privacy, we are interested in the output
 distribution. Algorithm~\ref{algorithm:frequency-estimator} has three
-different outputs. By privacy analysis, the state $I$ satisfies the
+different outputs. By privacy analysis, the state $s$ satisfies the
 following $\dpCTLstar$ formula:
 $
 \Psi = \dpriv{\ln 4}{0} (\F \mathit{at}_0) \wedge \dpriv{\ln 4}{0} (\F

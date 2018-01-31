@@ -10,6 +10,11 @@ Baier, C., Kiefer, S., Klein, J., Kl\"uppelholz, S., M\"uller, D., Worrell, J.:
   {Markov} chains and unambiguous {B\"uchi} automata. In: CAV. Lecture Notes in
   Computer Science, vol. 9779, pp. 23--42. Springer (2016)
 
+\bibitem{BiancoA95}
+Bianco, A., de~Alfaro, L.: Model checking of probabalistic and nondeterministic
+  systems. In: FSTTCS. Lecture Notes in Computer Science, vol. 1026, pp.
+  499--513. Springer (1995)
+
 \bibitem{CY95}
 Courcoubetis, C., Yannakakis, M.: The complexity of probabilistic verification.
   J. of the ACM  42(4),  857--907 (1995)
@@ -18,6 +23,11 @@ Courcoubetis, C., Yannakakis, M.: The complexity of probabilistic verification.
 Couvreur, J.M., Saheb, N., Sutre, G.: An optimal automata approach to {LTL}
   model checking of probabilistic systems. In: LPAR. LNCS, vol. 2850, pp.
   361--375 (2003)
+
+\bibitem{DKNP04}
+Duflot, M., Kwiatkowska, M., Norman, G., Parker, D.: A formal analysis of
+  {Bluetooth} device discovery. In: Proc. 1st International Symposium on
+  Leveraging Applications of Formal Methods (ISOLA'04) (2004)
 
 \bibitem{DMNS:06:CNSPD}
 Dwork, C., McSherry, F., Nissim, K., Smith, A.: Calibrating noise to
@@ -55,6 +65,10 @@ Ghosh, A., Roughgarden, T., Sundararajan, M.: Universally utility-maximizing
 Ghosh, A., Roughgarden, T., Sundararajan, M.: Universally utility-maximizing
   privacy mechanisms. SIAM Journal of Computing  41(6),  1673--1693 (2012)
 
+\bibitem{HanssonJ94}
+Hansson, H., Jonsson, B.: A logic for reasoning about time and reliability.
+  Formal Asp. Comput.  6(5),  512--535 (1994)
+
 \bibitem{JLE:14:DPML}
 Ji, Z., Lipton, Z.C., Elkan, C.: Differential privacy and machine learning: a
   survey and review. CoRR  abs/1412.7584 (2014),
@@ -64,6 +78,15 @@ Ji, Z., Lipton, Z.C., Elkan, C.: Differential privacy and machine learning: a
 Mironov, I.: On significance of the least significant bits for differential
   privacy. In: Yu, T., Danezis, G., Gligor, V.D. (eds.) ACM Conference on
   Computer and Communications Security. pp. 650--661 (2012)
+
+\bibitem{Paz71}
+Paz, A.: Introduction to Probabilistic Automata (Computer Science and Applied
+  Mathematics). Academic Press, Inc., Orlando, FL, USA (1971)
+
+\bibitem{Put05}
+Puterman, M.L.: {Markov} Decision Processes: Discrete Stochastic Dynamic
+  Programming. No. 594 in Wiley Series in Probability and Statistics, John
+  Wiley \& Sons, Inc. (2005)
 
 \bibitem{Rabin63}
 Rabin, M.: {Probabilistic automata}. Information and Control  6(3),  230--245

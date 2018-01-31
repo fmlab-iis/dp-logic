@@ -60,15 +60,11 @@ corresponding to the MDP shown in
 Figure~\ref{figure:simple-mdp}.
 
 In the figure, the states $+$,
-$-$, $Y$, and $N$ are interpreted as before. The actions $L$ and $H$
+$-$, $s$, and $t$ are interpreted as before. The actions $L$ and $H$
 denote low- and high-accuracy requests respectively. Let $M_H$ denote
 the Markov chain derived by high-accuracy requests.
-Observe that $1/5 \leq \Pr[M_H(x) = Y] \leq 4/5$ for any $x
-\in \mathcal{X}$. Hence $\Pr[M_H (x) = Y] \leq 4/5 = 4 \cdot 1/5 \leq
-4 \Pr[M_H (x') = Y]$ for any neighboring $x, x' \in
-\mathcal{X}$. Similarly, $\Pr[M_H (x) = N] \leq 4 \Pr[M_H (x') =
-N]$. The high-accuracy mechanism is $(\ln 4,0)$-differentially private.
-The privacy guarantees vary from accuracy requests.
+Note that the high-accuracy mechanism is $(\ln 4,0)$-differentially private.
+Unlike non-interactive mechanisms, the privacy guarantees vary from accuracy requests.
 
 \subsection{Semantics}
 The logic $\dpCTLstar$ can be interpreted over MDPs. Semantics over Markov chains generalizes to MDPs as well. %Note that two states with different enabled actions
@@ -88,15 +84,15 @@ relation $M, \neighbor{S}, s \models \Phi$ for $\PJ{J}$ and $\dpriv{\epsilon}{\d
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
-   scheduler } \scheduler{S},
-   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
+   query scheduler } \scheduler{Q},
+   \myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} \leq
   e^{\epsilon} \cdot
    \\
   & &
-   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
+   \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} + \delta
    \textmd{ and }
-   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq e^{\epsilon} \cdot
-   \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta
+   \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} \leq e^{\epsilon} \cdot
+   \myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} + \delta
 \end{eqnarray*}
 
 Recall that $M_{\scheduler{S}}$ is but a Markov chain. The semantics
@@ -109,12 +105,12 @@ $\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
 $\dpriv{\epsilon}{\delta} \phi$ specifies states which are $(\epsilon,
 \delta)$-close to all its neighbors in having paths satisfying $\phi$
 for arbitrary schedulers. That is, no
-position-independent scheduler can force any of neighbors to have
+query scheduler can force any of neighbors to have
 probabilistically distinguishable behaviors.
 
 \noindent
 \emph{Justification of the scheduler class.}
-For MDPs a richer class of scheduler classes have been considered in the literature, see \cite{BK:08:PMC}. It may depend on the full history of state and action sequences, and the decision can be randomised. If we use such scheduler, another definition of the differentially private operator
+For MDPs a richer class of scheduler classes have been considered in the literature, see \cite{BK:08:PMC}. It may depend on the full history of state and action sequences, and the decision can be randomized. If we use such scheduler, another definition of the differentially private operator
 might be:
 \begin{eqnarray*}
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
@@ -137,21 +133,21 @@ differentiated by an action sequence and lose their privacy.
 
 We consider only sequences $\scheduler{S}\in Act^\omega$, which correspond to the query sequences. In the differential privacy context, neighbor states exhibit same action behaviours. And we will see later that
 our semantics agrees with the notion of differential privacy in the literature for such systems.
-Wpe hence
+We hence
 prefer the original definition.
 
-\subsection{Model Checking Algorithm}
+\subsection{The Model Checking Problem}
 For an MDP $M =
 (S, \Act, \wp, L)$, we want to compute $\{ M, \neighbor{S}, s \models
 \dpriv{\epsilon}{\delta} \phi \}$ . Recall the semantics of $\dpriv{\epsilon}{\delta}
-\phi$. Given $s, t$ with $s \neighbor{M} t$ and a path formula
+\phi$. Given $s, t$ with $s \neighbor{S} t$ and a path formula
 $\phi$, we need to decide whether
-$\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
-e^{\epsilon} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta$
-for every scheduler $\scheduler{S}$.
-If the path formula only contain next operators, it is easy to deal with. For $\phi:=\X B$ with $B\subseteq S$ only one step behaviour needs to be considered, thus only the first action in the query sequence is needed. It can also be easily generalized to nested next operators:  one needs only to enumerate
+$\myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} \leq
+e^{\epsilon} \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} + \delta$
+for every query scheduler $\scheduler{Q}$.
+If the path formula only contains next operators, it is easy to deal with. When $\phi$ is $\gX B$ with $B\subseteq S$, only one step behaviour needs to be considered. Thus only the first action in the query sequence is needed. It can also be easily generalized to nested next operators:  one needs only to enumerate
 all actions query sequences of length obtained by the number of nexted $\X$ operators.
-In general, the problem is undecidable.
+The problem however is undecidable in general.
 
 \begin{theorem}\label{theorem:mdp-model-checking}
 The $\dpCTLstar$ model checking problem for MDPs  is undecidable.
