@@ -104,6 +104,22 @@ satisfies $\dpriv{\epsilon}{\delta} \phi$ is undecidable.
 
 % analyze mechanism
 
+\paragraph{Related Work.}
+An early on formal verification of differential privacy
+is~\cite{TKD:11:FVDPIS}. The work formalizes differential privacy in
+the framework of information leakage. The connection between
+differential privacy and information leakage is investigated
+in~\cite{AACDP:15:OILDPM,GMP:16:PDPFPS}. Type systems for differential
+privacy have been developed
+in~\cite{WHRP:17:FADP,GHHNP:13:LDPDP,RP:10:DMTGS}. A light-weight
+technique for checking differential privacy can be found
+in~\cite{ZK:17:LTADPP}. Lots of formal Coq proofs in differential
+privacy are reported
+in~\cite{BFGGHS:16:APCDP,BGGHS:16:PDPPC,BKOB:12:PRRDP,BDGKZ:13:VCDPASM,BGAHKS:14:PDPHL,BGAHRS:15:HOARRT,BFGAGHS:16:DPBP}. This
+work emphasizes on model checking differential privacy. We develop a
+framework to formalize and analyze differential privacy in Markov
+chains and Markov decision processes.
+
 \paragraph{Contributions.} Our main contributions are threefold. (I)
 We introduce the logic $\dpCTLstar$ for reasoning about properties in
 differential privacy. We use the logic to express classical
