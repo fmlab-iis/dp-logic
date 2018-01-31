@@ -34,10 +34,10 @@ In tis paper, we propose the logic $\dpCTLstar$ for specifying
 differential privacy and investigate their model checking
 problems. Data analysts can automatically verify their designs and
 implementations with our techniques. Most interestingly, our
-techniques can be adopted rather easily by existing probabilistic
-model checkers. Privacy checking with existing tools can be attained
-with minimal efforts and overheads. Hopefully, more interaction
-between model checking and privacy analysis will follow.
+techniques can be adopted easily by existing probabilistic
+model checkers. Privacy checking with existing tools is attainable
+with minimal efforts. More interaction
+between model checking and privacy analysis hopefully will follow.
 
 % Markov chains and MDP as formal models, actions made by adversary
 
@@ -54,8 +54,8 @@ When a data analysis mechanism does not
 interact with its environment, it is formalized as a Markov
 chain. Otherwise, its interactions are formalized by actions in
 Markov decision processes. Our formalization effectively assumes that
-actions are controlled by adversaries. It is subsequently necessary to
-consider attacks from all possible adversaries in order to establish
+actions are controlled by adversaries. It is thus necessary to
+consider all privacy attacks from adversaries in order to establish
 differential privacy.
 %\todo{What is a state?}
 
@@ -98,8 +98,8 @@ satisfying a subformula $\dpriv{\epsilon}{\delta} \phi$ are computed
 by a simple variant of the model checking algorithm for Markov chains.
 The time complexity of our algorithm is the same as
 those of $\PCTLstar$ for Markov chains. The logic $\dpCTLstar$ obtains its
-essentially expressiveness for free.
-For Markov decision processes, we show that checking whether a state
+expressiveness essentially for free.
+For Markov decision processes, checking whether a state
 satisfies $\dpriv{\epsilon}{\delta} \phi$ is undecidable.
 
 % analyze mechanism
@@ -124,6 +124,6 @@ chains and Markov decision processes.
 We introduce the logic $\dpCTLstar$ for reasoning about properties in
 differential privacy. We use the logic to express classical
 differential privacy properties, and moreover, complex properties such as those
-involving infinite behaviors can also be expressed. (II) We model several differential privacy mechanisms, including stream processing, in Markov chains or Markov decision processes.
+involving infinite behaviors can also be expressed. (II) We model several differentially private mechanisms, including stream processing, in Markov chains or Markov decision processes.
 (III) We show that the model checking 
 problem for Markov chains is standard. For Markov decision processes we show that it is undecidable.
