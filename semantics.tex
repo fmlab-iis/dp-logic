@@ -144,7 +144,7 @@ We hence have the following results:
 
 \begin{algorithm}[tbh]
   \begin{algorithmic}[1]
-    \Function{SAT}{$K$, $\neighbor{S}$, $\phi$}
+    \Procedure{SAT}{$K$, $\neighbor{S}$, $\phi$}
     \Match{$\phi$}
     \Comment{by Lemma~\ref{lemma:PJ-subroutines}}
     \Case{$\X \Psi$}
@@ -161,7 +161,7 @@ We hence have the following results:
     \EndMatch
     \State{$R \leftarrow S$}
     \For{$s \in S$}
-      \For{$t$ with $s \neighbor{K} t$}
+      \For{$t$ with $s \neighbor{S} t$}
         \If{$p(s) \not\leq e^{\epsilon} p(t) + \delta$ or
             $p(t) \not\leq e^{\epsilon} p(s) + \delta$}
         {remove $s$ from $R$}
@@ -170,9 +170,9 @@ We hence have the following results:
     \EndFor
 
     \State{\Return $R$}
-    \EndFunction
+    \EndProcedure
   \end{algorithmic}
-  \caption{SAT($\phi$, $\neighbor{K}$)}
+  \caption{SAT($K$, $\neighbor{S}$, $\phi$)}
   \label{algorithm:sat-dpriv-dtmc}
 \end{algorithm}
 

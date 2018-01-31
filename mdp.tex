@@ -102,14 +102,14 @@ is again standard except the differentially private operator
 $\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
 $\dpriv{\epsilon}{\delta} \phi$ specifies states which are $(\epsilon,
 \delta)$-close to all its neighbors in having paths satisfying $\phi$
-for arbitrary schedulers. That is, no
+for query schedulers. That is, no
 query scheduler can force any of neighbors to have
 probabilistically distinguishable behaviors.
 
 \noindent
 \emph{Justification of the scheduler class.}
 For defining semantics for the $\mathcal{D}$-operator, we used query scheduler.
-If we use such scheduler, another definition of the differentially private operator
+If we use arbitrary scheduler, another definition of the differentially private operator
 might be:
 \begin{eqnarray*}
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
@@ -152,7 +152,7 @@ The problem however is undecidable in general.
 The $\dpCTLstar$ model checking problem for MDPs  is undecidable.
 \end{theorem}
 
-We consider some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
+The proof is put in Appendix. We consider some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
 $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{F B} -
 \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
 becomes an approximate version of the language equivalence problem~\cite{Tzeng92}. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}.

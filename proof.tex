@@ -14,7 +14,7 @@ Each input alphabet $\alpha$ induces a stochastic matrix $M(\alpha)$ in the obvi
 
 \paragraph{Emptiness problem:} Given a probabilistic automaton $\mathcal{A}= (S,\Sigma,M,s_0,B)$, whether there exists $\eta\in\Sigma^*$ such that $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$?
 
-Now we establish the proof by reducing the threshold problem to our $\dpCTLstar$ model checking problem. Given the probabilistic automaton  $\mathcal{A}= (S,\Sigma,M,s_0,B)$, assume we have a \emph{primed} copy $\mathcal{A}'= (S',\Sigma,M',s_0',\emptyset)$.
+Now we establish the proof by reducing the emptiness problem to our $\dpCTLstar$ model checking problem. Given the probabilistic automaton  $\mathcal{A}= (S,\Sigma,M,s_0,B)$, assume we have a \emph{primed} copy $\mathcal{A}'= (S',\Sigma,M',s_0',\emptyset)$.
 
 Let $AP:=\{at_B\}$. Now we construct our MDP  $M =
 (S\cupdot S', \Sigma, \wp, L)$ where $\wp(s,a,t)$ equals to $M(s,a,t)$ if $s,t\in S$ and to $M'(s,a,t)$ if $s,t\in S'$. We define the neighbor relation $N_S:=\{(s_0,s_0'),(s_0',s_0)\}$ by relating states $s_0,s_0'$. The labelling function $L$ is defined by $L(s)=\{at_B\}$ if $s\in B$ and $L(s)=\emptyset$ otherwise.

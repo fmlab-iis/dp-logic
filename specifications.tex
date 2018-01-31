@@ -2,7 +2,7 @@ In this section we describe how properties in the differential privacy literatur
 
 \paragraph{Standard Differential Privacy.}
 Consider the survey mechanism (Subsection~\ref{subsec:survey}). The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)$ holds in state $s$ if for  $t$ with $sNt$, the probability of satisfying $\X \mathit{out}_Y$ from $s$ and $t$ satisfy:
-$\myPr{s}{K}{N}{\X \mathit{out}_Y}\le 3\myPr{t}{K}{N}{\X \mathit{out}_Y}$. The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)\wedge \dpriv{\ln 3}{0} (\X \mathit{out}_N)$ thus specifies the differential privacy property for states $+$ and $-$ in Example~\ref{exa:survey}.
+$\myPr{s}{K}{N}{\X \mathit{out}_Y}\le 3\myPr{t}{K}{N}{\X \mathit{out}_Y}$. The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)\wedge \dpriv{\ln 3}{0} (\X \mathit{out}_N)$ thus specifies the differentially private property for states $+$ and $-$ in Example~\ref{exa:survey}.
 The survey mechanism is
 $(\ln 3, 0)$-differentially private.
 
@@ -104,13 +104,13 @@ Now we consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X
 Figure~\ref{figure:2-dp-mc}. Applying the
 compositional theorem, one has $\epsilon_2=2\epsilon_1=0$ and
 $\delta_2=2\delta_1=1$. However, we can check easily that one gets
-better privacy parameter $(0,0.5)$.
+better privacy parameter $(0,.5)$.
 
 
 \paragraph{Reachability Privacy.}
 The formula $\dpriv{\epsilon}{\delta}(F \top)$ is a reachability privacy: it states that related states should have similar probabilities of eventually reaching $\top$. Reachability privacy is often used in combination with other properties.
 
-As an example, for our threshold model (Algorithm~\ref{algorithm:online-model}), we consider the property $\Phi=\wedge_{i=1}^{6} \dpriv{3}{0}(\X^i \top) \wedge \PJ{\le 0.025}(\X^6 F \top) \wedge \dpriv{3}{0.025}(\X^6 F \top)$, to express the privacy. The state $s_{34}$ (with the input threshold $t=3$, and the database $d=4$) satisfies $\Phi$ by our computation. It means the probability of reaching $\top$ at $i$ steps with $i$ ranges over $\{1,\ldots,6\}$, is $(3, 0)$-differentially private for the database $d$ and its neighbours ($d=3$ and $d=5$). It also states that the probability of reaching $\top$ after no less than $6$ steps, is smaller than $0.025$ and is  $(3, 0.025)$-differentially private.
+As an example, for our threshold model (Algorithm~\ref{algorithm:online-model}), we consider the property $\Phi=\wedge_{i=1}^{6} \dpriv{3}{0}(\X^i \top) \wedge \PJ{\le .025}(\X^6 F \top) \wedge \dpriv{3}{.025}(\X^6 F \top)$, to express the privacy. The state $s_{34}$ (with the input threshold $t=3$, and the database $d=4$) satisfies $\Phi$ by our computation. It means the probability of reaching $\top$ at $i$ steps with $i$ ranges over $\{1,\ldots,6\}$, is $(3, 0)$-differentially private for the database $d$ and its neighbours ($d=3$ and $d=5$). It also states that the probability of reaching $\top$ after no less than $6$ steps, is smaller than $.025$ and is  $(3, .025)$-differentially private.
 
 Later we use reachability privacy to specify differential privacy property for MDPs.
 
@@ -127,7 +127,7 @@ can be an arbitrary $\dpCTLstar$ path formula. One can specify
 $(\epsilon, \delta)$-closedness over infinite behaviors naturally.
 
 Consider the Bluetooth example in~\cite{DKNP04} and the
-formula $\dpriv{\epsilon}{\delta}{\F \G \mathit{timeout}}$. Let us say
+formula $\dpriv{\epsilon}{\delta}{(\F \G \mathit{timeout})}$. Let us say
 two states are neighbors if a slave device in a state is replaced by
 another device in the other state.
 Then the formula holds if the probability of having

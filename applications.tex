@@ -19,7 +19,7 @@ In pan privacy, data analysis mechanisms are required to respect
 privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}.
 The idea is to show \emph{reachability probabilities} are similar on
 neighboring observations. In the following, we model a discrete
-variant of a stream processing mechanisms by MDPs. We will also
+variant of a stream processing mechanism by MDPs. We will also
 specify pan privacy in our model using $\dpCTLstar$.
 
 Consider monitoring events of the types $a$ and $b$ continuously.
@@ -141,7 +141,7 @@ the uniform distribution. Similarly, $xy \in L (t_{xy})$ for $x, y \in
 \{ 0, 1 \}$.
 Consider, for example, the internal state
 $t_{10}$. If the action $a[a]$ or $b[a]$ are chosen, they
-denote that the current event type is replaced with the eveny type
+denote that the current event type is replaced with the event type
 $a$. The MDP moves to the internal state
 $t_{00}$ and $t_{10}$ with probability $.375 =
 \frac{3}{8}$ and $.625 = \frac{5}{8}$ respectively. At an internal
