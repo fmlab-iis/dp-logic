@@ -54,13 +54,13 @@ The parameters $\epsilon$ and $\delta$ quantify probabilistically
 similar behaviors;
 the smaller they are, the behaviors are more similar.
 Informally, a differentially private mechamism has probabilistically
-similar behabiors on neighboring databases. It will have similar
+similar behaviors on neighboring databases. It will have similar
 output distributions when a row is replaced by another in a given
 database. Consider, for instance, a database contains the row
 corresponding to an individual. A differentially private mechanism
 will have a similar output distribution when the individual is not in
 the database. Such mechanisms behave similarly regardless of the
-presence of any individual. Individual privacy is thus 
+presence of any individual. Individual privacy is thus
 preserved by differentially private mechanisms.
 
 \subsection{Markov Chains and Markov Decision Processes}
@@ -85,7 +85,7 @@ of
 a finite set of \emph{actions} $\Act$,
 a \emph{transition probability function} $\wp : S \times \Act
 \times S \rightarrow [0, 1]$ with $\sum_{t \in S} \wp(s, \alpha, t)
-= 1$ for every $s \in S$ and $\alpha \in \Act$. $S$ and 
+= 1$ for every $s \in S$ and $\alpha \in \Act$. $S$ and
 $L$ are as for Markov chains.
 A \emph{path} $\pi$ in $M$ is an infinite sequence $\pi_0 \alpha_1
 \pi_1 \cdots \pi_n \alpha_{n+1} \cdots$ with
@@ -97,10 +97,10 @@ For any measurable set $\Pi$ of paths, we
 write $\Pr[\Pi]$ for the \emph{probability measure} of $\Pi$.
 }
 
-Let $M = (S, \Act, \wp, L)$ be an MDP. A
+Let $M = (S, \Act, \wp, L)$ be an MDP. A (history-dependent)
 \emph{scheduler} for $M$ is a function $\scheduler{S} : S^+
 \rightarrow \Act$. A \emph{query scheduler} for $M$ is a function
-$\scheduler{Q} : \bbfZ^{\geq 0} \rightarrow \Act$. 
+$\scheduler{Q} : \bbfZ^{\geq 0} \rightarrow \Act$. Intuitively, its decision depends only the length of the history.
 A path $\pi =
 \pi_0 \alpha_1 \pi_1 \cdots$ $\pi_n$ $\alpha_{n+1} \cdots$ is an
 \emph{$\scheduler{S}$-path} if $\alpha_{i+1} = \scheduler{S}(\pi_0

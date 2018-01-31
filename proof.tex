@@ -28,5 +28,12 @@ $\myPr{s_0}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B} \leq
 $\myPr{s_0}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B} \leq
  0$. This implies  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$ for all $\eta\in\Sigma^*$.
 
- For the other direction, assume that all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$. We prove by contradiction. Assume that $s_0\not\models \dpriv{1}{0} (F at_B)$. Since the relation $N_S$ contains only one pair, it implies that there exists a query scheduler $\scheduler{Q}\in\Sigma^\omega$ such that $\myPr{s_0}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B} >0$. It is then easy to construct a finite sequence $\eta\in\Sigma^*$ with  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$, a contradiction.
+ For the other direction, assume that all $\eta\in\Sigma^*$ it holds $v_{s_0}\cdot M(\eta)\cdot (v_B)^c \leq 0$. We prove by contradiction. Assume that $s_0\not\models \dpriv{1}{0} (F at_B)$. Since the relation $N_S=\{(s_0,s_0'),(s_0',s_0)\}$, there exists $(s_0,s_0')$,
+  and a query scheduler $\scheduler{Q}\in\Sigma^\omega$ such that 
+ \[
+ \myPr{s_0}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B} \not\leq
+  e \cdot
+  \myPr{s_0'}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B}
+ \]
+ which implies $\myPr{s_0}{M_{\scheduler{Q}}}{\neighbor{S}}{F at_B} >0$. It is then easy to construct a finite sequence $\eta\in\Sigma^*$ with  $v_{s_0}\cdot M(\eta)\cdot (v_B)^c > 0$, a contradiction.
 \end{proof}

@@ -260,7 +260,7 @@ $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 
 \begin{algorithm}[tbh]
 	\begin{algorithmic}[1]
-		\Function{OnlineModel}{$d$, $t$}
+		\Function{AboveThreshold}{$d$, $t$}
 		\Match{the input threshold $t$}
 		\Comment{Assignments of $t'$ by $\frac{1}{4}$-geometric mechanism}
 		\lCase{$0$}{$t' \leftarrow 0, 1,2,3,4,5$ with probability
@@ -330,7 +330,7 @@ $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 	\label{algorithm:online-model}
 \end{algorithm}
 
-\subsection{Above Threshold Mechanisms}
+\subsection{Above Threshold Mechanism}
 In the differentially privacy context, we differentiate between \emph{offline} and \emph{online} models.
 In the offline (or \emph{non-interactive}) model the curator releases the outputs only once and plays no further role. Thus the models we constructed in previous section are offline models. On the contrary, in the online (or \emph{interactive}) model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differential privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
 
