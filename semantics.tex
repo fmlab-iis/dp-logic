@@ -79,26 +79,26 @@ Other than the differentially private operator, the semantics of
 $\dpCTLstar$ is standard~\cite{BK:08:PMC}.
 To intuit the semantics of $\dpriv{\epsilon}{\delta} \phi$,
 recall that  $\myPr{s}{K}{N}{\phi}$ is the probability of having
-paths satisfying $\phi$ from $s$. Thus, a state $s$ satisfies
+paths satisfying $\phi$ from $s$. A state $s$ satisfies
 $\dpriv{\epsilon}{\delta} \phi$ if having paths satisfying $\phi$
 from $s$ is $(\epsilon, \delta)$-close to having paths satisfying
-$\phi$ from every neighbor of $s$. In other words, it is
+$\phi$ from every neighbor of $s$. Informally, it is
 probabilistically similar to observe paths satisfying $\phi$ from $s$
-and from all neighbors of $s$.
+and from all its neighbors.
 
 \subsection{Model Checking Algorithms}
-We first describe the model checking algorithm for $\dpCTL$, which follows the classical
+We describe the model checking algorithm for $\dpCTL$. The algorithm follows the classical
 algorithms for $\PCTL$ by computing the states satisfying
 sub state-formulae inductively~\cite{HanssonJ94,BK:08:PMC}. It hence suffices to
 consider the inductive step where the states satisfying the subformula
-$\dpriv{\epsilon}{\delta} (\phi)$ is computed.
+$\dpriv{\epsilon}{\delta} (\phi)$ are to be computed.
 
 %We start with the algorithm for Markov chains.
 
 In the classical $\PCTL$ model checking algorithm for Markov chains,
 states satisfying the subformula $\PJ{J} \phi$ are obtained by
 computing $\myPr{s}{K}{\neighbor{S}}{\phi}$ for state $s \in S$.
-These probabilities can be computed by solving linear equations or
+These probabilities can be obtained by solving linear equations or
 through iterative approximations. We summarize it in the following
 theorem (details see~\cite{BK:08:PMC}):
 
@@ -129,13 +129,13 @@ $\varphi$ to minimize confusion.
 }
 
 In order to determine the set $\{ s : K, \neighbor{S}, s \models
-\dpriv{\epsilon}{\delta} \varphi \}$, our algorithm first computes
+\dpriv{\epsilon}{\delta} \varphi \}$, our algorithm computes
 the probabilities $p (s) = \myPr{s}{K}{\neighbor{S}}{\varphi}$ for every
 $s \in S$ (Algorithm~\ref{algorithm:sat-dpriv-dtmc}). For each $s \in S$,
 it then compares the probabilities $p (s)$ and $p (t)$ for every
 neighbor $t$ of $s$. If there is a neighbor $t$ such that $p (s)$ and
 $p (t)$ are not $(\epsilon, \delta)$-close, the state $s$
-is removed from the result. Hence
+is removed from the result. 
 Algorithm~\ref{algorithm:sat-dpriv-dtmc} returns all states which are
 $(\epsilon, \delta)$-close to their neighbors.
 The algorithm requires at most $O

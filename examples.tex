@@ -5,7 +5,7 @@ A state $s$ stores at least a database $x\in \mathcal{X}^n$, which is the data h
 States are typically labelled with the corresponding outputs
 the curator generates. We explain the main idea with some examples.
 
-\subsection{Survey Mechanisms}
+\subsection{Survey Mechanism}
 \label{subsec:survey}
 
 Consider the survey question: have you been diagnosed
@@ -13,7 +13,7 @@ with the disease $X$? In order to protect surveyees' privacy, each
 answers the question as follows. The surveyee first flips a
 coin. If it is tail, she answers the question truthfully. Otherwise,
 she randomly answers \textit{Yes} or \textit{No}
-uniformly~\cite{DR:14:AFDP}.
+uniformly (Figure~\ref{figure:2-dp-table})~\cite{DR:14:AFDP}.
 
 Let us analyze the mechanism briefly. The data universe $\mathcal{X}$
 is $\{ +, - \}$. The mechanism $M$ is a randomized algorithm with
@@ -23,6 +23,9 @@ inputs in $\mathcal{X}$ and outputs in $\{ Y, N \}$. For any $x \in
 \frac{1}{4} \leq e^{\ln 3} \Pr[M (x') = Y]$ for any neighboring $x, x'
 \in \mathcal{X}$. Similarly, $\Pr[M (x) = N] \leq e^{\ln 3} \Pr[M (x')
 = N]$. The survey mechanism is $(\ln 3, 0)$-differentially private.
+The random noise boosts the probability of answering
+\textit{Yes} or \textit{No} to at least $1/4$ regardless of
+diagnoses. Inferences on individual diagnosis can be plausibly denied.
 
 \begin{figure}
   \centering
@@ -76,22 +79,16 @@ inputs in $\mathcal{X}$ and outputs in $\{ Y, N \}$. For any $x \in
   \label{figure:2-dp}
 \end{figure}
 
-\begin{example}\label{exa:survey}
-  Figure~\ref{figure:2-dp} shows the survey
-mechanism and its corresponding Markov chain.
+Figure~\ref{figure:2-dp-mdp} shows the corresponding Markov chain.
 In the figure, the states
 $+$ and $-$ denote the diagnoses are positive or negative
 respectively; the states $s$ and $t$ denote answers to the survey
 question and hence let $\mathit{out}_Y \in L (s)$ and $\mathit{out}_N
 \in L (t)$.
 States $+$ and $-$ are neighbors.
-The random noise boosts the probability of answering
-\textit{Yes} or \textit{No} to at least $1/4$ regardless of
-diagnoses. Inferences on individual diagnosis can be plausibly denied.
 Missing transitions (such as those from $s$ and $t$) lead
 to a special state $\dagger$ with a self-loop. We omit the transitions
 and the state $\dagger$ for clarity.
-\end{example}
 
 
 \subsection{Truncated $\alpha$-Geometric Mechanism}\label{subsec:geometric}
@@ -107,7 +104,7 @@ distribution~\cite{GRS:09:UUPM,GRS:12:UUPM} :
 \]
 The $\alpha$-geometric mechanism is oblivious since it has the same
 output distribution on any inputs $x, x'$ with $f (x) = f
-(x')$. Moreover, it is $(- {\Delta (f)} \ln \alpha, 0)$-differentially
+(x')$. It is $(- {\Delta (f)} \ln \alpha, 0)$-differentially
 private for any query $f$ with sensitivity $\Delta (f)$. The range of
 the mechanism
 however is $\bbfZ$. It may give nonsensical outputs such as
@@ -159,7 +156,7 @@ given in Figure~\ref{figure:geometric-mechanism-table}.
       \hline
     \end{array}
     \]
-    \caption{$1/2$-Geometric Mechanism}
+    \caption{$\frac{1}{2}$-Geometric Mechanism}
     \label{figure:geometric-mechanism-table}
   \end{subfigure}
   \hspace{.08\columnwidth}
@@ -241,10 +238,7 @@ given in Figure~\ref{figure:geometric-mechanism-table}.
 
 Similar to the survey mechanism, it is
 straightforward to model the truncated $\frac{1}{2}$-geometric
-mechanisms as Markov chains.
-
-\begin{example}
-Let the state $s_k$ and $t_l$
+mechanisms as Markov chains. Let the state $s_k$ and $t_l$
 denote the input value $k$ and output value $l$ respectively. Define
 the state set $S = \{ s_k, t_k : k \in \{ 0, 1, \ldots, n \} \}$.
 The probability transition $\wp (s_k, t_l)$ is the probability of the
@@ -256,7 +250,6 @@ neighbors iff $| k - l | \leq 1$.
 Figure~\ref{figure:geometric-mechanism-markov-chain} gives
 the Markov chain of the truncated
 $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
-\end{example}
 
 \begin{algorithm}[tbh]
 	\begin{algorithmic}[1]
