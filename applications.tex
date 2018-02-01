@@ -15,16 +15,16 @@ information in such mechanisms. When differentially private mechanisms
 are in their internal states, privacy is still lost if an intrusion
 occurs.
 
-In pan privacy, data analysis mechanisms are required to respect
+In pan privacy, mechanisms are required to respect
 privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}.
 The idea is to show \emph{reachability probabilities} are similar on
 neighboring observations. In the following, we model a discrete
-variant of a stream processing mechanism by MDPs. We will also
-specify pan privacy in our model using $\dpCTLstar$.
+variant of a stream processing mechanism by an MDP and
+specify pan privacy using $\dpCTLstar$.
 
 Consider monitoring events of the types $a$ and $b$ continuously.
 A sequence of event types is said to be an observation. Two
-obsevations are {neighbors} if one can be obtained from the other
+observations are {neighbors} if one can be obtained from the other
 by replacing event types any number of times, that is, if they are of
 the same length. %\bw{Later, we will consider a different definition of
 %neighborhood by restricting the number of replacements.}
@@ -96,7 +96,7 @@ $f_a$ can only be changed from $U$ to $B$, values of $f_a$ is $(\ln 2,
 0)$-differentially private and similarly for $f_b$. Finally, the
 $\frac{1}{2}$-geometric mechanism gives $(\ln 2, 0)$-differential privacy.
 Recall $2\ln 2 = \ln 4$,
-the steaming data analysis mechanism in
+the steaming mechanism in
 Algorithm~\ref{algorithm:frequency-estimator} is $(\ln 4,
 0)$-differentially private by
 composition theorem.
@@ -113,9 +113,9 @@ Algorithm~\ref{algorithm:frequency-estimator}.
 In order to obtain a finite model, we formalize neighbors as action
 sequences in MDPs. Consider the action set $\{
 a[a], a[b], b[a], b[b] \}$. Informally, the action $x[y]$ means the
-event type $x$ is replaced by the event type $y$ in a neighbor. An
+event type $x$ is replaced by the event type $y$. An
 action sequence thus represents an observation and one of its
-neighbors and vice versa. More formally, the action sequence
+neighbors. Concretely, 
 $x_1[y_1]x_2[y_2]\cdots x_n[y_n]$ represents the observation
 $x_1x_2\cdots x_n$ and its neighbor $y_1y_2\cdots y_n$. For instance,
 the action sequence $a[a]a[b]a[a]b[a]b[b]$ represents the observation
@@ -325,14 +325,13 @@ $
 $\mathit{at}_i$, i=1,2,3, is an atomic proposition satisfied only at state $i$, which is not shown in the figure).
 For pan privacy, we moreover wish to measure privacy loss in internal
 states. For observations of length $k$, the probabilities of reaching
-each internal states need to be sufficiently close. The state $I$
-therefore must satisfy
+each internal states need to be sufficiently close. Define
 \[
-\Psi
-\wedge
-\bigwedge_{k \in \bbfN}
-\dpriv{\ln 4}{0} (\X^k {00}) \wedge
-\dpriv{\ln 4}{0} (\X^k {01}) \wedge
-\dpriv{\ln 4}{0} (\X^k {10}) \wedge
-\dpriv{\ln 4}{0} (\X^k {11}).
+\Psi_i =
+\dpriv{\ln 4}{0} (\X^i {00}) \wedge
+\dpriv{\ln 4}{0} (\X^i {01}) \wedge
+\dpriv{\ln 4}{0} (\X^i {10}) \wedge
+\dpriv{\ln 4}{0} (\X^i {11}).
 \]
+The state $s$ therefore must satisfy $\Psi$ and $\Psi_i$ for every $i
+\in \bbfZ^{\geq 0}$.  

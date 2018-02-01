@@ -1,5 +1,6 @@
 %\subsection{Markov Decision Processes}
 \begin{wrapfigure}[14]{r}{.45\columnwidth}
+%\begin{figure}
   \centering
     \resizebox{.45\columnwidth}{!}{
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
@@ -30,9 +31,10 @@
     \caption{Markov Decision Process}
     \label{figure:simple-mdp}
 \end{wrapfigure}
+%\end{figure}
 
 \hide{Mechanisms are not necessarily closed randomized algorithms; they may
-perform different compution on users' requests.
+perform different computation on users' requests.
 We use Markov decision processes to model such
 interactive mechanisms. Specifically, external inputs are modeled by
 actions. Behaviors associated with different inputs are modeled by
@@ -46,8 +48,8 @@ distributions associated with actions.
 
 
 Consider again the survey mechanism. Suppose we would like to design
-an interactive mechanism which adjusts random noises on surveyers'
-requests. When the surveyer requests low-accuracy answers, the
+an interactive mechanism which adjusts random noises on surveyors'
+requests. When the surveyor requests low-accuracy answers, the
 surveyee uses the survey mechanism as before. When high-accuracy
 answers are requested, the surveyee answers \textit{Yes} with
 probability $\frac{4}{5}$ and \textit{No} with probability $\frac{1}{5}$ when she has
@@ -107,10 +109,10 @@ query scheduler can force any of neighbors to have
 probabilistically distinguishable behaviors.
 
 \noindent
-\emph{Justification of the scheduler class.}
-For defining semantics for the $\mathcal{D}$-operator, we used query scheduler.
-If we use arbitrary scheduler, another definition of the differentially private operator
-might be:
+\paragraph{Justification of query schedulers.}
+We use query schedulers in the semantics for the differentially
+private operator. A definition with history-dependent schedulers
+might be
 \begin{eqnarray*}
   M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
   & \textmd{ if } &
@@ -124,15 +126,15 @@ might be:
   + \delta
 \end{eqnarray*}
 A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
-no scheduler could differentiate the probabilities of paths satisfying
-$\phi$ from neighbors. Such a definition would allow strategies to
-take different actions from different states. It might need different
-action sequences to distinguish neighbors. Two neighbors could still be
-differentiated by an action sequence and lose their privacy.
-
-We consider only query scheduler $\scheduler{Q}\in Act^\omega$, which correspond to the query sequences. In the differential privacy context, neighbor states exhibit same action behaviours. And we will see later that
-our semantics agrees with the notion of differential privacy in the literature for such systems.
-We hence
+no history-dependent scheduler could differentiate the probabilities of paths satisfying
+$\phi$ from neighbors. Such a definition would allow schedulers to
+take different actions from different states. Two neighbors might be
+differentiated by different action sequences erroneously.
+A query scheduler $\scheduler{Q} : \bbfZ^{\geq 0} \rightarrow \omega$
+corresponds to a query sequence. In differential privacy,
+neighbors exhibit similar action behaviors.
+Our semantics agrees with the informal interpretation of differential
+privacy for such systems. We hence
 prefer the original definition.
 
 \subsection{The Model Checking Problem}
@@ -144,17 +146,17 @@ $\phi$, we need to decide whether
 $\myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} \leq
 e^{\epsilon} \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} + \delta$
 for every query scheduler $\scheduler{Q}$.
-If the path formula only contains next operators, it is easy to deal with. When $\phi$ is $\gX B$ with $B\subseteq S$, only one step behaviour needs to be considered. Thus only the first action in the query sequence is needed. It can also be easily generalized to nested next operators:  one needs only to enumerate
-all actions query sequences of length obtained by the number of nexted $\X$ operators.
+If the path formula only contains next operators, it is easy to deal with. When $\phi$ is $\gX B$ with $B\subseteq S$, only one step behavior needs to be considered. Thus only the first action in the query sequence is needed. It can also be easily generalized to nested next operators:  one needs only to enumerate
+all actions query sequences of length obtained by the number of nested $\X$ operators.
 The problem however is undecidable in general.
 
 \begin{theorem}\label{theorem:mdp-model-checking}
 The $\dpCTLstar$ model checking problem for MDPs  is undecidable.
 \end{theorem}
 
-The proof is put in Appendix. We consider some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
-$\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{F B} -
-\myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
+The proof is put in Appendix. We discuss some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
+$\myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{F B} -
+\myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
 becomes an approximate version of the language equivalence problem~\cite{Tzeng92}. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}.
 
 \hide{

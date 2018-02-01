@@ -1,6 +1,6 @@
 In this section we describe how properties in the differential privacy literature can be expressed using $\dpCTLstar$ formulae.
 
-\paragraph{Standard Differential Privacy.}
+\paragraph{Classical Differential Privacy.}
 Consider the survey mechanism (Section~\ref{subsec:survey}). The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)$ holds in state $u$ if for  $v$ with $u N v$, the probability of satisfying $\X \mathit{out}_Y$ from $u$ and $v$ satisfy:
 $\myPr{u}{K}{N}{\X \mathit{out}_Y}\le 3\myPr{v}{K}{N}{\X \mathit{out}_Y}$. The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)\wedge \dpriv{\ln 3}{0} (\X \mathit{out}_N)$ thus specifies differential privacy for states $+$ and $-$.
 The survey mechanism is $(\ln 3, 0)$-differentially private.
@@ -93,8 +93,10 @@ The model is depicted in Figure~\ref{figure:2-dp-mc}.
 Consider the formula $\dpriv{\ln 9}{0} (\X (\mathit{out}_Y\wedge \X \mathit{out}_Y))$. A path satisfies $\X (\mathit{out}_Y\wedge \X \mathit{out}_Y)$ if the second state satisfies $\mathit{out}_Y$ and the third state satisfies $\mathit{out}_Y$ as well. We verify that this formula is satisfied for states $+$ and $-$. Moreover, the bound $\epsilon=\ln 9$ is tight, since the probability of satisfying $\X (\mathit{out}_Y\wedge \X \mathit{out}_Y)$ from states $+$ and $-$ are $\frac{9}{16}$ and $\frac{1}{16}$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{\ln 9}{0} (\X (a_1\wedge \X a_2))$ specifies differential privacy for the model, where $a_1,a_2$ range over all atomic propositions $\{\mathit{out}_Y, \mathit{out}_N\}$.
 
 In comparison, let us consider two slightly different formulae:
-(a) $\dpriv{\ln 3}{0} (\X \X \mathit{out}_Y)$. In this case we do not have privacy loss, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
-(b) $\dpriv{\ln 3}{0} (\X (\mathit{out}_Y\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_Y)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_Y)$ states the one step differential privacy. Observe the inner formula is satisfied by all neighbors. Thus, the outer formula also has no privacy loss.
+\begin{itemize}
+\item $\dpriv{\ln 3}{0} (\X \X \mathit{out}_Y)$. In this case we do not have privacy loss, even though we are querying twice: the reason is that the output of the first query is not utilized at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
+\item $\dpriv{\ln 3}{0} (\X (\mathit{out}_Y\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_Y)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_Y)$ specifies the one step differential privacy. Observe the inner formula is satisfied by all neighbors. Thus, the outer formula also has no privacy loss.
+\end{itemize}
 
 \paragraph{Tighter Privacy Bounds for Composition.}
 An advantage of applying model checking is that we may get tighter bounds for composition. Consider the survey mechanism, and the property $\dpriv{0}{.5} (\X \mathit{out}_Y)$. Obviously, it holds in states $+$ and $-$. A careful check ensures that one cannot decrease  $\delta_1=.5$ without increasing $\epsilon$.
@@ -103,13 +105,40 @@ Now consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X
 Figure~\ref{figure:2-dp-mc}. Applying the
 compositional theorem, one has $\epsilon_2=2\epsilon_1=0$ and
 $\delta_2=2\delta_1=1$. However, we can check easily that one gets
-better privacy parameter $(0,.5)$.
+better privacy parameter $(0,.5)$ using the model checking algorithm.
+In general, compositional theorems for differential privacy only give
+asymptotic upper bounds. Privacy parameters $\epsilon$ and $\delta$
+must be calculated carefully and often overly pessimistic. Our
+algorithm allows data analysts to choose such parameters more
+tightly.
 
 
 \paragraph{Reachability Privacy.}
 The formula $\dpriv{\epsilon}{\delta}(F \top)$ is a reachability privacy. It specifies that neighbors should have similar probabilities of eventually reaching $\top$. Reachability privacy is often used in combination with other properties.
-In the above threshold mechanism in Section~\ref{subsec:threshold},
-consider the property $\Phi=\wedge_{i=1}^{6} \dpriv{3}{0}(\X^i \top) \wedge \PJ{\le .025}(\X^6 F \top) \wedge \dpriv{3}{.025}(\X^6 F \top)$. The state $s_{34}$ (with the input threshold $t=3$, and the database $d=4$) satisfies $\Phi$ by our computation. It means the probability of reaching $\top$ at $i$ steps with $i$ ranges over $\{1,\ldots,6\}$, is $(3, 0)$-differentially private for the database $d$ and its neighbours ($d=3$ and $d=5$). It also states that the probability of reaching $\top$ after no less than $6$ steps, is smaller than $.025$ and is  $(3, .025)$-differentially private.
+In the above threshold mechanism (Section~\ref{subsec:threshold}),
+recall that outputs are of the form $\bot \cdots \bot \top$. In order
+to establish differential privacy, one wishes to show that $\Phi_i$
+holds for every $i \in \bbfZ^{\geq 0}$ where $\Phi_i =
+\dpriv{3}{0}(\X^i \top)$. That is, the mechanism halts at the $i$-th
+step with similar probabilities for every $i$. 
+It is not clear how to verify them automatically. 
+
+Now consider $\Phi=\wedge_{i=1}^{6} \dpriv{3}{0}(\X^i \top) 
+\wedge \PJ{\le .025}(\X^6 F \top) \wedge \dpriv{3}{.025}(\X^6 F
+\top)$. The state with the threshold $t=3$, and the query result $r=4$ 
+satisfies $\Phi$ by our computation. It means the
+probability of reaching $\top$ at $i$ steps with $i$ ranges over
+$\{1,\ldots,6\}$, is $(3, 0)$-differentially private for the database
+$d$ and its neighbors ($r=3$ and $r=5$). It also states that the
+probability of reaching $\top$ after no less than $6$ steps, is
+smaller than $.025$ and $(3, .025)$-differentially private as well. 
+Rather than checking the probabilities of all possible outputs, $\Phi$
+focuses on finitely many short outputs. It says the mechanism enjoys $(3,
+0)$-differentially privacy for the short outputs, and long outputs are
+unlikely. Moreover, all neighbors are unlikely to have long outputs. 
+Using this trick, one can bound the probability of long outputs
+arbitrarily (say, less than $10^{-6}$). Our technique can establish
+practical privacy guarantees automatically. 
 
 %Later we use reachability privacy to specify differential privacy property for MDPs.
 
@@ -133,4 +162,7 @@ Then the formula holds if the probability of having
 continuous time out (say, in the denial of service attack) is
 $(\epsilon, \delta)$-close for all neighbors. That is, replacing a slave
 device cannot increase the chance of service failure significantly.
-
+In many applications, data analyses are carried out constantly. 
+Privacy analysis over infinite behaviors is crucial. 
+We will revisit this issue again in
+Section~\ref{section:applications}. 

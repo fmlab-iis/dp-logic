@@ -1,9 +1,19 @@
+To model differentially private mechanisms by Markov chains, we
+formalize inputs (such as databases or query results) as states. For
+each input, its output distribution is modeled as a probabilistic
+transition. Finally, neighbors are specified by a neighborhood
+relation. States are typically labelled with atomic propositions to
+signify their intended interpretation (such as inputs or outputs). We
+demonstrate the key ideas in examples.
+
+\hide{
 A simple way to design differentially private mechanisms is to add
 random noises.
 Now we describe our main ideas for  modelling differentially private mechanisms.
 A state $s$ stores at least a database $x\in \mathcal{X}^n$, which is the data held by a trusted \emph{curator}. A transition corresponds to a data analysis mechanism.
 States are typically labelled with the corresponding outputs
 the curator generates. We explain the main idea with some examples.
+}
 
 \subsection{Survey Mechanism}
 \label{subsec:survey}
@@ -24,7 +34,7 @@ inputs in $\mathcal{X}$ and outputs in $\{ Y, N \}$. For any $x \in
 \in \mathcal{X}$. Similarly, $\Pr[M (x) = N] \leq e^{\ln 3} \Pr[M (x')
 = N]$. The survey mechanism is $(\ln 3, 0)$-differentially private.
 The random noise boosts the probability of answering
-\textit{Yes} or \textit{No} to at least $1/4$ regardless of
+\textit{Yes} or \textit{No} to at least $\frac{1}{4}$ regardless of
 diagnoses. Inferences on individual diagnosis can be plausibly denied.
 
 \begin{figure}
@@ -253,9 +263,10 @@ $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 
 \begin{algorithm}[tbh]
 	\begin{algorithmic}[1]
-		\Procedure{AboveThreshold}{$d$, $t$}
-		\Match{the input threshold $t$}
-		\Comment{Assignments of $t'$ by $\frac{1}{4}$-geometric mechanism}
+		\Procedure{AboveThreshold}{$d$, $\{ f_1, f_2, \ldots
+                  \}$, $t$}
+		\Match{$t$}
+		\Comment{obtain $t'$ by $\frac{1}{4}$-geometric mechanism}
 		\lCase{$0$}{$t' \leftarrow 0, 1,2,3,4,5$ with probability
 			$\frac{4}{5}$,$\frac{3}{20}$,
 			$\frac{3}{80}$,$\frac{3}{320}$,
@@ -282,58 +293,87 @@ $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 			$\frac{3}{20}$,$\frac{4}{5}$ respectively}
 		\EndMatch
 		\For{each query $f_i$}
-		\Match{the input databese $d$}
-		\Comment{Assignments of $f_{i}'$ by $\frac{1}{2}$-geometric mechanism}
-		\lCase{$0$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+                \State{$r_i \leftarrow f_i (d)$}
+		\Match{ $r_i$}
+		\Comment{obtain $r_{i}'$ by $\frac{1}{2}$-geometric mechanism}
+		\lCase{$0$}{$r_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
 			$\frac{2}{3}$,$\frac{1}{6}$,
 			$\frac{1}{12}$,$\frac{1}{24}$,
 			$\frac{1}{48}$,$\frac{1}{48}$ respectively}
-		\lCase{$1$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+		\lCase{$1$}{$r_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
 			$\frac{1}{3}$,$\frac{1}{3}$,
 			$\frac{1}{6}$,$\frac{1}{12}$,
 			$\frac{1}{24}$,$\frac{1}{24}$ respectively}
-		\lCase{$2$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+		\lCase{$2$}{$r_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
 			$\frac{1}{6}$,$\frac{1}{6}$,
 			$\frac{1}{3}$,$\frac{1}{6}$,
 			$\frac{1}{12}$,$\frac{1}{12}$ respectively}
-		\lCase{$3$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+		\lCase{$3$}{$r_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
 			$\frac{1}{12}$,$\frac{1}{12}$,
 			$\frac{1}{6}$,$\frac{1}{3}$,
 			$\frac{1}{6}$,$\frac{1}{6}$ respectively}
-		\lCase{$4$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+		\lCase{$4$}{$r_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
 			$\frac{1}{24}$,$\frac{1}{24}$,
 			$\frac{1}{12}$,$\frac{1}{6}$,
 			$\frac{1}{3}$,$\frac{1}{3}$ respectively}
-		\lCase{$5$}{$f_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
+		\lCase{$5$}{$r_{i}' \leftarrow 0, 1,2,3,4,5$ with probability
 			$\frac{1}{48}$,$\frac{1}{48}$,
 			$\frac{1}{24}$,$\frac{1}{12}$,
 			$\frac{1}{6}$,$\frac{2}{3}$ respectively}
 		\EndMatch
-		\If{$f_{i}'>t'$}
+                \State{\textbf{if} $r'_i \geq t'$ \textbf{then} 
+                  \textbf{halt} with $a_i = \top$ \textbf{else}
+                  $a_i = \bot$}
+\hide{
+		\If{$r_{i}'>t'$}
 		\State{$a_i=\top$}
-		\State{\Return}
+		\State{\textbf{halt}}
 		\Else
 		\State{$a_i=\bot$}
 		\EndIf
+}
 		\EndFor
 		\EndProcedure
 		
 	\end{algorithmic}
-	\caption{Input is a private database $d \in \{0,1,\ldots,5\}$, an adaptively chosen stream of sensitivity 1 queries $f_1,f_2$,\ldots, a threshold $t \in \{0,1,\ldots,5\}$. Output is a stream of answers $a_1,a_2$,\ldots}
+	\caption{Input: private database $d$, 
+          queries $f_i : \{ 0, 1, \ldots, 5 \} \rightarrow \{ 0, 1,
+          \ldots, 5 \}$ with sensitivity $1$, threshold $t \in \{ 0,
+          1, \ldots, 5 \}$; Output: $a_1, a_2, \ldots$}
 	\label{algorithm:online-model}
 \end{algorithm}
 
 \subsection{Above Threshold Mechanism}
 \label{subsec:threshold}
-In the differentially privacy context, we differentiate between \emph{offline} and \emph{online} models.
-In the offline (or \emph{non-interactive}) model the curator releases the outputs only once and plays no further role. Thus the models we constructed in previous section are offline models. On the contrary, in the online (or \emph{interactive}) model the curator can permit further queries. In this setting it is obvious that queries do not change database themselves. To maintain differential privacy, the curator however can decide to change data analysis mechanisms accordingly. For instance, after a certain output is disclosed or a certain number of queries, it may decide to disable further queries.
+In differential privacy, we differentiate between {offline} and
+{online} mechanisms. 
+An offline mechanism releases outputs only once and plays no further
+role. The mechanisms we constructed previously are offline mechanisms. 
+On the other hand, online mechanisms permit further queries. 
+Obviously, queries do not change databases themselves. To maintain
+privacy, online mechanisms may decide to release
+information differently. For instance, they may disable further
+queries after a certain output is disclosed.
 
-Below we describe an online model adapted from~\cite{DR:14:AFDP}: it is used in the scenario where a large amount of queries occur, but we only care for the queries which
-are above a given threshold. Other queries below the threshold are considered \emph{irrelevant} and won't cause privacy disclosure. In~\cite{DR:14:AFDP}, the model is set for continuous database, and the Laplace mechanisms are applied to both queries and the threshold. In our model, the database is discrete and instead the geometric mechanisms are applied.
+Below we describe an online mechanism adapted from~\cite{DR:14:AFDP}:
+it is used in the scenario where a large amount of queries occur, but
+we only care for the queries which 
+are above a given threshold. Queries below the threshold are
+considered {irrelevant} and only disclose minimal information.
+In~\cite{DR:14:AFDP}, the mechanism is design for continuous queries.
+The Laplace mechanism is applied. Here, our mechanism is designed for
+bounded and discrete queries. The geometric mechanism is applied instead.
 
-We consider the database set $D = \{0,1\ldots,5\}$, a threshold $t \in \{0,1\ldots,5\}$, and queries $\{f| f $ with sensitivity $\Delta (f) = 1 \}$. In order to protect privacy, truncated $\alpha$-geometric mechanisms over $\{0,1\ldots,5\}$ are applied to each query and the threshold, and what we observe is the first time that a query result is greater than or equal to the threshold after interference. We are interested in the differentially private property of the data in $D$, assuming that a pair of data $d,d'$are neighbors, if $|d-d'|\le 1$. The algorithm is shown in Algorithm~\ref{algorithm:online-model} and a property will be specefied in Section~\ref{section:specifying-properties}.
-
-
-
-
-
+Consider a threshold $t \in
+\{ 0, 1 \ldots, 5\}$, and queries $\{ f_i : f_i $ with sensitivity $\Delta
+(f_i) = 1 \}$. In order to protect privacy, our mechanism applies the
+truncated $\frac{1}{4}$-geometric mechanism to obtain a noisy
+threshold $t'$. For each query, the truncated $\frac{1}{2}$-geometric
+mechanism is applied to its result. If the noisy result is not less
+than the noisy threshold, our mechanism outputs $\top$ and
+halts. Otherwise, it outputs $\bot$ and continues to the next query
+(Algorithm~\ref{algorithm:online-model}). The above threshold
+mechanism outputs a sequence of the form $\bot \cdots \bot \top$. On
+similar databases, we would like to show that the discrete above
+threshold mechanism outputs the same sequence with similar
+probabilities. 

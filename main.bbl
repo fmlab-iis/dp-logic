@@ -2,22 +2,63 @@
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
 
+\bibitem{AACDP:15:OILDPM}
+Alvim, M.S., Andr{\'{e}}s, M.E., Chatzikokolakis, K., Degano, P., Palamidessi,
+  C.: On the information leakage of differentially-private mechanisms. Journal
+  of Computer Security  23(4),  427--469 (2015)
+
 \bibitem{BK:08:PMC}
 Baier, C., Katoen, J.P.: Principles of Model Checking. The MIT Press (2008)
 
 \bibitem{BaierKKKMW16}
 Baier, C., Kiefer, S., Klein, J., Kl\"uppelholz, S., M\"uller, D., Worrell, J.:
-  {Markov} chains and unambiguous {B\"uchi} automata. In: CAV. Lecture Notes in
-  Computer Science, vol. 9779, pp. 23--42. Springer (2016)
+  {Markov} chains and unambiguous {B\"uchi} automata. In: CAV. LNCS, vol. 9779,
+  pp. 23--42. Springer (2016)
+
+\bibitem{BDGKZ:13:VCDPASM}
+Barthe, G., Danezis, G., Gr\'egoire, B., Kunz, C., Zanella-B\'eguelin, S.:
+  Verified computational differential privacy with applications to smart
+  metering. In: CSF. pp. 287--301. IEEE (2013)
+
+\bibitem{BFGAGHS:16:DPBP}
+Barthe, G., Farina, G.P., Gaboardi, M., Arias, E.J.G., Gordon, A., Hsu, J.,
+  Strub, P.Y.: Differentially private {B}ayesian programming. In: CCS. pp.
+  68--79. ACM (2016)
+
+\bibitem{BFGGHS:16:APCDP}
+Barthe, G., Fong, N., Gaboardi, M., Gr\'egoire, B., Hsu, J., Strub, P.Y.:
+  Advanced probabilistic couplings for differential privacy. In: CCS. pp.
+  55--67. ACM (2016)
+
+\bibitem{BGAHKS:14:PDPHL}
+Barthe, G., Gaboardi, M., Arias, E.J.G., Hsu, J., Kunz, C., Strub, P.Y.:
+  Proving differential privacy in {Hoare} logic. In: CSF. pp. 411--424. IEEE
+  (2014)
+
+\bibitem{BGAHRS:15:HOARRT}
+Barthe, G., Gaboardi, M., Arias, E.J.G., Hsu, J., Roth, A., Strub, P.:
+  Higher-order approximate relational refinement types for mechanism design and
+  differential privacy. In: POPL. pp. 68--79. ACM (2015)
+
+\bibitem{BGGHS:16:PDPPC}
+Barthe, G., Gaboardi, M., Gregoire, B., Hsu, J., Strub, P.Y.: Proving
+  differential privacy via probabilistic couplings. In: LICS. IEEE (2016)
+
+\bibitem{BKOB:12:PRRDP}
+Barthe, G., K\"opf, B., Olmedo, F., Zanella-B\'eguelin, S.: Probabilistic
+  relational reasoning for differential privacy. In: POPL. pp. 97--110. ACM
+  (2012)
 
 \bibitem{BiancoA95}
 Bianco, A., de~Alfaro, L.: Model checking of probabalistic and nondeterministic
-  systems. In: FSTTCS. Lecture Notes in Computer Science, vol. 1026, pp.
-  499--513. Springer (1995)
+  systems. In: FSTTCS. LNCS, vol. 1026, pp. 499--513. Springer (1995)
+
+\bibitem{ManneP92}
+Clarke, E.M., Grumberg, O., Peled, D.: Model Checking. The MIT Press (1999)
 
 \bibitem{CY95}
 Courcoubetis, C., Yannakakis, M.: The complexity of probabilistic verification.
-  J. of the ACM  42(4),  857--907 (1995)
+  Journal of the ACM  42(4),  857--907 (1995)
 
 \bibitem{CSS03}
 Couvreur, J.M., Saheb, N., Sutre, G.: An optimal automata approach to {LTL}
@@ -26,13 +67,12 @@ Couvreur, J.M., Saheb, N., Sutre, G.: An optimal automata approach to {LTL}
 
 \bibitem{DKNP04}
 Duflot, M., Kwiatkowska, M., Norman, G., Parker, D.: A formal analysis of
-  {Bluetooth} device discovery. In: Proc. 1st International Symposium on
-  Leveraging Applications of Formal Methods (ISOLA'04) (2004)
+  {Bluetooth} device discovery. In: ISOLA'04 (2004)
 
 \bibitem{DMNS:06:CNSPD}
 Dwork, C., McSherry, F., Nissim, K., Smith, A.: Calibrating noise to
-  sensitivity in private data analysis. In: Halevi, S., Rabin, T. (eds.) Theory
-  of Cryptography Conference. LNCS, vol. 3876, pp. 265--284. Springer (06)
+  sensitivity in private data analysis. In: Halevi, S., Rabin, T. (eds.) TCC.
+  LNCS, vol. 3876, pp. 265--284. Springer (06)
 
 \bibitem{DR:14:AFDP}
 Dwork, C., Roth, A.: The algorithmic foundations of differential privacy.
@@ -41,8 +81,7 @@ Dwork, C., Roth, A.: The algorithmic foundations of differential privacy.
 
 \bibitem{D:06:DP}
 Dwork, C.: Differential privacy. In: Bugliesi, M., Preneel, B., Sassone, V.,
-  Wegener, I. (eds.) International Colloquium on Automata, Languages and
-  Programming (ICALP). LNCS, vol. 4052, pp. 1--12. Springer (2006)
+  Wegener, I. (eds.) ICALP. LNCS, vol. 4052, pp. 1--12. Springer (2006)
 
 \bibitem{DNPR:10:DPCO}
 Dwork, C., Naor, M., Pitassi, T., Rothblum, G.N.: Differential privacy under
@@ -57,6 +96,15 @@ Fung, B.C.M., Wang, K., Chen, R., Yu, P.S.: Privacy-preserving data publish: A
   survey of recent developments. ACM Computing Surveys  42(4),  14:1--14:53
   (June 2010)
 
+\bibitem{GHHNP:13:LDPDP}
+Gaboardi, M., Haeberlen, A., Hsu, J., Narayan, A., Pierce, B.C.: Linear
+  dependent types for differential privacy. In: POPL. pp. 357--370 (2013)
+
+\bibitem{GMP:16:PDPFPS}
+Gazeau, I., Miller, D., Palamidessi, C.: Preserving differential privacy under
+  finite-precision semantics. Theoretical Computer Science  655,  92--108
+  (2016)
+
 \bibitem{GRS:09:UUPM}
 Ghosh, A., Roughgarden, T., Sundararajan, M.: Universally utility-maximizing
   privacy mechanisms. In: STOC. pp. 351--360. ACM, New York, NY, USA (2009)
@@ -67,7 +115,7 @@ Ghosh, A., Roughgarden, T., Sundararajan, M.: Universally utility-maximizing
 
 \bibitem{HanssonJ94}
 Hansson, H., Jonsson, B.: A logic for reasoning about time and reliability.
-  Formal Asp. Comput.  6(5),  512--535 (1994)
+  Formal Aspects of Computing  6(5),  512--535 (1994)
 
 \bibitem{JLE:14:DPML}
 Ji, Z., Lipton, Z.C., Elkan, C.: Differential privacy and machine learning: a
@@ -76,8 +124,8 @@ Ji, Z., Lipton, Z.C., Elkan, C.: Differential privacy and machine learning: a
 
 \bibitem{M:12:SLSBDP}
 Mironov, I.: On significance of the least significant bits for differential
-  privacy. In: Yu, T., Danezis, G., Gligor, V.D. (eds.) ACM Conference on
-  Computer and Communications Security. pp. 650--661 (2012)
+  privacy. In: Yu, T., Danezis, G., Gligor, V.D. (eds.) ACM CCS. pp. 650--661
+  (2012)
 
 \bibitem{Paz71}
 Paz, A.: Introduction to Probabilistic Automata (Computer Science and Applied
@@ -92,17 +140,35 @@ Puterman, M.L.: {Markov} Decision Processes: Discrete Stochastic Dynamic
 Rabin, M.: {Probabilistic automata}. Information and Control  6(3),  230--245
   (1963)
 
+\bibitem{RP:10:DMTGS}
+Reed, J., Pierce, B.C.: Distance makes the types grow stronger: A calculus for
+  differential privacy. In: ICFP. pp. 157--168. ACM (2010)
+
 \bibitem{TKBW:17:PLAI}
 Tang, J., Korolova, A., Bai, X., Wang, X., Wang, X.: Privacy loss in apple's
   implementation of differential privacy on {MacOS} 10.12. CoRR  abs/1709.02753
   (2017), \url{http://arxiv.org/abs/1709.02753}
 
+\bibitem{TKD:11:FVDPIS}
+Tschantz, M.C., Kaynar, D., Datta, A.: Formal verification of differential
+  privacy for interactive systems (extended abstract). ENTCS, vol. 276, pp.
+  61--79 (2011)
+
 \bibitem{Tzeng92}
 Tzeng, W.: {A polynomial-time algorithm for the equivalence of probabilistic
   automata}. SIAM Journal on Computing  21(2),  216--227 (1992)
 
+\bibitem{WHRP:17:FADP}
+Winograd{-}Cort, D., Haeberlen, A., Roth, A., Pierce, B.C.: A framework for
+  adaptive differential privacy. Proceedings of the ACM on Programming
+  Languages  1({ICFP}),  10:1--10:29 (2017)
+
 \bibitem{A:16:EPYU}
 WWDC: Engineering privacy for your users (2016),
   \url{https://developer.apple.com/videos/play/wwdc2016/709/}
+
+\bibitem{ZK:17:LTADPP}
+Zhang, D., Kifer, D.: {LightDP}: Towards automating differential privacy
+  proofs. In: POPL. pp. 888--901. ACM (2017)
 
 \end{thebibliography}

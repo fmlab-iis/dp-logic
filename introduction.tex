@@ -41,7 +41,7 @@ between model checking~\cite{ManneP92,BK:08:PMC} and privacy analysis hopefully 
 
 % Markov chains and MDP as formal models, actions made by adversary
 
-In order to illusrtrate applicability of our techniques, we give
+In order to illustrate applicability of our techniques, we give
 detailed formalizations of several data analysis mechanisms in this
 paper.
 In differential privacy, data analysis mechanisms are
@@ -105,7 +105,7 @@ satisfies $\dpriv{\epsilon}{\delta} \phi$ is undecidable.
 % analyze mechanism
 
 \noindent
-\emph{Related Work.}
+\paragraph{Related Work.}
 An early attempt on formal verification of differential privacy
 is~\cite{TKD:11:FVDPIS}. The work formalizes differential privacy in
 the framework of information leakage. The connection between
@@ -122,10 +122,13 @@ framework to formalize and analyze differential privacy in Markov
 chains and Markov decision processes.
 
 \noindent
-\emph{Contributions.} Our main contributions are threefold. (I)
-We introduce the logic $\dpCTLstar$ for reasoning about properties in
-differential privacy. We use the logic to express classical
-differential privacy properties, and moreover, complex properties such as those
-involving infinite behaviors can also be expressed. (II) We model several differentially private mechanisms, including stream processing, in Markov chains or Markov decision processes.
-(III) We show that the model checking
+\paragraph{Contributions.} Our main contributions are threefold. 
+\begin{enumerate}
+\item We introduce the logic $\dpCTLstar$ for reasoning about properties in
+differential privacy. The logic is able to to express classical
+differentially private properties. Complex properties such as those
+involving infinite behaviors can also be expressed;
+\item We model several differentially private mechanisms, including stream processing, in Markov chains or Markov decision processes; and
+\item We show that the model checking
 problem for Markov chains is standard. For Markov decision processes, we show that it is undecidable.
+\end{enumerate}

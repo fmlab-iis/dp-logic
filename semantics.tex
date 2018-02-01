@@ -33,7 +33,7 @@ $s$. Define the satisfaction relation $K, \neighbor{S}, s
 \end{eqnarray*}
 
 Moreover, the relation $K, \neighbor{S}, \pi \models \phi$ is defined as
-for the standard LTL formulas~\cite{ManneP92}. We only recall the semantics for $\X$ and $\until$ as follows:
+for the standard linear temporal logic formulas~\cite{ManneP92}. We only recall the semantics for $\X$ and $\until$ as follows:
 \begin{eqnarray*}
   K, \neighbor{S}, \pi \models \X \phi
   & \textmd{ if } &
@@ -84,7 +84,7 @@ $\dpriv{\epsilon}{\delta} \phi$ if having paths satisfying $\phi$
 from $s$ is $(\epsilon, \delta)$-close to having paths satisfying
 $\phi$ from every neighbor of $s$. Informally, it is
 probabilistically similar to observe paths satisfying $\phi$ from $s$
-and from all its neighbors.
+and from its neighbors.
 
 \subsection{Model Checking Algorithms}
 We describe the model checking algorithm for $\dpCTL$. The algorithm follows the classical
