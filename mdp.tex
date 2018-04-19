@@ -102,9 +102,9 @@ defined as in Markov chains.
 The semantics of $\dpCTLstar$ on MDPs
 is again standard except the differentially private operator
 $\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
-$\dpriv{\epsilon}{\delta} \phi$ specifies states which are $(\epsilon,
-\delta)$-close to all its neighbors in having paths satisfying $\phi$
-for query schedulers. That is, no
+$\dpriv{\epsilon}{\delta} \phi$ specifies states whose probability
+of having paths satisfying $\phi$ are $(\epsilon, \delta)$-close to
+those of all its neighbors for query schedulers. That is, no
 query scheduler can force any of neighbors to have
 probabilistically distinguishable behaviors.
 
@@ -126,13 +126,17 @@ might be
   + \delta
 \end{eqnarray*}
 A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
-no history-dependent scheduler could differentiate the probabilities of paths satisfying
-$\phi$ from neighbors. Such a definition would allow schedulers to
-take different actions from different states. Two neighbors might be
-differentiated by different action sequences erroneously.
-A query scheduler $\scheduler{Q} : \bbfZ^{\geq 0} \rightarrow \omega$
-corresponds to a query sequence. In differential privacy,
-neighbors exhibit similar action behaviors.
+no history-dependent scheduler could differentiate the probabilities
+of haveing paths satisfying
+$\phi$ from neighbors. Recall that a history-dependent scheduler takes
+actions by previous states. Such a definition would allow
+schedulers to take different actions from different states. 
+Two neighbors could be differentiated by different action sequences
+erroneously.
+A query scheduler $\scheduler{Q} : \bbfZ^{\geq 0} \rightarrow \Act$,
+on the other hand, corresponds to a query sequence. A state satisfies
+$\dpriv{\epsilon}{\delta} \phi$ if no query sequence can differentiate
+the probabilities of having paths satisfying $\phi$ from neighbors.
 Our semantics agrees with the informal interpretation of differential
 privacy for such systems. We hence
 prefer the original definition.
@@ -156,8 +160,8 @@ The $\dpCTLstar$ model checking problem for MDPs  is undecidable.
 
 The proof is put in Appendix. We discuss some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
 $\myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{F B} -
-\myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time \cite{Tzeng92}. However, if $\delta>0$, the problem
-becomes an approximate version of the language equivalence problem~\cite{Tzeng92}. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}.
+\myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time. However, if $\delta>0$, the problem
+becomes an approximate version of the language equivalence problem. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}.
 
 \hide{
 Since the scheduler attaining the maximally probable
