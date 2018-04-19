@@ -27,8 +27,8 @@ mechanisms~\cite{DR:14:AFDP,JLE:14:DPML}.
 
 Designing differentially private mechanisms can be tedious for
 sophisticated data analyses. Privacy leak has also been observed in
-data analysis programs with differentially private
-designs~\cite{M:12:SLSBDP,TKBW:17:PLAI}. This calls for formal
+data analysis programs implementing differentialy
+privacy~\cite{M:12:SLSBDP,TKBW:17:PLAI}. This calls for formal 
 analysis of differential privacy on both designs and implementations.
 In this paper, we propose the logic $\dpCTLstar$ for specifying
 differential privacy and investigate their model checking
@@ -80,8 +80,8 @@ $(\epsilon, \delta)$-differentially private at the state.
 An important byproduct of this work is to analyze privacy over
 infinite behaviors. Consider the formula $\dpriv{\epsilon}{\delta}
 (\G \F \mathit{high})$. A state satisfies the formula if it
-is probabilistically similar to  infinitely often
-answer $\mathit{high}$ as similar states. Compared to the unbounded
+is as likely to answer $\mathit{high}$ infinitely often
+as similar states. Compared to the unbounded
 but finite behavior specified by $\F \mathit{high}$,
 $\G \F \mathit{high}$ specifies an infinite behavior.
 Not only can differential privacy specify randomized algorithms, it

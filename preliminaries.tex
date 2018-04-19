@@ -32,9 +32,10 @@ $\Pr[M_f(x) = \tilde{r}] = \Pr[M_f(x') = \tilde{r}]$ for every
 $\tilde{r} \in \tilde{R}$ when $f (x) = f (x')$. In words, outputs of an
 oblivious mechanism depend on the query result $f (x)$ but not on the
 input database $x$. The order of rows in a database, for instance, is
-irrelevant to oblivious mechanisms. A database $x$ is
-\emph{$(\epsilon, \delta)$-close} to $x'$ in a mechanism
-$M_f$ if for every $\tilde{r} \in \tilde{R}$,
+irrelevant to oblivious mechanisms for counting queries. Let $x, x'$
+be databses and $\tilde{r} \in \tilde{R}$. We say the probability of
+the mechanism $M_f$ outputing $\tilde{r}$ on $x$ is
+\emph{$(\epsilon, \delta)$-close} to those on $x'$ if
 \[
 \Pr[M_f (x) = \tilde{r}] \leq e^{\epsilon} \Pr[M_f (x') =
 \tilde{r}] + \delta.
@@ -47,11 +48,13 @@ $M_f$ if for every $\tilde{r} \in \tilde{R}$,
 \]
 A mechanism $M_f$ is \emph{$(\epsilon, \delta)$-differentially
   private} % $(\epsilon, \delta \approx 0)$
-if for every $x, x' \in \mathcal{X}^n$ with $d(x, x') \leq 1$,
-$x$ is $(\epsilon, \delta)$-close to $x'$ in $M_f$.
+if for every $x, x' \in \mathcal{X}^n$ with $d(x, x') \leq 1$
+and $\tilde{r} \in \tilde{R}$, the probability of
+$M_f$ outputing $\tilde{r}$ on $x$ is $(\epsilon, \delta)$-close to
+those on $x'$.
 
-The parameters $\epsilon$ and $\delta$ quantify probabilistically
-similar behaviors;
+The non-negative parameters $\epsilon$ and $\delta$ quantify
+probabilistically similar behaviors;
 the smaller they are, the behaviors are more similar.
 Informally, a differentially private mechanism has probabilistically
 similar behaviors on neighboring databases. It will have similar
