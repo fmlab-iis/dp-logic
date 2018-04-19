@@ -1,12 +1,17 @@
 To model differentially private mechanisms by Markov chains, we
-formalize inputs (such as databases or query results) as states. For
+formalize inputs (such as databases or query results) as states. 
+Randomized computation is modeled by probabilistic transitions. Atomic
+propositions are used to designate intended interpretation on states
+(such as inputs or outputs). We demonstrates the ideas in examples.
+
+\hide{
+For
 each input, its output distribution is modeled as a probabilistic
 transition. Finally, neighbors are specified by a neighborhood
 relation. States are typically labelled with atomic propositions to
 signify their intended interpretation (such as inputs or outputs). We
 demonstrate the key ideas in examples.
 
-\hide{
 A simple way to design differentially private mechanisms is to add
 random noises.
 Now we describe our main ideas for  modelling differentially private mechanisms.
@@ -30,7 +35,7 @@ is $\{ +, - \}$. The mechanism $M$ is a randomized algorithm with
 inputs in $\mathcal{X}$ and outputs in $\{ Y, N \}$. For any $x \in
 \mathcal{X}$, we have $\frac{1}{4} \leq \Pr[M (x) = Y] \leq
 \frac{3}{4}$. Hence $\Pr[M (x) = Y] \leq \frac{3}{4} = 3 \cdot
-\frac{1}{4} \leq e^{\ln 3} \Pr[M (x') = Y]$ for any neighboring $x, x'
+\frac{1}{4} \leq e^{\ln 3} \Pr[M (x') = Y]$ for any neighbors $x, x'
 \in \mathcal{X}$. Similarly, $\Pr[M (x) = N] \leq e^{\ln 3} \Pr[M (x')
 = N]$. The survey mechanism is $(\ln 3, 0)$-differentially private.
 The random noise boosts the probability of answering
@@ -91,20 +96,20 @@ diagnoses. Inferences on individual diagnosis can be plausibly denied.
 
 Figure~\ref{figure:2-dp-mdp} shows the corresponding Markov chain.
 In the figure, the states
-$+$ and $-$ denote the diagnoses are positive or negative
+$+$ and $-$ denote positive or negative diagnoses 
 respectively; the states $s$ and $t$ denote answers to the survey
-question and hence let $\mathit{out}_Y \in L (s)$ and $\mathit{out}_N
+question and hence $\mathit{out}_Y \in L (s)$ and $\mathit{out}_N
 \in L (t)$.
 States $+$ and $-$ are neighbors.
 Missing transitions (such as those from $s$ and $t$) lead
-to a special state $\dagger$ with a self-loop. We omit the transitions
+to a special state $\dagger$ with a self-loop. We omit such transitions
 and the state $\dagger$ for clarity.
 
 
 \subsection{Truncated $\alpha$-Geometric Mechanism}\label{subsec:geometric}
 More sophisticated differentially private mechanisms are
 available. Consider a query
-$f : \mathcal{X}^n \rightarrow \bbfZ^{\geq 0}$. Let $\alpha \in (0, 1)$.
+$f : \mathcal{X}^n \rightarrow \{ 0, 1, \ldots, m \}$. Let $\alpha \in (0, 1)$.
 The \emph{$\alpha$-geometric mechanism}
 outputs $f(x) + Y$ where $Y$ is a random variable with the geometric
 distribution~\cite{GRS:09:UUPM,GRS:12:UUPM} :
@@ -118,10 +123,10 @@ output distribution on any inputs $x, x'$ with $f (x) = f
 private for any query $f$ with sensitivity $\Delta (f)$. The range of
 the mechanism
 however is $\bbfZ$. It may give nonsensical outputs such as
-negative integers for queries with positive ranges.
+negative integers for non-negative queries.
 
 The \emph{truncated $\alpha$-geometric mechanism over $\{ 0, 1,
-  \ldots, n \}$}
+  \ldots, m \}$}
 outputs $f (x) + Z$ where $Z$ is a random variable with the following
 distribution:
 \[
@@ -131,14 +136,14 @@ distribution:
     0 & \textmd{ if } z < - f (x) \\
     \frac{\alpha^{f (x)}}{1 + \alpha} & \textmd{ if } z = -f (x)\\
     \frac{1 - \alpha}{1 + \alpha}\alpha^{|z|} &
-    \textmd{ if } -f (x) < z < n - f (x)\\
-    \frac{\alpha^{n - f (x)}}{1 + \alpha} & \textmd{ if } z = n-f (x)\\
-    0 & \textmd{ if } z > n - f (x)
+    \textmd{ if } -f (x) < z < m - f (x)\\
+    \frac{\alpha^{m - f (x)}}{1 + \alpha} & \textmd{ if } z = m-f (x)\\
+    0 & \textmd{ if } z > m - f (x)
   \end{array}
 \right.
 \]
 Note the range of the truncated $\alpha$-geometric mechanism is
-$\{ 0, 1, \ldots, n \}$. The truncated $\alpha$-geometric mechanism is
+$\{ 0, 1, \ldots, m \}$. The truncated $\alpha$-geometric mechanism is
 again oblivious; it is also $(- {\Delta (f)} \ln \alpha, 0)$-differentially
 private for any query $f$ with sensitivity $\Delta (f)$.
 The truncated $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$ is
@@ -246,20 +251,26 @@ given in Figure~\ref{figure:geometric-mechanism-table}.
   \label{figure:geometric-mechanism}\vspace*{-.5cm}
 \end{figure}
 
-Similar to the survey mechanism, it is
-straightforward to model the truncated $\frac{1}{2}$-geometric
-mechanisms as Markov chains. Let the state $s_k$ and $t_l$
+Similar to the survey mechanism, it is straightforward to model the
+truncated $\frac{1}{2}$-geometric mechanism as a Markov chain. 
+Recall that the truncated $\frac{1}{2}$-geometric mechanism is
+oblivious. It suffices to consider $\{ f (x) : x \in \mathcal{X}^n \}$
+instead of $\mathcal{X}^n$ as inputs. 
+Let the state $s_k$ and $t_l$
 denote the input value $k$ and output value $l$ respectively. Define
-the state set $S = \{ s_k, t_k : k \in \{ 0, 1, \ldots, n \} \}$.
+the state set $S = \{ s_k, t_k : k \in \{ 0, 1, \ldots, m \} \}$.
 The probability transition $\wp (s_k, t_l)$ is the probability of the
 output value $l$ on the input value $k$ as defined in the
 mechanism. Moreover, we have $\mathit{in}_k \in L (s_k)$ and
 $\mathit{out}_k \in L (t_k)$ for $k \in \{ 0, 1, \ldots, n \}$.
-If $\Delta (f) = 1$, $s_k$ and $s_l$ are
-neighbors iff $| k - l | \leq 1$.
+If $\Delta (f) = 1$, $| f (x) - f (x') | \leq 1$ for every neighbors
+$x, x' \in \mathcal{X}^n$. Subsequently, $s_k$ and $s_l$ are
+neighbors iff $| k - l | \leq 1$ in our model.
 Figure~\ref{figure:geometric-mechanism-markov-chain} gives
-the Markov chain of the truncated
+the Markov chain for the truncated
 $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
+
+
 
 \begin{algorithm}[tbh]
 	\begin{algorithmic}[1]
@@ -345,24 +356,27 @@ $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 
 \subsection{Above Threshold Mechanism}
 \label{subsec:threshold}
-In differential privacy, we differentiate between {offline} and
-{online} mechanisms. 
-An offline mechanism releases outputs only once and plays no further
-role. The mechanisms we constructed previously are offline mechanisms. 
-On the other hand, online mechanisms permit further queries. 
+In differential privacy, an offline mechanism releases outputs only
+once and plays no further role; an online (interactive) mechanism
+allows analysts to ask queries adaptively based on previous
+responses. The mechanisms we constructed previously are offline
+mechanisms. On the other hand, online mechanisms permit further queries. 
 Obviously, queries do not change databases themselves. To maintain
 privacy, online mechanisms may decide to release
 information differently. For instance, they may disable further
 queries after a certain output is disclosed.
 
-Below we describe an online mechanism adapted from~\cite{DR:14:AFDP}:
-it is used in the scenario where a large amount of queries occur, but
-we only care for the queries which 
-are above a given threshold. Queries below the threshold are
-considered {irrelevant} and only disclose minimal information.
-In~\cite{DR:14:AFDP}, the mechanism is design for continuous queries.
-The Laplace mechanism is applied. Here, our mechanism is designed for
-bounded and discrete queries. The geometric mechanism is applied instead.
+Below we describe an online mechanism adapted from~\cite{DR:14:AFDP}.
+Given a threshold and a series of adaptive queries, we only care for
+the queries whose results are above the threshold; queries below the
+threshold only disclose minimal information and hence are considered
+irrelevant. Since query results above the threshold convey useful
+information, let us assume the mechanism will halt on the first such
+query result for simplicity. The question is to design a
+privacy-preserving mechanism to have similar behaviors on similar
+databases. In~\cite{DR:14:AFDP}, a mechanism is design for continuous
+queries by applying the Laplace mechanism. We will develop a mechanism
+for bounded and discrete queries using the geometric mechanism.
 
 Consider a threshold $t \in
 \{ 0, 1 \ldots, 5\}$, and queries $\{ f_i : f_i $ with sensitivity $\Delta
@@ -373,7 +387,7 @@ mechanism is applied to its result. If the noisy result is not less
 than the noisy threshold, our mechanism outputs $\top$ and
 halts. Otherwise, it outputs $\bot$ and continues to the next query
 (Algorithm~\ref{algorithm:online-model}). The above threshold
-mechanism outputs a sequence of the form $\bot \cdots \bot \top$. On
+mechanism outputs a sequence of the form $\bot^* \top$. On
 similar databases, we would like to show that the discrete above
 threshold mechanism outputs the same sequence with similar
 probabilities. 
