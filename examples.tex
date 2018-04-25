@@ -354,6 +354,87 @@ $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 	\label{algorithm:online-model}
 \end{algorithm}
 
+\begin{figure}
+  \centering
+    \resizebox{\columnwidth}{!}{
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+      distance=2cm,node/.style={circle,draw}]
+      \node[node] (t0r1) at (-4.75, 0) { $t_0r_1$ };
+
+      \draw (-3.95, 2.1) rectangle (-.05, 4.9);
+      \node at (-3.25, 4.5) { $\vdots $};
+      \node[node] (t'0r1) at (-3.25, 3.5) { $t'_0r_1$ };
+      \node at (-3.25, 2.7) { $\vdots $};
+      \draw (-3.95, -1.9) rectangle (-.05, 1.9);
+      \node[node] (t'1r0) at (-3.25, 1.2) { $t'_1r_0$ };
+      \node[node] (t'1r1) at (-3.25, 0) { $t'_1r_1$ };
+      \node[node] (t'1r2) at (-3.25, -1.2) { $t'_1r_2$ };
+      \node at (-1.95, 0) { $\cdots$ };
+      \node at (-1.95, -1.2) { $\cdots$ };
+      \draw (-3.95, -2.1) rectangle (-.05, -4.9);
+      \node at (-3.25, -2.5) { $\vdots$ };
+      \node[node] (t'2r1) at (-3.25, -3.5) { $t'_2r_1$ };
+      \node at (-3.25, -4.3) { $\vdots$ };
+
+      \node[node] (t'1r'0) at (-.75, 1.2) { $t'_1r'_0$ };
+      \node[node] (t'1r'1) at (-.75, 0) { $t'_1r'_1$ };
+      \node[node] (t'1r'2) at (-.75, -1.2) { $t'_1r'_2$ };
+
+      \node[node] (tt0rr0) at (4.75, 1.2) { $\underline{t}_0\underline{r}_0$ };
+
+      \draw (3.95, 2.1) rectangle (.05, 4.9);
+      \node[node] (tt'0rr0) at (3.25, 4.2) { $\underline{t}'_0\underline{r}_0$ };
+      \node at (3.25, 3) { $\vdots$ };
+      \draw (3.95, -.9) rectangle (.05, 1.9);
+      \node[node] (tt'1rr0) at (3.25, 1.2) { $\underline{t}'_1\underline{r}_0$ };
+      \node at (3.25, 0) { $\vdots$ };
+
+      \draw (3.95, -1.1) rectangle (.05, -4.9);
+      \node[node] (tt'2rr0) at (3.25, -1.8) { $\underline{t}'_2\underline{r}_0$ };
+      \node[node] (tt'2rr1) at (3.25, -3.0) { $\underline{t}'_2\underline{r}_1$ };
+      \node[node] (tt'2rr2) at (3.25, -4.2) { $\underline{t}'_2\underline{r}_2$ };
+
+      \node at (1.95, -4.2) { $\cdots$ };
+      
+      \node[node] (tt'2rr'0) at (.75, -1.8) { $\underline{t}'_2\underline{r}'_0$ };
+      \node[node] (tt'2rr'1) at (.75, -3.0) { $\underline{t}'_2\underline{r}'_1$ };
+      \node[node] (tt'2rr'2) at (.75, -4.2) { $\underline{t}'_2\underline{r}'_2$ };
+
+
+      \path
+      (t0r1) edge [bend left=20] node [above] { $\frac{1}{1}$ } (t'0r1)
+      (t0r1) edge node [above] { $\frac{1}{1}$ } (t'1r1)
+      (t0r1) edge [bend right=20] node [below] { $\frac{1}{1}$ } (t'2r1)
+
+%      (t'1r1) edge node [above] { $\frac{1}{1}$ } (t'1r'0)
+%      (t'1r1) edge node [above] { $\frac{1}{1}$ } (t'1r'1)
+%      (t'1r1) edge node [above] { $\frac{1}{1}$ } (t'1r'2)
+
+      (t'1r'0) edge [double] node [above] { $0|0, 0|1$ } (t'1r0)
+      (t'1r'0) edge [double, bend left=10] node [above] 
+              { $1|0, 1|1, 1|2$ } (t'1r1)
+      (t'1r'0) edge [double, bend left=20] node [below] 
+              { $2|1, 2|2$ } (t'1r2)
+
+      (tt0rr0) edge [bend right=20] node [above] { $\frac{1}{1}$ } (tt'0rr0)
+      (tt0rr0) edge node [above] { $\frac{1}{1}$ } (tt'1rr0)
+      (tt0rr0) edge [bend left=20] node [below] { $\frac{1}{1}$ } (tt'2rr0)
+
+      (tt'2rr'0) edge [double] node [above] { $0|0, 1|0$ } (tt'2rr0)
+      (tt'2rr'0) edge [double] node [above] { $0|1, 1|1, 2|1$ } (tt'2rr1)
+      (tt'2rr'0) edge [double] node [above] { $1|2, 2|2$ } (tt'2rr2)
+
+      (tt'2rr'1) edge [double] node [above] { $0|0, 1|0$ } (tt'2rr0)
+      (tt'2rr'1) edge [double] node [above] { $0|1, 1|1, 2|1$ } (tt'2rr1)
+      (tt'2rr'1) edge [double] node [above] { $1|2, 2|2$ } (tt'2rr2)
+
+      ;
+      \end{tikzpicture}
+    }
+  \caption{Markov Decision Process for Above Threshold}
+  \label{figure:mdp-above-threshold}
+\end{figure}
+
 \subsection{Above Threshold Mechanism}
 \label{subsec:threshold}
 In differential privacy, an offline mechanism releases outputs only
