@@ -1,1 +1,28 @@
 
+\begin{algorithm}
+  \begin{algorithmic}[1]
+    \Function{Subsampling}{$d$, $f$}
+    \Require{$d \in \{ R, B \}^3$, $f : \{ R, B \}^3 \rightarrow \{ R,
+      B \}$}
+    \State{Subsample $m$ data sets $\hat{d}_1, \hat{d}_2, \ldots,
+      \hat{d}_m$ from $d$ where each row of $d$ is chosen with
+      probability $q$}
+    \State{$z \leftarrow \{ f (\hat{d}_1), f (\hat{d}_2), \ldots, f
+      (\hat{d}_m) \}$}
+    \State{$\mathit{count}_R, \mathit{count}_B \leftarrow 
+            | \{ i : f (\hat{d}_i) = R \} |,
+            | \{ i : f (\hat{d}_i) = B \} |$}
+    \State{$r \leftarrow | \mathit{count}_R - \mathit{count}_B | /
+      (4mq) - 1$}
+    \State{$\hat{r} \leftarrow r + \mathit{Lap}(\frac{1}{\epsilon})$}
+    \If{$\hat{r} > \ln (1/\delta)/\epsilon$}
+      \State{\textbf{if} $\mathit{count}_R \geq \mathit{count}_B$
+             \textbf{then} \Return { $R$ } \textbf{else} \Return {$B$} } 
+    \Else
+      \State{\Return {$\bot$}}
+    \EndIf
+  \EndFunction
+  \end{algorithmic}
+  \caption{Subsampling}
+  \label{algorithm:subsampling}
+\end{algorithm}
