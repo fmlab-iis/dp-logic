@@ -83,14 +83,6 @@ Dwork, C., Roth, A.: The algorithmic foundations of differential privacy.
 Dwork, C.: Differential privacy. In: Bugliesi, M., Preneel, B., Sassone, V.,
   Wegener, I. (eds.) ICALP. LNCS, vol. 4052, pp. 1--12. Springer (2006)
 
-\bibitem{DNPR:10:DPCO}
-Dwork, C., Naor, M., Pitassi, T., Rothblum, G.N.: Differential privacy under
-  continual observation. In: STOC. pp. 715--724. ACM, New York, NY, USA (2010)
-
-\bibitem{DNPRY:10:PPSA}
-Dwork, C., Naor, M., Pitassi, T., Rothblum, G.N., Yekhanin, S.: Pan-private
-  streaming algorithms. In: Innovations in Computer Science. pp. 66--80 (2010)
-
 \bibitem{FWC:10:PPDP}
 Fung, B.C.M., Wang, K., Chen, R., Yu, P.S.: Privacy-preserving data publish: A
   survey of recent developments. ACM Computing Surveys  42(4),  14:1--14:53
