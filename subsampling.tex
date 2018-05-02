@@ -12,13 +12,28 @@ Subsampling is a technique to design such mechanisms. Concretely, let
 us consider $\mathcal{X} = \{ R, B \}$ (for red and blue teams) and a
 dataset $d \in \mathcal{X}^n$. Suppose we would like to ask which team
 is the majority in the dataset while respecting individual
-privacy. This can be achieved as follows. The mechanism first samples $m$
+privacy. This can be achieved as
+follows~(Algorithm~\ref{algorithm:subsampling-majority}). The
+mechanism first samples $m$ 
 sub-datasets $\hat{d}_1, \hat{d}_2, \ldots, \hat{d}_m$ from
-$d$. It then computes $m$ query results from the $m$
-sub-datasets. Finally, the mechanism reports a perturbed result in a
-privacy respecting way
-(Algorithm~\ref{algorithm:subsampling-majority}). 
-
+$d$~(line~\ref{algorithm:subsampling-majority-subsample}). 
+It then computes the majority of each sub-dataset and obtains $m$
+sub-results. Let $\mathit{count}_R$ and $\mathit{count}_B$ be the
+number of sub-datasets with the majority $R$ and $B$
+respectively~(line~\ref{algorithm:subsampling-majority-count}). 
+Since there are $m$ sub-datasets, we have
+$\mathit{count}_R + \mathit{count}_B = m$. To ensure differential
+privacy, the mechanism makes sure the difference $| \mathit{count}_R -
+\mathit{count}_B |$ is significantly large after perturbation. In
+line~\ref{algorithm:subsampling-majority-noise},
+$\mathit{Lap}(p)$ denotes a continuous random
+variable with the Laplace distribution whose probability density
+function is $f(x) = \frac{1}{2p}e^{-|x|/p}$.
+If so,
+it reports the majority of the $m$
+sub-results~(line~\ref{algorithm:subsampling-majority-output}). Otherwise,
+no information is
+revealed~(line~\ref{algorithm:subsampling-majority-mute}).
 
 \begin{algorithm}
   \begin{algorithmic}[1]
@@ -31,22 +46,46 @@ privacy respecting way
     \State{Subsample $m$ data sets $\hat{d}_1, \hat{d}_2, \ldots,
       \hat{d}_m$ from $d$ where each row of $d$ is chosen with
       probability $q$}
+    \label{algorithm:subsampling-majority-subsample}
     \State{$\mathit{count}_R, \mathit{count}_B \leftarrow 
             | \{ i : f (\hat{d}_i) = R \} |,
             | \{ i : f (\hat{d}_i) = B \} |$}
+    \label{algorithm:subsampling-majority-count}
     \State{$r \leftarrow | \mathit{count}_R - \mathit{count}_B | /
       (4mq) - 1$}
+    \label{algorithm:subsampling-majority-difference}
     \If{${r} + \mathit{Lap}(\frac{1}{\epsilon}) > \ln (1/\delta)/\epsilon$}
+    \label{algorithm:subsampling-majority-noise}
       \State{\textbf{if} $\mathit{count}_R \geq \mathit{count}_B$
              \textbf{then} \Return { $R$ } \textbf{else} \Return {$B$} } 
+      \label{algorithm:subsampling-majority-output}
     \Else
       \State{\Return {$\bot$}}
+      \label{algorithm:subsampling-majority-mute}
     \EndIf
   \EndFunction
   \end{algorithmic}
   \caption{Subsampling Majority}
   \label{algorithm:subsampling-majority}
 \end{algorithm}
+
+Fix the dataset size $n$ and privacy parameters $\epsilon$, $\delta$,
+the subsampling majority mechanism can be modeled by a Markov chain.
+Figure~\ref{figure:subsampling-majority-markov-chain} gives a sketch
+of the Markov chain for $n = 3$. The leftmost four states represent
+all possible datasets. From each dataset, we compute the probability
+of having $(\mathit{count}_R, \mathit{count}_B) = (i, j)$ with $i + j
+= m$ from $m$ sub-datasets. Since $| \mathit{count}_R -
+\mathit{count}_B |$ can have only finitely many values, the number of
+possible values of $r$ 
+(line~\ref{algorithm:subsampling-majority-difference}) is in a finite
+set $\{ r_m, \ldots, r_M \}$. For each $r \in \{ r_m, \ldots, r_M \}$,
+the probability of having $r + \mathit{Lap}(\frac{1}{\epsilon}) > \ln
+(1/\delta)/\epsilon$ (line~\ref{algorithm:subsampling-majority-noise})
+is equal to the probability of $\mathit{Lap}(\frac{1}{\epsilon}) > \ln
+(1/\delta)/\epsilon - r$. This is equal to $\int^{\infty}_{\ln
+  (1/\delta)/\epsilon - r} \frac{\epsilon}{2}e^{-\epsilon|x|}$. 
+
 
 \begin{figure}
   \centering
@@ -102,5 +141,5 @@ privacy respecting way
       \end{tikzpicture}
     }
   \caption{Markov Chain for Subsampling Majority}
-  \label{figure:mc-subsampling}
+  \label{figure:subsampling-majority-markov-chain}
 \end{figure}
