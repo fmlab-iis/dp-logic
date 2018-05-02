@@ -1,14 +1,36 @@
 
+The sensitivity of queries is required to apply the (truncated)
+$\alpha$-geometric mechanism. Recall that the sensitivity of a query
+is the maximal difference of query results on any two neighbors. There are
+two problems for such mechanisms depending on query sensitivity. First, 
+sensitivity of queries can be hard to compute or estimate. Second,
+the sensitivity over arbitrary neighbors can be too conservative for
+the actual dataset in use. One therefore would like to have
+mechanisms independent of query sensitivity.
+
+Subsampling is a technique to design such mechanisms. Concretely, let
+us consider $\mathcal{X} = \{ R, B \}$ (for red and blue teams) and a
+dataset $d \in \mathcal{X}^n$. Suppose we would like to ask which team
+is the majority in the dataset while respecting individual
+privacy. This can be achieved as follows. The mechanism first samples $m$
+sub-datasets $\hat{d}_1, \hat{d}_2, \ldots, \hat{d}_m$ from
+$d$. It then computes $m$ query results from the $m$
+sub-datasets. Finally, the mechanism reports a perturbed result in a
+privacy respecting way
+(Algorithm~\ref{algorithm:subsampling-majority}). 
+
+
 \begin{algorithm}
   \begin{algorithmic}[1]
-    \Function{Subsampling}{$d$, $f$}
-    \Require{$d \in \{ R, B \}^3$, $f : \{ R, B \}^3 \rightarrow \{ R,
+    \Function{SubsamplingMajority}{$d$, $f$}
+    \Require{$d \in \{ R, B \}^n$, $f : \{ R, B \}^* \rightarrow \{ R,
       B \}$}
+    \State{$q, m \leftarrow 
+            \frac{\epsilon}{64\ln (1/\delta)},
+            \frac{\log (n/\delta)}{q^2}$}
     \State{Subsample $m$ data sets $\hat{d}_1, \hat{d}_2, \ldots,
       \hat{d}_m$ from $d$ where each row of $d$ is chosen with
       probability $q$}
-    \State{$z \leftarrow \{ f (\hat{d}_1), f (\hat{d}_2), \ldots, f
-      (\hat{d}_m) \}$}
     \State{$\mathit{count}_R, \mathit{count}_B \leftarrow 
             | \{ i : f (\hat{d}_i) = R \} |,
             | \{ i : f (\hat{d}_i) = B \} |$}
@@ -22,8 +44,8 @@
     \EndIf
   \EndFunction
   \end{algorithmic}
-  \caption{Subsampling}
-  \label{algorithm:subsampling}
+  \caption{Subsampling Majority}
+  \label{algorithm:subsampling-majority}
 \end{algorithm}
 
 \begin{figure}
@@ -49,7 +71,7 @@
       \node at (0, 0) { $\vdots$ };
       \node[node] (RM) at (0, -1.5) { $r_M$ };
 
-      \node[node] (top) at (2.5,  0.75) { $\mathit{out}$ };
+      \node[node] (top) at (2.5,  0.75) { $\top$ };
       \node[node] (bot) at (2.5, -0.75) { $\bot$ };
 
       \node[node] (outR) at (5,  1.25) { $R$ };
@@ -79,6 +101,6 @@
 
       \end{tikzpicture}
     }
-  \caption{Markov Chain for Subsampling}
+  \caption{Markov Chain for Subsampling Majority}
   \label{figure:mc-subsampling}
 \end{figure}

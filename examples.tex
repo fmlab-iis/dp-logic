@@ -117,17 +117,23 @@ distribution~\cite{GRS:09:UUPM,GRS:12:UUPM} :
 \Pr[Y = y] = \frac{1 - \alpha}{1 + \alpha}\alpha^{|y|}
 \textmd{ for } y \in \bbfZ.
 \]
+%Observe that $\Pr[Y=0] \rightarrow 1$ as $\alpha \rightarrow 0$. The
+%$\alpha$-geometric mechanism is less noisy for smaller $\alpha$.
 The $\alpha$-geometric mechanism is oblivious since it has the same
 output distribution on any inputs $x, x'$ with $f (x) = f
 (x')$. It is $(- {\Delta (f)} \ln \alpha, 0)$-differentially
-private for any query $f$ with sensitivity $\Delta (f)$. The range of
-the mechanism
-however is $\bbfZ$. It may give nonsensical outputs such as
-negative integers for non-negative queries.
+private for any query $f$ with sensitivity $\Delta (f)$. Observe that
+the privay guarantee $(-{\Delta (f)} \ln \alpha, 0)$ depends on the
+sensitivity of the query $f$. To achieve $(\epsilon, 0)$-differential
+privacy using the $\alpha$-geometric mechanism, one first decides the
+sensitivity of the query and then computes the parameter $\alpha =
+e^{-{\epsilon}/{{\Delta (f)}}}$. 
 
+The range of the mechanism is $\bbfZ$. It may give nonsensical
+outputs such as negative integers for non-negative queries.
 The \emph{truncated $\alpha$-geometric mechanism over $\{ 0, 1,
   \ldots, m \}$}
-outputs $f (x) + Z$ where $Z$ is a random variable with the following
+outputs $f (x) + Z$ where $Z$ is a random variable with the 
 distribution:
 \[
 \Pr[Z = z] =
@@ -270,7 +276,7 @@ Figure~\ref{figure:geometric-mechanism-markov-chain} gives
 the Markov chain for the truncated
 $\frac{1}{2}$-geometric mechanism over $\{ 0, 1, \ldots, 5 \}$.
 
-\subsection{Subsampling}
+\subsection{Subsampling Majority}
 \label{subsection:subsampling}
 
 \input{subsampling}
