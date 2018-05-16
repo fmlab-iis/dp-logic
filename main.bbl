@@ -65,10 +65,6 @@ Couvreur, J.M., Saheb, N., Sutre, G.: An optimal automata approach to {LTL}
   model checking of probabilistic systems. In: LPAR. LNCS, vol. 2850, pp.
   361--375 (2003)
 
-\bibitem{DKNP04}
-Duflot, M., Kwiatkowska, M., Norman, G., Parker, D.: A formal analysis of
-  {Bluetooth} device discovery. In: ISOLA'04 (2004)
-
 \bibitem{DMNS:06:CNSPD}
 Dwork, C., McSherry, F., Nissim, K., Smith, A.: Calibrating noise to
   sensitivity in private data analysis. In: Halevi, S., Rabin, T. (eds.) TCC.

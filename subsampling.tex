@@ -73,18 +73,35 @@ Fix the dataset size $n$ and privacy parameters $\epsilon$, $\delta$,
 the subsampling majority mechanism can be modeled by a Markov chain.
 Figure~\ref{figure:subsampling-majority-markov-chain} gives a sketch
 of the Markov chain for $n = 3$. The leftmost four states represent
-all possible datasets. From each dataset, we compute the probability
-of having $(\mathit{count}_R, \mathit{count}_B) = (i, j)$ with $i + j
-= m$ from $m$ sub-datasets. Since $| \mathit{count}_R -
-\mathit{count}_B |$ can have only finitely many values, the number of
-possible values of $r$ 
-(line~\ref{algorithm:subsampling-majority-difference}) is in a finite
-set $\{ r_m, \ldots, r_M \}$. For each $r \in \{ r_m, \ldots, r_M \}$,
+all possible datasets. Given a dataset, $m$ samples are taken with
+replacement. Outcomes of these samples are denoted by
+$(\mathit{count}_R, \mathit{count}_B)$. There are only $m + 1$
+outcomes from $(m, 0), (m - 1, 1), \ldots, (0, m)$. Each outcome is
+represetned by a state in
+Figure~\ref{figure:subsampling-majority-markov-chain}. From each
+dataset, the probability distribution of all outcomes gives the
+transition probability in the figure. Next, observe that  $|
+\mathit{count}_R - \mathit{count}_B |$ can have only finitely many
+values. The values of $r$ 
+(line~\ref{algorithm:subsampling-majority-difference}) hence belong to
+a finite set $\{ r_m, \ldots, r_M \}$ with the minimum $r_m$ and
+maximum $r_M$. For each $r \in \{ r_m, \ldots,
+r_M \}$, it is represented by a state in
+Figure~\ref{figure:subsampling-majority-markov-chain}. For instance,
+both outcomes $(m, 0)$ and $(0, m)$ transit to the state $r_M = 1/(4q)
+- 1$ with probability $1$. For each $r \in \{ r_m, \ldots, r_M \}$,
 the probability of having $r + \mathit{Lap}(\frac{1}{\epsilon}) > \ln
 (1/\delta)/\epsilon$ (line~\ref{algorithm:subsampling-majority-noise})
 is equal to the probability of $\mathit{Lap}(\frac{1}{\epsilon}) > \ln
 (1/\delta)/\epsilon - r$. This is equal to $\int^{\infty}_{\ln
-  (1/\delta)/\epsilon - r} \frac{\epsilon}{2}e^{-\epsilon|x|}$. 
+  (1/\delta)/\epsilon - r} \frac{\epsilon}{2}e^{-\epsilon|x|} dx$.
+From each state $r \in \{ r_m, \ldots, r_M \}$, it thus goes to the state
+$\top$ with probability $\int^{\infty}_{\ln (1/\delta)/\epsilon - r}
+\frac{\epsilon}{2}e^{-\epsilon|x|} dx$ and to the state $\bot$ with
+probability $1 - \int^{\infty}_{\ln (1/\delta)/\epsilon - r}
+\frac{\epsilon}{2}e^{-\epsilon|x|} dx$. Finally, the Markov chain
+moves to the state $R$ if $\mathit{count}_R \geq \mathit{count}_B$;
+otherwise, it moves to $B$.
 
 
 \begin{figure}
@@ -143,3 +160,4 @@ is equal to the probability of $\mathit{Lap}(\frac{1}{\epsilon}) > \ln
   \caption{Markov Chain for Subsampling Majority}
   \label{figure:subsampling-majority-markov-chain}
 \end{figure}
+
