@@ -176,4 +176,53 @@ prefer the original definition.
 
 \todo{explain classical schedulers as upperbound of difference}
 
+Despite of the negative result in Theorem~\ref{theorem:mdp-model-checking},
+a sufficient condition for $M, \neighbor{S}, s \models
+\dpriv{\epsilon}{\delta} \phi$ can still be checked
+efficiently. To see this, observe that for any state $s \in S$ and
+query scheduler $\scheduler{Q}$, we have
+\[
+  \min_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} 
+  \leq
+  \myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} 
+  \leq
+  \max_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} 
+\]
+where the minimum and maximum are taken over all (not necessarily
+history independent) schedulers $\scheduler{S}$. Hence,
+\begin{eqnarray*}
+  \myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} -
+      e^\epsilon \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi}
+  \leq
+    \max_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    - e^\epsilon \cdot
+    \min_{\scheduler{S}} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+\end{eqnarray*}
+for any $s, t \in S$ and query scheduler $\scheduler{Q}$. We have the
+following proposition:
+\begin{proposition}\label{proposition:sufficient-condition-mdp-model-checking}
+  Let $M = (S, \Act, \wp, L)$ be an MDP, $\neighbor{S}$ a
+  neighborhood relation on $S$.
+  $M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi$ if
+  \begin{itemize}
+  \item $\max\limits_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    - e^\epsilon \cdot
+    \min\limits_{\scheduler{S}} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    \leq \delta$; and
+  \item $\max\limits_{\scheduler{S}} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    - e^\epsilon \cdot
+    \min\limits_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    \leq \delta$.
+  \end{itemize}
+  for any $s, t \in S$ with $s \neighbor{S} t$.
+\end{proposition}
+
+For any $s \in S$, recall that $\min\limits_{\scheduler{S}}
+\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ can be efficiently
+computed by iterative methods or linear programming~\cite{BK:08:PMC}. 
+Using
+Proposition~\ref{proposition:sufficient-condition-mdp-model-checking},
+$M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi$ can be
+checked soundly.
+
 \todo{explain experiments}
