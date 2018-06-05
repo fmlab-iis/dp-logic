@@ -1,25 +1,14 @@
-\subsection{Above Threshold Mechanism}
-\label{subsec:threshold}
 
-In differential privacy, an offline mechanism releases outputs only
-once and plays no further role; an online (interactive) mechanism
-allows analysts to ask queries adaptively based on previous
-responses. The mechanisms we constructed previously are offline
-mechanisms. On the other hand, online mechanisms permit further queries. 
-To maintain
-privacy, online mechanisms may decide to release
-information differently. For instance, they may disable further
-queries after a certain output is disclosed.
-
-Below we describe an online mechanism adapted from~\cite{DR:14:AFDP}.
-Given a threshold and a series of adaptive queries, we only care for
+Below we describe an online mechanism from~\cite{DR:14:AFDP}.
+Given a threshold and a series of adaptive queries, we care for
 the queries whose results are above the threshold; queries below the
 threshold only disclose minimal information and hence are considered
 irrelevant. Since query results above the threshold convey useful
 information, let us assume the mechanism will halt on the first such
-query result for simplicity. The question is to design a
-privacy-preserving mechanism to have similar behaviors on similar
-databases. In~\cite{DR:14:AFDP}, a mechanism is design for continuous
+query result for simplicity. 
+%The question is to design a privacy-preserving mechanism to have 
+%similar behaviors on similar databases. 
+In~\cite{DR:14:AFDP}, a mechanism is design for continuous
 queries by applying the Laplace mechanism. We will develop a mechanism
 for bounded and discrete queries using the geometric mechanism.
 
@@ -108,20 +97,16 @@ for bounded and discrete queries using the geometric mechanism.
 Consider a threshold $t \in
 \{ 0, 1 \ldots, 5\}$, and queries $\{ f_i : f_i $ with sensitivity $\Delta
 (f_i) = 1 \}$. In order to protect privacy, our mechanism applies the
-truncated $\frac{1}{4}$-geometric mechanism to obtain a noisy
+truncated $\frac{1}{4}$-geometric mechanism to obtain a perturbed
 threshold $t'$. For each query, the truncated $\frac{1}{2}$-geometric
-mechanism is applied to its result. If the noisy result is not less
-than the noisy threshold, our mechanism outputs $\top$ and
+mechanism is applied to its result. If the perturbed result is not less
+than the perturbed threshold, our mechanism outputs $\top$ and
 halts. Otherwise, it outputs $\bot$ and continues to the next query
 (Algorithm~\ref{algorithm:online-model}). The above threshold
 mechanism outputs a sequence of the form $\bot^* \top$. On
-similar databases, we would like to show that the discrete above
+similar databases, we would like to show that the above
 threshold mechanism outputs the same sequence with similar
 probabilities. 
-
-\todo{explain Markov Decision Process}
-
-
 
 \begin{figure}
   \centering
@@ -173,9 +158,9 @@ probabilities.
 
 
       \path
-      (t0r1) edge node [above] { $\frac{1}{1}$ } (t'0r1)
-      (t0r1) edge node [left] { $\frac{1}{1}$ } (t'1r1)
-      (t0r1) edge node [above] { $\frac{1}{1}$ } (t'2r1)
+      (t0r1) edge node [above] {  } (t'0r1)
+      (t0r1) edge node [left] {  } (t'1r1)
+      (t0r1) edge node [above] {  } (t'2r1)
 
 %      (t'1r1) edge node [above] { $\frac{1}{1}$ } (t'1r'0)
 %      (t'1r1) edge node [above] { $\frac{1}{1}$ } (t'1r'1)
@@ -188,9 +173,9 @@ probabilities.
       (t'1r'0) edge [double] node [below] 
               { \hide{$2|1, 2|2$} } (t'1r2)
 
-      (tt0rr0) edge node [below] { $\frac{1}{1}$ } (tt'0rr0)
-      (tt0rr0) edge node [left] { $\frac{1}{1}$ } (tt'1rr0)
-      (tt0rr0) edge node [below] { $\frac{1}{1}$ } (tt'2rr0)
+      (tt0rr0) edge node [below] {  } (tt'0rr0)
+      (tt0rr0) edge node [left] {  } (tt'1rr0)
+      (tt0rr0) edge node [below] {  } (tt'2rr0)
 
 %      (tt'2rr'0) edge [double] node [above] { $0|0, 1|0$ } (tt'2rr0)
 %      (tt'2rr'0) edge [double] node [above] { $0|1, 1|1, 2|1$ } (tt'2rr1)
@@ -209,5 +194,4 @@ probabilities.
   \caption{Markov Decision Process for Above Threshold}
   \label{figure:mdp-above-threshold}
 \end{figure}
-
 

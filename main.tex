@@ -66,21 +66,26 @@ Academia Sinica
 \noindent
 \paragraph{Organization of the paper.}
 Preliminaries are given in Section~\ref{section:preliminaries}.
-In Section~\ref{section:examples} we discuss how differentially private mechanisms can be modeled in Markov chains.
-The logic $\dpCTLstar$ and model checking algorithms for Markov chains are presented in
-Section~\ref{section:dpCTL}.
-Section~\ref{section:specifying-properties} describes differential privacy properties using   $\dpCTLstar$.
-They are followed by the extension to Markov decision processes and an
-application in stream processing (Section~\ref{section:mdp}). Finally,
+In Section~\ref{section:examples} we discuss how differentially private mechanisms can be modeled as Markov chains.
+The logic $\dpCTLstar$ and its syntax are presented in Section~\ref{section:dpCTL}. The semantics over Markov chains and its model checking algorithm are given in Section~\ref{section:semantics}.
+Section~\ref{section:specifying-properties} describes differential privacy properties using $\dpCTLstar$.
+More examples of differentially private mechanisms as Markov decision processes are given in Section~\ref{section:mdp}.
+The semantics over Markov decision processes and undecidability of model checking is discussed in Section~\ref{section:semantics-mdp}.
+Finally,
 Section~\ref{section:conclusions} concludes our presentation.
 
 \section{Preliminaries}
 \label{section:preliminaries}
 \input{preliminaries}
 
-\section{Markov Chains  for Differentially Private Mechanisms}
+\section{Differentially Private Mechanisms as Markov Chains}
 \label{section:examples}
 \input{examples}
+
+\subsection{Subsampling Majority}
+\label{subsection:subsampling}
+
+\input{subsampling}
 
 \section{The Logic $\dpCTLstar$}
 \label{section:dpCTL}
@@ -90,17 +95,25 @@ Section~\ref{section:conclusions} concludes our presentation.
 \label{subsection:syntax}
 \input{syntax}
 
-\subsection{Semantics}
-\label{subsection:semantics}
+\section{$\dpCTLstar$ for Markov Chains}
+\label{section:semantics}
 \input{semantics}
 
 \section{Specifying Properties in $\dpCTLstar$}
 \label{section:specifying-properties}
 \input{specifications}
 
-\section{Markov Decision Processes for Differentially Private Mechanisms}
+\section{Differentially Private Mechanisms as Markov Decision Processes}
 \label{section:mdp}
 \input{mdp}
+
+\subsection{Above Threshold Mechanism}
+\label{subsec:threshold}
+\input{above-threshold}
+
+\section{$\dpCTLstar$ for Markov Decision Processes}
+\label{section:semantics-mdp}
+\input{semantics-mdp}
 
 %\section{Model Checking Algorithms}
 %\label{section:model-checking-algorithms}
@@ -113,10 +126,13 @@ Section~\ref{section:conclusions} concludes our presentation.
 
 \section{Conclusions}
 \label{section:conclusions}
-We have introduced $\dpCTLstar$ to reason about properties in differential privacy, and have investigated the model checking problem. For Markov chains, the model checking problem has the same complexity as for $\PCTLstar$. The general MDP model checking problem is undecidable. We have discussed that some special cases are decidable. An interesting work is to identify more
-decidable subclass. As an example, consider the formula $\bigwedge_{k \in \bbfZ^{\geq 0}}
+We have introduced $\dpCTLstar$ to reason about properties in differential privacy, and have investigated the model checking problem. For Markov chains, the model checking problem has the same complexity as for $\PCTLstar$. The general MDP model checking problem however is undecidable. 
+We have discussed some decidable special cases and an efficient and sufficient condition to check differentially private subformulas.
+An interesting furture work is to identify more
+decidable subclasses and sufficient conditions.
+As an example, consider the formula $\bigwedge_{k \in \bbfZ^{\geq 0}}
 \dpriv{\epsilon}{\delta} (\X^k  00)$ which was used in specifying the pan privacy. For the case $\epsilon=\delta=0$, it reduces to a language equivalence problem for probabilistic automata. It is interesting to characterize other cases as well.
- Another interesting line of further works is to consider continuous perturbation (such as Laplace distribution used in \cite{DR:14:AFDP}) -- we would need Markov models with continuous state space for the modelling.
+Another interesting line of further works is to consider continuous perturbation (such as Laplace distribution used in \cite{DR:14:AFDP}). We would need Markov models with continuous state space.
 
 
 \bibliographystyle{splncs03}

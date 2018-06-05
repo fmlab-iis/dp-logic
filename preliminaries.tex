@@ -15,7 +15,7 @@ We denote the data universe by $\mathcal{X}$; $x \in \mathcal{X}^n$ is
 a database with $n$ rows from the data universe. Two databases $x$ and
 $x'$ are \emph{neighbors} (denoted by $d(x, x') \leq 1$) if they are
 identical except at most one row. A \emph{query} $f$ is a function
-from $\mathcal{X}^n$ to its range $R$. The \emph{sensitivity} of the
+from $\mathcal{X}^n$ to its range $R \subseteq \bbfZ$. The \emph{sensitivity} of the
 query $f$ (written $\Delta (f)$) is $\max_{d(x, x') \leq 1} | f (x) -
 f (x') |$. For instance, a \emph{counting} query counts the number
 of rows with certain attributes (say, female). The sensitivity of a
@@ -59,12 +59,13 @@ the smaller they are, the behaviors are more similar.
 Informally, a differentially private mechanism has probabilistically
 similar behaviors on neighboring databases. It will have similar
 output distributions when a row is replaced by another in a given
-database. Consider, for instance, a database contains the row
-corresponding to an individual. A differentially private mechanism
-will have a similar output distribution when the individual is not in
-the database. Such mechanisms behave similarly regardless of the
-presence of any individual. Individual privacy is thus
-preserved by differentially private mechanisms.
+database. 
+%Consider, for instance, a database contains the row
+%corresponding to an individual. A differentially private mechanism
+%will have a similar output distribution when the individual is not in
+%the database. Such mechanisms behave similarly regardless of the
+%presence of any individual. 
+Individual privacy is thus preserved by differentially private mechanisms.
 
 \subsection{Markov Chains and Markov Decision Processes}
 

@@ -30,8 +30,8 @@ $(\ln 2, 0)$-differentially private.
 
 
 \paragraph{Compositionality.}
-Compositionality is one of the building block for differential privacy. According to the compositional theorem \cite[Theorem 3.16]{DR:14:AFDP}, for $(\epsilon_1,\delta_1)$-differentially private mechanism $M_1$ and
-$(\epsilon_2,\delta_2)$-differentially private mechanism $M_2$, their combination $M$ defined by $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1 + \epsilon_2,\delta_1+\delta_2)$-differentially private. The degradation is rooted in the repeated releases of information. To illustrate this property, we consider the extended survey mechanism which allows two consequent queries.
+Compositionality is one of the building block for differential privacy. For any $(\epsilon_1,\delta_1)$-differentially private mechanism $M_1$ and
+$(\epsilon_2,\delta_2)$-differentially private mechanism $M_2$, their combination $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1 + \epsilon_2,\delta_1+\delta_2)$-differentially private by the compositional theorem \cite[Theorem 3.16]{DR:14:AFDP}. The degradation is rooted in the repeated releases of information. To illustrate this property, we consider the extended survey mechanism which allows two consecutive queries.
 In this mechanism, an input is either $+$ or $-$; but 
 outputs are $\mathit{out}_Y\mathit{out}_Y$,
 $\mathit{out}_Y\mathit{out}_N$, $\mathit{out}_N\mathit{out}_Y$, or
@@ -115,7 +115,7 @@ must be calculated carefully and often overly pessimistically. Our
 algorithm allows data analysts to choose such parameters more
 tightly.
 
-
+\hide{
 \paragraph{Reachability Privacy.}
 The formula $\dpriv{\epsilon}{\delta}(F \top)$ is a reachability privacy. It specifies that neighbors should have similar probabilities of eventually reaching $\top$. Reachability privacy is often used in combination with other properties.
 In the above threshold mechanism (Section~\ref{subsec:threshold}),
@@ -142,6 +142,7 @@ unlikely. Moreover, all neighbors are unlikely to have long outputs.
 Using this trick, one can bound the probability of long outputs
 arbitrarily (say, less than $10^{-6}$). Our technique can establish
 practical privacy guarantees automatically. 
+}
 
 %Later we use reachability privacy to specify differential privacy property for MDPs.
 

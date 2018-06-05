@@ -1,0 +1,155 @@
+The logic $\dpCTLstar$ can be interpreted over MDPs. Semantics over Markov chains generalizes to MDPs as well. %Note that two states with different enabled actions
+%are trivially distinguishable; no privacy can be preserved.
+Let $M = (S, \Act, \wp, L)$ be an MDP. Define the satisfaction
+relation $M, \neighbor{S}, s \models \Phi$ for $\PJ{J}$ and $\dpriv{\epsilon}{\delta} \phi$ (others are standard) as follows.
+\begin{eqnarray*}
+%  M, \neighbor{S}, s \models \top\\
+%  M, \neighbor{S}, s \models p  & \textmd{ if } &  p \in L(s)\\
+%  M, \neighbor{S}, s \models \neg \Phi  & \textmd{ if } &  M, \neighbor{S}, s \not\models \Phi\\
+%  M, \neighbor{S}, s \models \Phi_0 \wedge \Phi_1  & \textmd{ if } &  M, \neighbor{S}, s \models \Phi_0 \textmd{ and }
+%  M, \neighbor{S}, s \models \Phi_1\\
+  M, \neighbor{S}, s \models \PJ{J} \phi
+  & \textmd{ if } &
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \in J
+  \textmd{ for every scheduler } \scheduler{S}\\
+  M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
+  & \textmd{ if } &
+  \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
+   query scheduler } \scheduler{Q},
+   \myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} \leq
+  e^{\epsilon} \cdot
+   \\
+  & &
+   \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} + \delta
+   \textmd{ and }
+   \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} \leq e^{\epsilon} \cdot
+   \myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} + \delta
+\end{eqnarray*}
+
+Recall that $M_{\scheduler{S}}$ is but a Markov chain. The semantics
+of $M_{\scheduler{S}}, \neighbor{S}, \pi \models \phi$ and hence the
+probability $\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ are
+defined as in Markov chains.
+The semantics of $\dpCTLstar$ on MDPs
+is again standard except the differentially private operator
+$\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
+$\dpriv{\epsilon}{\delta} \phi$ specifies states whose probability
+of having paths satisfying $\phi$ are $(\epsilon, \delta)$-close to
+those of all its neighbors for query schedulers. That is, no
+query scheduler can force any of neighbors to have
+probabilistically distinguishable behaviors.
+
+\noindent
+\paragraph{Justification of query schedulers.}
+We use query schedulers in the semantics for the differentially
+private operator. A definition with history-dependent schedulers
+might be
+\begin{eqnarray*}
+  M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi
+  & \textmd{ if } &
+  \textmd{for all } t \textmd{ with } s \neighbor{S} t \textmd{ and
+  scheduler } \scheduler{S},
+  \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
+  e^{\epsilon} \cdot\\
+  && \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta \textmd{ and }
+  \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
+  e^{\epsilon} \cdot \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+  + \delta
+\end{eqnarray*}
+A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
+no history-dependent scheduler could differentiate the probabilities
+of haveing paths satisfying
+$\phi$ from neighbors. Recall that a history-dependent scheduler takes
+actions by previous states. Such a definition would allow
+schedulers to take different actions from different states. 
+Two neighbors could be differentiated by different action sequences
+erroneously.
+A query scheduler $\scheduler{Q} : \bbfZ^{\geq 0} \rightarrow \Act$,
+on the other hand, corresponds to a query sequence. A state satisfies
+$\dpriv{\epsilon}{\delta} \phi$ if no query sequence can differentiate
+the probabilities of having paths satisfying $\phi$ from neighbors.
+Our semantics agrees with the informal interpretation of differential
+privacy for such systems. We hence
+prefer the original definition.
+
+\subsection{Model Checking}
+For an MDP $M =
+(S, \Act, \wp, L)$, we want to compute $\{ s : M, \neighbor{S}, s \models
+\dpriv{\epsilon}{\delta} \phi \}$ . Recall the semantics of $\dpriv{\epsilon}{\delta}
+\phi$. Given $s, t$ with $s \neighbor{S} t$ and a path formula
+$\phi$, we need to decide whether
+$\myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} \leq
+e^{\epsilon} \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} + \delta$
+for every query scheduler $\scheduler{Q}$.
+If the path formula only contains next operators, it is easy to deal with. When $\phi$ is $\gX B$ with $B\subseteq S$, only one step behavior needs to be considered. Thus only the first action in the query sequence is needed. It can also be easily generalized to nested next operators:  one needs only to enumerate
+all actions query sequences of length obtained by the number of nested $\X$ operators.
+The problem however is undecidable in general.
+
+\begin{theorem}\label{theorem:mdp-model-checking}
+The $\dpCTLstar$ model checking problem for MDPs  is undecidable.
+\end{theorem}
+
+The proof is in Appendix. We discuss some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
+$\myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{F B} -
+\myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time. However, if $\delta>0$, the problem
+becomes an approximate version of the language equivalence problem. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}.
+
+\hide{
+Since the scheduler attaining the maximally probable
+behavior from a state may be different from the scheduler attaining
+the maximally probable behavior from its neighbors, two
+neighbors may still be distinguished by a scheduler. The
+weaker definition does not preserve differential privacy. We hence
+prefer the original definition.
+}
+
+Despite of the negative result in Theorem~\ref{theorem:mdp-model-checking},
+a sufficient condition for $M, \neighbor{S}, s \models
+\dpriv{\epsilon}{\delta} \phi$ is available.
+To see this, observe that for any state $s \in S$ and
+query scheduler $\scheduler{Q}$, we have
+\[
+  \min_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} 
+  \leq
+  \myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} 
+  \leq
+  \max_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} 
+\]
+where the minimum and maximum are taken over all schedulers
+$\scheduler{S}$. Hence, 
+\begin{eqnarray*}
+  \myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} -
+      e^\epsilon \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi}
+  \leq
+    \max_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    - e^\epsilon \cdot
+    \min_{\scheduler{S}} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+\end{eqnarray*}
+for any $s, t \in S$ and query scheduler $\scheduler{Q}$. We have the
+following proposition:
+\begin{proposition}\label{proposition:sufficient-condition-mdp-model-checking}
+  Let $M = (S, \Act, \wp, L)$ be an MDP, $\neighbor{S}$ a
+  neighborhood relation on $S$.
+  $M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi$ if
+  for any $s, t \in S$ with $s \neighbor{S} t$, we have
+  $\max\limits_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    - e^\epsilon \cdot
+    \min\limits_{\scheduler{S}} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    \leq \delta$, and
+  $\max\limits_{\scheduler{S}} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    - e^\epsilon \cdot
+    \min\limits_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
+    \leq \delta$.
+\end{proposition}
+
+For any $s \in S$, recall that $\max\limits_{\scheduler{S}}
+\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ and
+$\min\limits_{\scheduler{S}}
+\myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ can be efficiently 
+computed~\cite{BK:08:PMC}. 
+Using
+Proposition~\ref{proposition:sufficient-condition-mdp-model-checking},
+$M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi$ can be
+checked soundly and efficiently.
+
+\todo{explain experiments}

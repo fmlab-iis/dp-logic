@@ -2,13 +2,13 @@
 The sensitivity of queries is required to apply the (truncated)
 $\alpha$-geometric mechanism. Recall that the sensitivity of a query
 is the maximal difference of query results on any two neighbors. There are
-two problems for such mechanisms depending on query sensitivity. First, 
+two problems for mechanisms depending on query sensitivity. First, 
 sensitivity of queries can be hard to compute or estimate. Second,
 the sensitivity over arbitrary neighbors can be too conservative for
 the actual dataset in use. One therefore would like to have
 mechanisms independent of query sensitivity.
 
-Subsampling is a technique to design such mechanisms. Concretely, let
+Subsampling is a technique to design such mechanisms~\cite{DR:14:AFDP}. Concretely, let
 us consider $\mathcal{X} = \{ R, B \}$ (for red and blue teams) and a
 dataset $d \in \mathcal{X}^n$. Suppose we would like to ask which team
 is the majority in the dataset while respecting individual
@@ -29,8 +29,8 @@ line~\ref{algorithm:subsampling-majority-noise},
 $\mathit{Lap}(p)$ denotes a continuous random
 variable with the Laplace distribution whose probability density
 function is $f(x) = \frac{1}{2p}e^{-|x|/p}$.
-If so,
-it reports the majority of the $m$
+If the perturbed difference is sufficiently large,
+the mechanism reports the majority of the $m$
 sub-results~(line~\ref{algorithm:subsampling-majority-output}). Otherwise,
 no information is
 revealed~(line~\ref{algorithm:subsampling-majority-mute}).
@@ -110,18 +110,18 @@ otherwise, it moves to $B$.
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
       distance=2cm,node/.style={circle,draw}]
 
-      \node[node] (rrr) at (-5,  2.25) { $rrr$ };
+      \node[node] (rrr) at (-5,  1.5) { $rrr$ };
 %      \node at (-4.4, 2) { $\vdots$ };
-      \node[node] (rrb) at (-5,  0.75) { $rrb$ };
+      \node[node] (rrb) at (-5.5,  0.55) { $rrb$ };
 %      \node at (-4.4, .75) { $\vdots$ };
-      \node[node] (rbb) at (-5, -0.75) { $rbb$ };
+      \node[node] (rbb) at (-5.5, -0.55) { $rbb$ };
 %      \node at (-4.4, -.5) { $\vdots$ };
-      \node[node] (bbb) at (-5, -2.25) { $bbb$ };
+      \node[node] (bbb) at (-5, -1.5) { $bbb$ };
 %      \node at (-4.4, -1.75) { $\vdots$ };
 
-      \node[node] (rmb0) at (-2.5,  2.25) { $m,0$ };
+      \node[node] (rmb0) at (-2.5,  1.5) { $m,0$ };
       \node at (-2.5, 0) { $\vdots$ };
-      \node[node] (r0bm) at (-2.5, -2.25) { $0,m$ };
+      \node[node] (r0bm) at (-2.5, -1.5) { $0,m$ };
 
       \node[node] (Rm) at (0,  1.5) { $r_m$ };
       \node at (0, 0) { $\vdots$ };
