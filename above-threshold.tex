@@ -195,3 +195,50 @@ probabilities.
   \label{figure:mdp-above-threshold}
 \end{figure}
 
+It is not hard to model the above threshold mechanism as a Markov
+decision process (Figure~\ref{figure:mdp-above-threshold}). In the
+figure, we sketch the model where the threshold and query results are
+in $\{ 0, 1, 2 \}$. The model simulates two computation in parallel:
+one for the dataset, the other for its neighbor. The state $t_ir_j$
+represents the input threshold $i$ and the first query result
+$j$; the state $t'_ir'_j$ represents the perturbed threshold $i$ and
+the perturbed query result $j$. Other states are similar. Consider the
+state $t_0r_1$. After applying the truncated $\frac{1}{4}$-geometric
+mechanism, it goes to one of the states $t'_0r_1$, $t'_1r_1$
+accordingly. From the state $t'_1r_1$, for instance, it moves to one
+of $t'_1r'_0$, $t'_1r'_1$, $t'_1r'_2$ by applying the truncated
+$\frac{1}{2}$-geometric mechanism to the query result. If it arrives
+at $t'_1r'_1$ or $t'_1r'_2$, the perturbed query result is not less
+than the perturbed threshold. The model enters the state of self
+loop. Otherwise, it moves to one of $t'_1r_0$, $t'_1r_1$, or $t'_1r_2$
+by actions non-deterministically (double arrows). The computation of
+the neighbor is similar. We just use the underlined symbols to
+represent threshold and query results. For instance, the state
+$\underline{t}'_2\underline{r}'_1$ represents the perturbed threshold
+$2$ and the perturbed query result $1$ in the neighbor.
+
+Now, the non-deterministic choices in the two computation cannot be 
+independent. Recall that the sensitivity of each query $f_i$ is
+$1$. If the top computation moves to the state, say, $t'_1r_0$, it
+means the next query result on the dataset is $0$. Subsequently, the
+bottom computation can only move to $\underline{t}'_i\underline{r}_0$
+or $\underline{t}'_i\underline{r}_1$ depending on the perturbed
+threshold. This is where action symbols are useful. Define the action
+symbols $\{ m\underline{n} : |m - n| \leq 1 \}$. The action
+$m\underline{n}$ represents that the next query results for the dataset
+and its neighbor are $m$ and $n$ respectively. For instance, the
+non-deterministic choice from $t'_1r'_0$ to $t'_1r_0$ is associated
+with two actions $0\underline{0}$ and $0\underline{1}$ (but not
+$0\underline{2}$). Similarly, the choice from
+$\underline{t}'_2\underline{r}'_1$ to
+$\underline{t}'_2\underline{r}_0$ is associated with the actions
+$0\underline{0}$ and $1\underline{0}$ (but not $2\underline{0}$). On
+action $0\underline{0}$, both computation will move to $t'_ir_0$ and
+$\underline{t}'_j\underline{r}_0$ respectively by the perturbed
+thresholds. Action symbols make sure the two computation on neighbor
+datasets are modeled properly. It remains to define the neighborhood
+relation. Since the sensitivity is $1$, it suffices to consider 
+$\{ (t_ir_m, t_ir_m),
+    (\underline{t}_i\underline{r}_n, \underline{t}_i\underline{r}_n),
+    (t_ir_m, \underline{t}_i\underline{r}_n), 
+    (\underline{t}_i\underline{r}_n, t_ir_m) : | m - n | \leq 1 \}$.
