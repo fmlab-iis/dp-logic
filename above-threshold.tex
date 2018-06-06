@@ -8,7 +8,7 @@ information, let us assume the mechanism will halt on the first such
 query result for simplicity. 
 %The question is to design a privacy-preserving mechanism to have 
 %similar behaviors on similar databases. 
-In~\cite{DR:14:AFDP}, a mechanism is design for continuous
+In~\cite{DR:14:AFDP}, a mechanism is designed for continuous
 queries by applying the Laplace mechanism. We will develop a mechanism
 for bounded and discrete queries using the geometric mechanism.
 
@@ -88,14 +88,14 @@ for bounded and discrete queries using the geometric mechanism.
 		
 	\end{algorithmic}
 	\caption{Input: private database $d$, 
-          queries $f_i : \{ 0, 1, \ldots, 5 \} \rightarrow \{ 0, 1,
+          queries $f_i : d \rightarrow \{ 0, 1,
           \ldots, 5 \}$ with sensitivity $1$, threshold $t \in \{ 0,
           1, \ldots, 5 \}$; Output: $a_1, a_2, \ldots$}
 	\label{algorithm:online-model}
 \end{algorithm}
 
-Consider a threshold $t \in
-\{ 0, 1 \ldots, 5\}$, and queries $\{ f_i : f_i $ with sensitivity $\Delta
+Assume that we have a threshold $t \in
+\bbfZ^{\geq 0}$, and queries $\{ f_i : f_i $ with sensitivity $\Delta
 (f_i) = 1 \}$. In order to protect privacy, our mechanism applies the
 truncated $\frac{1}{4}$-geometric mechanism to obtain a perturbed
 threshold $t'$. For each query, the truncated $\frac{1}{2}$-geometric

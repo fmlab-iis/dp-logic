@@ -152,4 +152,19 @@ Proposition~\ref{proposition:sufficient-condition-mdp-model-checking},
 $M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi$ can be
 checked soundly and efficiently.
 
-\todo{explain experiments}
+We model Algorithm~\ref{algorithm:online-model} as in Section~\ref{subsec:threshold} 
+and apply implementation on model checking to check whether the
+mechanism is differentially private. An advantage of model checking is that we
+can check property of any exact value of parameters $\epsilon$ and $\delta$.
+On the one hand,
+smaller values for particular neighborhood database could be obtained.
+For instance, for the state $t_3r_5$ and its neighborhood state $\underline{t}_3\underline{r}_4$, we verify the state
+satisfies the property $\bigwedge_{k \in \bbfZ^{\geq 0}} \dpriv{0}{0.17} ((\X^k\bot) \top)$(Note that with k rising, the reachability probability decreases to approximately 0).
+On the other hand, we could verify that for all the neighborhood database, i.e, the neighborhood states, the property $\bigwedge_{k \in \bbfZ^{\geq 0}} \dpriv{1}{0.74} ((\X^k\bot) \top)$ is satisfied. This indicates that the mechanism in Algorithm~\ref{algorithm:online-model} is differential private with $\epsilon = 1$ and $\delta = 0.74$. The parameter $\delta$ here seems large, due to the fact that 
+Propsition~\ref{proposition:sufficient-condition-mdp-model-checking} is a sufficient 
+condition.
+
+
+
+
+
