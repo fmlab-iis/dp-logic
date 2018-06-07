@@ -1,15 +1,15 @@
 In this section we describe how properties in the differential privacy literature can be expressed using $\dpCTLstar$ formulae.
 
-\paragraph{Classical Differential Privacy.}
+\paragraph{Differential Privacy.}
 Consider the survey mechanism (Section~\ref{subsec:survey}). For  $v$
-with $u N v$, we have $\myPr{u}{K}{N}{\X \mathit{out}_Y}\le
-3\myPr{v}{K}{N}{\X \mathit{out}_Y}$ for the probability of satisfying
-$\X \mathit{out}_Y$ from $u$ and $v$.
-The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_Y)$ holds in state $u$
-and similarly for $\dpriv{\ln 3}{0} (\X \mathit{out}_N)$. 
+with $u N v$, we have $\myPr{u}{K}{N}{\X \mathit{out}_1}\le
+3\myPr{v}{K}{N}{\X \mathit{out}_1}$ for the probability of satisfying
+$\X \mathit{out}_1$ from $u$ and $v$.
+The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_1)$ holds in state $u$
+and similarly for $\dpriv{\ln 3}{0} (\X \mathit{out}_0)$. 
 Recall that differential privacy requires similar output distributions
 on neighbors. The formula $\dpriv{\ln 3}{0} (\X
-\mathit{out}_Y)\wedge \dpriv{\ln 3}{0} (\X \mathit{out}_N)$ thus
+\mathit{out}_1)\wedge \dpriv{\ln 3}{0} (\X \mathit{out}_0)$ thus
 specifies differential privacy for states $+$ and $-$. 
 The survey mechanism is $(\ln 3, 0)$-differentially private.
 
@@ -30,12 +30,12 @@ $(\ln 2, 0)$-differentially private.
 
 
 \paragraph{Compositionality.}
-Compositionality is one of the building block for differential privacy. For any $(\epsilon_1,\delta_1)$-differentially private mechanism $M_1$ and
-$(\epsilon_2,\delta_2)$-differentially private mechanism $M_2$, their combination $M(x)=(M_1(x), M_2(x))$ is $(\epsilon_1 + \epsilon_2,\delta_1+\delta_2)$-differentially private by the compositional theorem \cite[Theorem 3.16]{DR:14:AFDP}. The degradation is rooted in the repeated releases of information. To illustrate this property, we consider the extended survey mechanism which allows two consecutive queries.
+Compositionality is one of the building blocks for differential privacy. For any $(\epsilon_1,\delta_1)$-differentially private mechanism $M_1$ and
+$(\epsilon_2,\delta_2)$-differentially private mechanism $M_2$, their combination $(M_1(x), M_2(x))$ is $(\epsilon_1 + \epsilon_2,\delta_1+\delta_2)$-differentially private by the compositional theorem \cite[Theorem 3.16]{DR:14:AFDP}. The degradation is rooted in the repeated releases of information. To illustrate this property, we consider the extended survey mechanism which allows two consecutive queries.
 In this mechanism, an input is either $+$ or $-$; but 
-outputs are $\mathit{out}_Y\mathit{out}_Y$,
-$\mathit{out}_Y\mathit{out}_N$, $\mathit{out}_N\mathit{out}_Y$, or
-$\mathit{out}_N\mathit{out}_N$. 
+outputs are $\mathit{out}_1\mathit{out}_1$,
+$\mathit{out}_1\mathit{out}_0$, $\mathit{out}_0\mathit{out}_1$, or
+$\mathit{out}_0\mathit{out}_0$. 
 The model is depicted in Figure~\ref{figure:2-dp-mc}.
 %where states $Y_1,Y_2$ are labelled by $Y$, and $N_1,N_2$ are labelled by $N$.
 
@@ -46,20 +46,20 @@ The model is depicted in Figure~\ref{figure:2-dp-mc}.
     distance=1cm,node/.style={circle,draw}]
     \node[node] (p) at  (  -3,  0) { $+$ };
     \node[node] (pY1) at (-1.5, .8) { $s_1$ };
-    \node at (-1.5, 1.3) { $\mathit{out}_Y$ };
+    \node at (-1.5, 1.3) { $\mathit{out}_1$ };
     \node[node] (pN1) at (-1.5, -.8) { $t_1$ };
-    \node at (-1.5, -.3) { $\mathit{out}_N$ };
+    \node at (-1.5, -.3) { $\mathit{out}_0$ };
 
     \node[node] (Y2) at ( 0,  .8) { $s_2$ };
-    \node at (0, 1.3) { $\mathit{out}_Y$ };
+    \node at (0, 1.3) { $\mathit{out}_1$ };
     \node[node] (N2) at ( 0, -.8) { $t_2$ };
-    \node at (0, -.3) { $\mathit{out}_N$ };
+    \node at (0, -.3) { $\mathit{out}_0$ };
 
     \node[node] (n) at  (   3,  0) { $-$ };
     \node[node] (nY1) at ( 1.5, .8) { $\bar{s}_1$ };
-    \node at (1.5, 1.3) { $\mathit{out}_Y$ };
+    \node at (1.5, 1.3) { $\mathit{out}_1$ };
     \node[node] (nN1) at ( 1.5, -.8) { $\bar{t}_1$ };
-    \node at (1.5, -.3) { $\mathit{out}_N$ };
+    \node at (1.5, -.3) { $\mathit{out}_0$ };
 
 
     \path
@@ -86,34 +86,33 @@ The model is depicted in Figure~\ref{figure:2-dp-mc}.
 
 
 
-Consider the formula $\dpriv{\ln 9}{0} (\X (\mathit{out}_Y\wedge \X \mathit{out}_Y))$. A path satisfies $\X (\mathit{out}_Y\wedge \X \mathit{out}_Y)$ if the second state satisfies $\mathit{out}_Y$ and the third state satisfies $\mathit{out}_Y$ as well. We verify that this formula is satisfied for states $+$ and $-$. Moreover, the bound $\epsilon=\ln 9$ is tight, since the probability of satisfying $\X (\mathit{out}_Y\wedge \X \mathit{out}_Y)$ from states $+$ and $-$ are $\frac{9}{16}$ and $\frac{1}{16}$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{\ln 9}{0} (\X (a_1\wedge \X a_2))$ specifies differential privacy for the model, where $a_1,a_2$ range over all atomic propositions $\{\mathit{out}_Y, \mathit{out}_N\}$.
+Consider the formula $\dpriv{\ln 9}{0} (\X (\mathit{out}_1\wedge \X \mathit{out}_1))$. A path satisfies $\X (\mathit{out}_1\wedge \X \mathit{out}_1)$ if the second state satisfies $\mathit{out}_1$ and the third state satisfies $\mathit{out}_1$ as well. We verify that this formula is satisfied for states $+$ and $-$. Moreover, the bound $\epsilon=\ln 9$ is tight, since the probability of satisfying $\X (\mathit{out}_1\wedge \X \mathit{out}_1)$ from states $+$ and $-$ are $\frac{9}{16}$ and $\frac{1}{16}$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{\ln 9}{0} (\X (a_1\wedge \X a_2))$ specifies differential privacy for the model, where $a_1,a_2$ range over all atomic propositions $\{\mathit{out}_1, \mathit{out}_0\}$.
 
 Let us consider two slightly different formulae for comparison:
 \begin{itemize}
-\item $\dpriv{\ln 3}{0} (\X \X \mathit{out}_Y)$. In this case we claim
+\item $\dpriv{\ln 3}{0} (\X \X \mathit{out}_1)$. In this case we claim
   there is no privacy loss, even though there are two queries. The reason is that the output of the first query is not observed at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
-\item $\dpriv{\ln 3}{0} (\X (\mathit{out}_Y\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_Y)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_Y)$ specifies the one step differential privacy. Observe the inner formula is satisfied by all neighbors. Thus, the outer formula also has no privacy loss.
+\item $\dpriv{\ln 3}{0} (\X (\mathit{out}_1\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_1)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_1)$ specifies the one-step differential privacy. Observe the inner formula is satisfied by all neighbors. Thus, the outer formula also has no privacy loss.
 \end{itemize}
 
 \paragraph{Tighter Privacy Bounds for Composition.}
 An advantage of applying model checking is that we may get tighter
 bounds for composition. Consider the survey mechanism, and the
-property $\dpriv{0}{.5} (\X \mathit{out}_Y)$. Obviously, it holds in
-states $+$ and $-$ since $\myPr{u}{K}{N}{\mathit{out}_Y} =
+property $\dpriv{0}{.5} (\X \mathit{out}_1)$. Obviously, it holds in
+states $+$ and $-$ since $\myPr{u}{K}{N}{\mathit{out}_1} =
 \frac{3}{4}$, $\frac{1}{4}$ for $u = +, -$ respectively (Figure~\ref{figure:2-dp}). A careful check ensures that one cannot decrease  $\delta_1=.5$ without increasing $\epsilon$.
 Now consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X
-(\mathit{out}_Y\wedge \X \mathit{out}_Y))$ in
+(\mathit{out}_1\wedge \X \mathit{out}_1))$ in
 Figure~\ref{figure:2-dp-mc}. Applying the
 compositional theorem, one has $\epsilon_2=2\epsilon_1=0$ and
 $\delta_2=2\delta_1=1$. However, we can check easily that one gets
 better privacy parameter $(0,.5)$ using the model checking algorithm
-because $\myPr{u}{K}{N}{\mathit{out}_Y} = \frac{9}{16}$,
+because $\myPr{u}{K}{N}{\mathit{out}_1} = \frac{9}{16}$,
 $\frac{1}{16}$ for $u = +, -$ respectively.
 In general, compositional theorems for differential privacy only give
 asymptotic upper bounds. Privacy parameters $\epsilon$ and $\delta$
-must be calculated carefully and often overly pessimistically. Our
-algorithm allows data analysts to choose such parameters more
-tightly.
+must be calculated carefully and often pessimistically. Our
+algorithm allows data analysts to choose better parameters.
 
 \hide{
 \paragraph{Reachability Privacy.}

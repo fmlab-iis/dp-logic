@@ -1,12 +1,35 @@
 In differential privacy, an \emph{offline} mechanism releases outputs only
 once and plays no further role; an \emph{online} (or \emph{interactive}) mechanism
 allows analysts to ask queries adaptively based on previous
-responses. The mechanisms we constructed previously are offline
-mechanisms. On the other hand, online mechanisms permit further queries. 
+responses. The mechanisms considered previously are offline
+mechanisms. 
+Since offline mechanisms only release one query result, they are
+relatively easy to analyze. For online mechanisms, one has to consider
+all possible adaptive queries. We therefore use MDPs to model these
+non-deterministic behaviors.
+Specifically, adaptive queries are modeled by
+actions. Randomized computation associated with different queries is
+modeled by distributions associated with actions.
+
+\hide{
+On the other hand, online mechanisms permit further queries. 
 To maintain
 privacy, online mechanisms may decide to release
 information differently. For instance, they may disable further
 queries after a certain output is disclosed.
+}
+
+Consider again the survey mechanism. Suppose we would like to design
+an interactive mechanism which adjusts random noises on surveyors'
+requests. When the surveyor requests low-accuracy answers, the
+surveyee uses the survey mechanism as before. When high-accuracy
+answers are requested, the surveyee answers $1$ with
+probability $\frac{4}{5}$ and $0$ with probability $\frac{1}{5}$ when she has
+positive diagnosis. She answers $1$ with probability $\frac{1}{5}$
+and $0$ with probability $\frac{4}{5}$ when she is not
+diagnosed with the disease X. This gives an interactive mechanism
+corresponding to the MDP shown in
+Figure~\ref{figure:simple-mdp}.
 
 \begin{wrapfigure}[14]{r}{.45\columnwidth}
 %\begin{figure}
@@ -50,27 +73,9 @@ actions. Behaviors associated with different inputs are modeled by
 distributions associated with actions.
 }
 
-We use MDPs to model 
-interactive mechanisms. Specifically, external inputs are modeled by
-actions. Behaviors associated with different inputs are modeled by
-distributions associated with actions.
-
-
-Consider again the survey mechanism. Suppose we would like to design
-an interactive mechanism which adjusts random noises on surveyors'
-requests. When the surveyor requests low-accuracy answers, the
-surveyee uses the survey mechanism as before. When high-accuracy
-answers are requested, the surveyee answers \textit{Yes} with
-probability $\frac{4}{5}$ and \textit{No} with probability $\frac{1}{5}$ when she has
-positive diagnosis. She answers \textit{Yes} with probability $\frac{1}{5}$
-and \textit{No} with probability $\frac{4}{5}$ when she is not
-diagnosed with the disease X. This gives an interactive mechanism
-corresponding to the MDP shown in
-Figure~\ref{figure:simple-mdp}.
-
 In the figure, the states $+$,
 $-$, $s$, and $t$ are interpreted as before. The actions $L$ and $H$
-denote low- and high-accuracy requests respectively. Let $M_H$ denote
-the Markov chain derived by high-accuracy requests.
-Note that the high-accuracy mechanism is $(\ln 4,0)$-differentially private.
-Unlike non-interactive mechanisms, the privacy guarantees vary from accuracy requests.
+denote low- and high-accuracy queries respectively. 
+Note that the high-accuracy survey mechanism is $(\ln
+4,0)$-differentially private. Unlike non-interactive mechanisms, the
+privacy guarantees vary from queries with different accuracies.

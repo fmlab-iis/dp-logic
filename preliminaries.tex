@@ -1,6 +1,5 @@
 
-Let $\bbfZ$ and $\bbfZ^{\geq 0}$ be the sets of integers and
-non-negative integers respectively.
+Let $\bbfZ$ and $\bbfZ^{\geq 0}$ be the sets of integers and non-negative integers respectively.
 % For $n \geq 0$, $\underline{n} = \{ 0, 1, \ldots, n \} \subseteq
 % \bbfZ^{\geq 0}$.
 %\lz{not so often used: can we do without this notation?}
@@ -12,7 +11,7 @@ from~\cite{BK:08:PMC}.
 
 \subsection{Differential Privacy}
 We denote the data universe by $\mathcal{X}$; $x \in \mathcal{X}^n$ is
-a database with $n$ rows from the data universe. Two databases $x$ and
+a dataset with $n$ rows from the data universe. Two datasets $x$ and
 $x'$ are \emph{neighbors} (denoted by $d(x, x') \leq 1$) if they are
 identical except at most one row. A \emph{query} $f$ is a function
 from $\mathcal{X}^n$ to its range $R \subseteq \bbfZ$. The \emph{sensitivity} of the
@@ -30,11 +29,11 @@ $\tilde{R} \neq R$ in general.
 A mechanism $M_f$ for $f$ is \emph{oblivious} if
 $\Pr[M_f(x) = \tilde{r}] = \Pr[M_f(x') = \tilde{r}]$ for every
 $\tilde{r} \in \tilde{R}$ when $f (x) = f (x')$. In words, outputs of an
-oblivious mechanism depend on the query result $f (x)$ but not on the
-input database $x$. The order of rows in a database, for instance, is
-irrelevant to oblivious mechanisms for counting queries. Let $x, x'$
-be databses and $\tilde{r} \in \tilde{R}$. We say the probability of
-the mechanism $M_f$ outputing $\tilde{r}$ on $x$ is
+oblivious mechanism depend on the query result $f (x)$.
+The order of rows in a dataset, for instance, is
+irrelevant to oblivious mechanisms. Let $x, x'$
+be datasets and $\tilde{r} \in \tilde{R}$. We say the probability of
+the mechanism $M_f$ outputting $\tilde{r}$ on $x$ is
 \emph{$(\epsilon, \delta)$-close} to those on $x'$ if
 \[
 \Pr[M_f (x) = \tilde{r}] \leq e^{\epsilon} \Pr[M_f (x') =
@@ -50,16 +49,16 @@ A mechanism $M_f$ is \emph{$(\epsilon, \delta)$-differentially
   private} % $(\epsilon, \delta \approx 0)$
 if for every $x, x' \in \mathcal{X}^n$ with $d(x, x') \leq 1$
 and $\tilde{r} \in \tilde{R}$, the probability of
-$M_f$ outputing $\tilde{r}$ on $x$ is $(\epsilon, \delta)$-close to
+$M_f$ outputting $\tilde{r}$ on $x$ is $(\epsilon, \delta)$-close to
 those on $x'$.
 
 The non-negative parameters $\epsilon$ and $\delta$ quantify
-probabilistically similar behaviors;
+mechanism behaviors probabilistically;
 the smaller they are, the behaviors are more similar.
 Informally, a differentially private mechanism has probabilistically
-similar behaviors on neighboring databases. It will have similar
-output distributions when a row is replaced by another in a given
-database. 
+similar behaviors on neighboring datasets. It will have similar
+output distributions when any row is replaced by another in a given
+dataset. 
 %Consider, for instance, a database contains the row
 %corresponding to an individual. A differentially private mechanism
 %will have a similar output distribution when the individual is not in
@@ -81,10 +80,14 @@ $\pi[j]$ for the suffix $\pi_j \pi_{j+1} \cdots$. % Thus $\pi[0] = \pi$.
 
 A \emph{(finite) Markov decision process}
 (MDP)~\footnote{The MDP we consider is \emph{reactive} in the sense that
-all actions are enabled in every state. If equipped with a set of final states $F\subseteq S$, such model is
-referred to as \emph{probabilistic automaton} in the literature~\cite{Rabin63}, and language equivalence/inclusion
-problems have been investigated. In the model checking context, the notion MDPs is mostly used.}
- $M = (S, \Act, \wp, L)$ consists
+all actions are enabled in every state.
+% If equipped with a set of final states $F\subseteq S$, such model is
+% referred to as \emph{probabilistic automaton} in the
+% literature~\cite{Rabin63}, and language equivalence/inclusion
+% problems have been investigated. In the model checking context, the
+% notion MDPs is mostly used.
+}
+$M = (S, \Act, \wp, L)$ consists
 of
 a finite set of \emph{actions} $\Act$,
 a \emph{transition probability function} $\wp : S \times \Act
@@ -104,7 +107,10 @@ write $\Pr[\Pi]$ for the \emph{probability measure} of $\Pi$.
 Let $M = (S, \Act, \wp, L)$ be an MDP. A (history-dependent)
 \emph{scheduler} for $M$ is a function $\scheduler{S} : S^+
 \rightarrow \Act$. A \emph{query scheduler} for $M$ is a function
-$\scheduler{Q} : \bbfZ^{\geq 0} \rightarrow \Act$. Intuitively, its decision depends only on the length of the history.
+$\scheduler{Q} : S^+ \rightarrow \Act$ such that
+$\scheduler{Q}(\sigma) = \scheduler{Q}(\sigma')$ for any $\sigma,
+\sigma' \in S^+$ of the same length.
+Intuitively, its decision depends only on the length of the history.
 A path $\pi =
 \pi_0 \alpha_1 \pi_1 \cdots$ $\pi_n$ $\alpha_{n+1} \cdots$ is an
 \emph{$\scheduler{S}$-path} if $\alpha_{i+1} = \scheduler{S}(\pi_0

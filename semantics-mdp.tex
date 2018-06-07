@@ -1,7 +1,11 @@
-The logic $\dpCTLstar$ can be interpreted over MDPs. Semantics over Markov chains generalizes to MDPs as well. %Note that two states with different enabled actions
+The logic $\dpCTLstar$ can be interpreted over MDPs. 
+%Semantics over Markov chains generalizes to MDPs as well. Note that
+%two states with different enabled actions 
 %are trivially distinguishable; no privacy can be preserved.
-Let $M = (S, \Act, \wp, L)$ be an MDP. Define the satisfaction
-relation $M, \neighbor{S}, s \models \Phi$ for $\PJ{J}$ and $\dpriv{\epsilon}{\delta} \phi$ (others are standard) as follows.
+Let $M = (S, \Act, \wp, L)$ be an MDP and $\neighbor{S}$ a
+neighborhood relation on $S$. Define the satisfaction
+relation $M, \neighbor{S}, s \models \Phi$ for $\PJ{J} \phi$ and
+$\dpriv{\epsilon}{\delta} \phi$ as follows (others are straightforward).
 \begin{eqnarray*}
 %  M, \neighbor{S}, s \models \top\\
 %  M, \neighbor{S}, s \models p  & \textmd{ if } &  p \in L(s)\\
@@ -36,8 +40,8 @@ $\dpriv{\epsilon}{\delta}$. For any path formula $\phi$,
 $\dpriv{\epsilon}{\delta} \phi$ specifies states whose probability
 of having paths satisfying $\phi$ are $(\epsilon, \delta)$-close to
 those of all its neighbors for query schedulers. That is, no
-query scheduler can force any of neighbors to have
-probabilistically distinguishable behaviors.
+query scheduler can force any of neighbors to distinguish the
+specified path behavior probabilistically.
 
 \noindent
 \paragraph{Justification of query schedulers.}
@@ -57,42 +61,50 @@ might be
   + \delta
 \end{eqnarray*}
 A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
-no history-dependent scheduler could differentiate the probabilities
-of haveing paths satisfying
+no history-dependent scheduler can differentiate the probabilities
+of having paths satisfying
 $\phi$ from neighbors. Recall that a history-dependent scheduler takes
 actions by previous states. Such a definition would allow
 schedulers to take different actions from different states. 
-Two neighbors could be differentiated by different action sequences
-erroneously.
-A query scheduler $\scheduler{Q} : \bbfZ^{\geq 0} \rightarrow \Act$,
+Two neighbors could hence be differentiated by different action sequences.
+The specification might be too strong for our purposes.
+A query scheduler $\scheduler{Q} : S^+ \rightarrow \Act$,
 on the other hand, corresponds to a query sequence. A state satisfies
 $\dpriv{\epsilon}{\delta} \phi$ if no query sequence can differentiate
 the probabilities of having paths satisfying $\phi$ from neighbors.
+Recall query schedulers only depend on lengths of histories. Two
+neighbors cannot be distinguished by the same action sequence of any
+length if they satisfy a differentially private subformula.
 Our semantics agrees with the informal interpretation of differential
-privacy for such systems. We hence
-prefer the original definition.
+privacy for such systems. We therefore consider only query schedulers
+in our definition.
 
 \subsection{Model Checking}
-For an MDP $M =
-(S, \Act, \wp, L)$, we want to compute $\{ s : M, \neighbor{S}, s \models
-\dpriv{\epsilon}{\delta} \phi \}$ . Recall the semantics of $\dpriv{\epsilon}{\delta}
+Given an MDP $M =
+(S, \Act, \wp, L)$, a neighborhood relation $\neighbor{S}$, $s \in
+S$, and a path formula $\phi$, consider the problem of deciding $M,
+\neighbor{S}, s \models 
+\dpriv{\epsilon}{\delta} \phi$ . Recall the semantics of $\dpriv{\epsilon}{\delta}
 \phi$. Given $s, t$ with $s \neighbor{S} t$ and a path formula
 $\phi$, we need to decide whether
 $\myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} \leq
 e^{\epsilon} \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} + \delta$
 for every query scheduler $\scheduler{Q}$.
-If the path formula only contains next operators, it is easy to deal with. When $\phi$ is $\gX B$ with $B\subseteq S$, only one step behavior needs to be considered. Thus only the first action in the query sequence is needed. It can also be easily generalized to nested next operators:  one needs only to enumerate
-all actions query sequences of length obtained by the number of nested $\X$ operators.
+When $\phi$ is $\gX B$ with $B\subseteq S$, only the first action in
+the query sequence needs to be considered. This can also be easily generalized to nested next operators:  one needs only to enumerate
+all actions query sequences of a fixed length.
+% obtained by the number of nested $\X$ operators.
 The problem however is undecidable in general.
 
 \begin{theorem}\label{theorem:mdp-model-checking}
 The $\dpCTLstar$ model checking problem for MDPs  is undecidable.
 \end{theorem}
 
-The proof is in Appendix. We discuss some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ are absorbing (with only self-loops). For the case $\epsilon=0$, the condition reduces to
+The proof is in Appendix. We discuss some decidable special cases. Consider the formula $\phi:=F B$ with $B\subseteq S$ and assume that states in $B$ with only self-loops. For the case $\epsilon=0$, the condition reduces to
 $\myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{F B} -
 \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{F B}\le \delta$. If $\delta=0$ it is the classical language equivalence problem for probabilistic automata~\cite{Rabin63}, which can be solved in polynomial time. However, if $\delta>0$, the problem
-becomes an approximate version of the language equivalence problem. To the best of our knowledge, the decision problem is still open, and has only be investigated for the special case when all states are connected~\cite{Tzeng92}.
+becomes an approximate version of the language equivalence problem. To
+the best of our knowledge, its decidability is still open except for the special case where all states are connected~\cite{Tzeng92}.
 
 \hide{
 Since the scheduler attaining the maximally probable
@@ -106,7 +118,7 @@ prefer the original definition.
 Despite of the negative result in Theorem~\ref{theorem:mdp-model-checking},
 a sufficient condition for $M, \neighbor{S}, s \models
 \dpriv{\epsilon}{\delta} \phi$ is available.
-To see this, observe that for any state $s \in S$ and
+To see this, observe that for $s \in S$ and
 query scheduler $\scheduler{Q}$, we have
 \[
   \min_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} 
@@ -119,7 +131,7 @@ where the minimum and maximum are taken over all schedulers
 $\scheduler{S}$. Hence, 
 \begin{eqnarray*}
   \myPr{s}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi} -
-      e^\epsilon \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi}
+      e^\epsilon \cdot \myPr{t}{M_{\scheduler{Q}}}{\neighbor{S}}{\phi}
   \leq
     \max_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
     - e^\epsilon \cdot
@@ -131,40 +143,48 @@ following proposition:
   Let $M = (S, \Act, \wp, L)$ be an MDP, $\neighbor{S}$ a
   neighborhood relation on $S$.
   $M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi$ if
-  for any $s, t \in S$ with $s \neighbor{S} t$, we have
   $\max\limits_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
     - e^\epsilon \cdot
     \min\limits_{\scheduler{S}} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
-    \leq \delta$, and
+    \leq \delta$ and
   $\max\limits_{\scheduler{S}} \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
     - e^\epsilon \cdot
     \min\limits_{\scheduler{S}} \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
-    \leq \delta$.
+    \leq \delta$ for any $s, t \in S$ with $s \neighbor{S} t$.
 \end{proposition}
 
-For any $s \in S$, recall that $\max\limits_{\scheduler{S}}
+For $s \in S$, recall that $\max\limits_{\scheduler{S}}
 \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ and
 $\min\limits_{\scheduler{S}}
 \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}$ can be efficiently 
 computed~\cite{BK:08:PMC}. 
-Using
+By
 Proposition~\ref{proposition:sufficient-condition-mdp-model-checking},
 $M, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi$ can be
 checked soundly and efficiently.
 
-We model Algorithm~\ref{algorithm:online-model} as in Section~\ref{subsec:threshold} 
-and apply implementation on model checking to check whether the
-mechanism is differentially private. An advantage of model checking is that we
-can check property of any exact value of parameters $\epsilon$ and $\delta$.
-On the one hand,
-smaller values for particular neighborhood database could be obtained.
-For instance, for the state $t_3r_5$ and its neighborhood state $\underline{t}_3\underline{r}_4$, we verify the state
-satisfies the property $\bigwedge_{k \in \bbfZ^{\geq 0}} \dpriv{0}{0.17} ((\X^k\bot) \top)$(Note that with k rising, the reachability probability decreases to approximately 0).
-On the other hand, we could verify that for all the neighborhood database, i.e, the neighborhood states, the property $\bigwedge_{k \in \bbfZ^{\geq 0}} \dpriv{1}{0.74} ((\X^k\bot) \top)$ is satisfied. This indicates that the mechanism in Algorithm~\ref{algorithm:online-model} is differential private with $\epsilon = 1$ and $\delta = 0.74$. The parameter $\delta$ here seems large, due to the fact that 
-Propsition~\ref{proposition:sufficient-condition-mdp-model-checking} is a sufficient 
-condition.
-
-
-
-
+We model the above threshold algorithm (Algorithm~\ref{algorithm:online-model})
+and apply
+Proposition~\ref{proposition:sufficient-condition-mdp-model-checking} 
+check whether the mechanism is differentially private using the
+classical $\PCTL$ model checking algorithm for MDPs. 
+Since concrete values of the parameters $\epsilon$ and $\delta$ are
+computed, tighter bounds for specific neighbors can be obtained.
+For instance, for the state $t_3r_5$ and its neighbor
+$\underline{t}_3\underline{r}_4$, we verify the property $\bigwedge_{k
+  \in \bbfZ^{\geq 0}} \dpriv{0}{0.17} ((\X^k\bot) \top)$ is
+satisfied. Note the reachability probability goes to $0$ as $k$ goes
+to infinity. By repeating the computation, we verify that 
+the property $\bigwedge_{k \in \bbfZ^{\geq 0}} \dpriv{1}{0.74}
+((\X^k\bot) \top)$ is satisfied for all neighbors. 
+Subsequently, the above threshold mechanism in
+Algorithm~\ref{algorithm:online-model} is $(1, 0.74)$-differentially
+private. Compared to the parameters for the neighbors $t_3r_5$ and
+$\underline{t}_3\underline{r}_4$, the parameter $\delta$ appears to be
+significantly large. It means that there are two neighbors with
+drastically different output distributions from our mechanism.
+Moreover, recall that
+Proposition~\ref{proposition:sufficient-condition-mdp-model-checking}
+is a sufficient condition. It only gives an upper bound of privacy
+parameters. Automatically computing tighter bounds may be possible. 
 

@@ -1,5 +1,5 @@
 To model differentially private mechanisms by Markov chains, we
-formalize inputs (such as databases or query results) as states. 
+formalize inputs (such as datasets or query results) as states. 
 Randomized computation is modeled by probabilistic transitions. Atomic
 propositions are used to designate intended interpretation on states
 (such as inputs or outputs). We demonstrates these ideas in examples.
@@ -27,41 +27,43 @@ Consider the survey question: have you been diagnosed
 with the disease $X$? In order to protect surveyees' privacy, each
 answers the question as follows. The surveyee first flips a
 coin. If it is tail, she answers the question truthfully. Otherwise,
-she randomly answers \textit{Yes} or \textit{No}
+she randomly answers $1$ or $0$
 uniformly (Figure~\ref{figure:2-dp-table})~\cite{DR:14:AFDP}.
 
 Let us analyze the mechanism briefly. The data universe $\mathcal{X}$
 is $\{ +, - \}$. The mechanism $M$ is a randomized algorithm with
-inputs in $\mathcal{X}$ and outputs in $\{ Y, N \}$. For any $x \in
-\mathcal{X}$, we have $\frac{1}{4} \leq \Pr[M (x) = Y] \leq
-\frac{3}{4}$. Hence $\Pr[M (x) = Y] \leq \frac{3}{4} = 3 \cdot
-\frac{1}{4} \leq e^{\ln 3} \Pr[M (x') = Y]$ for any neighbors $x, x'
-\in \mathcal{X}$. Similarly, $\Pr[M (x) = N] \leq e^{\ln 3} \Pr[M (x')
-= N]$. The survey mechanism is $(\ln 3, 0)$-differentially private.
+inputs in $\mathcal{X}$ and outputs in $\{ 1, 0 \}$. For any $x \in
+\mathcal{X}$, we have $\frac{1}{4} \leq \Pr[M (x) = 1] \leq
+\frac{3}{4}$. Hence $\Pr[M (x) = 1] \leq \frac{3}{4} = 3 \cdot
+\frac{1}{4} \leq e^{\ln 3} \Pr[M (x') = 1]$ for any neighbors $x, x'
+\in \mathcal{X}$. Similarly, $\Pr[M (x) = 0] \leq e^{\ln 3} \Pr[M (x')
+= 0]$. The survey mechanism is $(\ln 3, 0)$-differentially private.
 The random noise boosts the probability of answering
-\textit{Yes} or \textit{No} to at least $\frac{1}{4}$ regardless of
+$1$ or $0$ to at least $\frac{1}{4}$ regardless of
 diagnoses. Inferences on individual diagnosis can be plausibly denied.
 
 \begin{figure}
   \centering
   \begin{subfigure}{.48\columnwidth}
       \[
-      \begin{array}{|c|c|c|}
-        \hline
-        &
-        \multicolumn{2}{c|}{output}
+      \begin{array}{c|c|c|c|}
+        \multicolumn{2}{c}{} &
+        \multicolumn{2}{c}{output}
         \\
-        \hline
-        state & Y & N \\
-        \hline
+        \cline{2-4}
+        &  & 1 & 0 \\
+        \cline{2-4}
+        \multirow{2}*{\rotatebox{90}{state}} 
+        &
         + & \frac{3}{4} = \frac{1}{2} \cdot \frac{1}{2} + \frac{1}{2} \cdot 1
           & \frac{1}{4} = \frac{1}{2} \cdot \frac{1}{2} + \frac{1}{2} \cdot 0
         \\
-        \hline
+        \cline{2-4}
+        &
         - & \frac{1}{4} = \frac{1}{2} \cdot \frac{1}{2} + \frac{1}{2} \cdot 0
           & \frac{3}{4} = \frac{1}{2} \cdot \frac{1}{2} + \frac{1}{2} \cdot 1
         \\
-        \hline
+        \cline{2-4}
       \end{array}
       \]
     \caption{Survey Mechanism}
@@ -75,9 +77,9 @@ diagnoses. Inferences on individual diagnosis can be plausibly denied.
       \node[node] (p) at ( 0,  .5) { $+$ };
       \node[node] (n) at ( 0, -.5) { $-$ };
       \node[node] (Y) at (-1.5,  0) { $s$ };
-      \node at (-1.5, .5) { $\mathit{out}_Y$ };
+      \node at (-1.5, .5) { $\mathit{out}_1$ };
       \node[node] (N) at ( 1.5,  0) { $t$ };
-      \node at ( 1.5, .5) { $\mathit{out}_N$ };
+      \node at ( 1.5, .5) { $\mathit{out}_0$ };
 
       \path
       (p) edge node [above] { $\frac{3}{4}$ } (Y)
@@ -123,7 +125,7 @@ The $\alpha$-geometric mechanism is oblivious since it has the same
 output distribution on any inputs $x, x'$ with $f (x) = f
 (x')$. It is $(- {\Delta (f)} \ln \alpha, 0)$-differentially
 private for any query $f$ with sensitivity $\Delta (f)$. Observe that
-the privay guarantee $(-{\Delta (f)} \ln \alpha, 0)$ depends on the
+the privacy guarantee $(-{\Delta (f)} \ln \alpha, 0)$ depends on the
 sensitivity of the query $f$. To achieve $(\epsilon, 0)$-differential
 privacy using the $\alpha$-geometric mechanism, one first decides the
 sensitivity of the query and then computes the parameter $\alpha =
@@ -159,22 +161,25 @@ given in Figure~\ref{figure:geometric-mechanism-table}.
   \centering
   \begin{subfigure}{.40\columnwidth}
     \[
-    \begin{array}{|c|c|c|c|c|c|c|}
-      \hline
-      \textmd{input/output} & 0 & 1 & 2 & 3 & 4 & 5\\
-      \hline
-      0 & {2}/{3}  & {1}/{6} & {1}/{12} & {1}/{24}  & {1}/{48} & {1}/{48}\\
-      \hline
-      1 & {1}/{3}  & {1}/{3} & {1}/{6} & {1}/{12}  & {1}/{24} & {1}/{24}\\
-      \hline
-      2 & {1}/{6}  & {1}/{6} & {1}/{3} & {1}/{6}   & {1}/{12} & {1}/{12}\\
-      \hline
-      3 & {1}/{12} & {1}/{12} & {1}/{6} & {1}/{3}   & {1}/{6} & {1}/{6}\\
-      \hline
-      4 & {1}/{24} & {1}/{24} & {1}/{12} & {1}/{6}   & {1}/{3} & {1}/{3}\\
-      \hline
-      5 & {1}/{48} & {1}/{48} & {1}/{24} & {1}/{12} & {1}/{6} & {2}/{3}\\
-      \hline
+    \begin{array}{c|c|c|c|c|c|c|c|}
+      \multicolumn{2}{c}{} &
+      \multicolumn{6}{c}{output} \\
+      \cline{2-8}
+      & & 0 & 1 & 2 & 3 & 4 & 5\\
+      \cline{2-8}
+      \multirow{6}*{\rotatebox{90}{input}}
+      & 0 & {2}/{3}  & {1}/{6} & {1}/{12} & {1}/{24}  & {1}/{48} & {1}/{48}\\
+      \cline{2-8}
+      & 1 & {1}/{3}  & {1}/{3} & {1}/{6} & {1}/{12}  & {1}/{24} & {1}/{24}\\
+      \cline{2-8}
+      & 2 & {1}/{6}  & {1}/{6} & {1}/{3} & {1}/{6}   & {1}/{12} & {1}/{12}\\
+      \cline{2-8}
+      & 3 & {1}/{12} & {1}/{12} & {1}/{6} & {1}/{3}   & {1}/{6} & {1}/{6}\\
+      \cline{2-8}
+      & 4 & {1}/{24} & {1}/{24} & {1}/{12} & {1}/{6}   & {1}/{3} & {1}/{3}\\
+      \cline{2-8}
+      & 5 & {1}/{48} & {1}/{48} & {1}/{24} & {1}/{12} & {1}/{6} & {2}/{3}\\
+      \cline{2-8}
     \end{array}
     \]
     \caption{$\frac{1}{2}$-Geometric Mechanism}
@@ -261,12 +266,12 @@ Similar to the survey mechanism, it is straightforward to model the
 truncated $\frac{1}{2}$-geometric mechanism as a Markov chain. 
 Recall that the truncated $\frac{1}{2}$-geometric mechanism is
 oblivious. It suffices to consider $\{ f (x) : x \in \mathcal{X}^n \}$
-instead of $\mathcal{X}^n$ as inputs. 
+as inputs. 
 Let the state $s_k$ and $t_l$
-denote the input value $k$ and output value $l$ respectively. Define
-the state set $S = \{ s_k, t_k : k \in \{ 0, 1, \ldots, m \} \}$.
+denote the input $k$ and output $l$ respectively. Define
+$S = \{ s_k, t_k : k \in \{ 0, 1, \ldots, m \} \}$.
 The probability transition $\wp (s_k, t_l)$ is the probability of the
-output value $l$ on the input value $k$ as defined in the
+output $l$ on the input $k$ as defined in the
 mechanism. Moreover, we have $\mathit{in}_k \in L (s_k)$ and
 $\mathit{out}_k \in L (t_k)$ for $k \in \{ 0, 1, \ldots, n \}$.
 If $\Delta (f) = 1$, $| f (x) - f (x') | \leq 1$ for every neighbors

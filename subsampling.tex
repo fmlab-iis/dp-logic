@@ -1,15 +1,16 @@
 
 The sensitivity of queries is required to apply the (truncated)
-$\alpha$-geometric mechanism. Recall that the sensitivity of a query
-is the maximal difference of query results on any two neighbors. There are
-two problems for mechanisms depending on query sensitivity. First, 
-sensitivity of queries can be hard to compute or estimate. Second,
+$\alpha$-geometric mechanism. Recall that the sensitivity 
+is the maximal difference of query results on any two neighbors. 
+Two practical problems may arise for
+mechanisms depending on query sensitivity. First, 
+sensitivity of queries can be hard to compute. Second,
 the sensitivity over arbitrary neighbors can be too conservative for
 the actual dataset in use. One therefore would like to have
 mechanisms independent of query sensitivity.
 
 Subsampling is a technique to design such mechanisms~\cite{DR:14:AFDP}. Concretely, let
-us consider $\mathcal{X} = \{ R, B \}$ (for red and blue teams) and a
+us consider $\mathcal{X} = \{ R, B \}$ (for red and blue team members) and a
 dataset $d \in \mathcal{X}^n$. Suppose we would like to ask which team
 is the majority in the dataset while respecting individual
 privacy. This can be achieved as
@@ -27,12 +28,14 @@ privacy, the mechanism makes sure the difference $| \mathit{count}_R -
 \mathit{count}_B |$ is significantly large after perturbation. In
 line~\ref{algorithm:subsampling-majority-noise},
 $\mathit{Lap}(p)$ denotes a continuous random
-variable with the Laplace distribution whose probability density
-function is $f(x) = \frac{1}{2p}e^{-|x|/p}$.
+variable with the probability density
+function $f(x) = \frac{1}{2p}e^{-|x|/p}$ of Laplace distribution.
 If the perturbed difference is sufficiently large,
-the mechanism reports the majority of the $m$
-sub-results~(line~\ref{algorithm:subsampling-majority-output}). Otherwise,
-no information is
+the mechanism reports $1$ if the majority of the $m$
+sub-results is
+$R$ or $0$ if it is
+$B$~(line~\ref{algorithm:subsampling-majority-output}). Otherwise,  no
+information is 
 revealed~(line~\ref{algorithm:subsampling-majority-mute}).
 
 \begin{algorithm}
@@ -57,7 +60,7 @@ revealed~(line~\ref{algorithm:subsampling-majority-mute}).
     \If{${r} + \mathit{Lap}(\frac{1}{\epsilon}) > \ln (1/\delta)/\epsilon$}
     \label{algorithm:subsampling-majority-noise}
       \State{\textbf{if} $\mathit{count}_R \geq \mathit{count}_B$
-             \textbf{then} \Return { $R$ } \textbf{else} \Return {$B$} } 
+             \textbf{then} \Return { $1$ } \textbf{else} \Return {$0$} } 
       \label{algorithm:subsampling-majority-output}
     \Else
       \State{\Return {$\bot$}}
@@ -76,8 +79,8 @@ of the Markov chain for $n = 3$. The leftmost four states represent
 all possible datasets. Given a dataset, $m$ samples are taken with
 replacement. Outcomes of these samples are denoted by
 $(\mathit{count}_R, \mathit{count}_B)$. There are only $m + 1$
-outcomes from $(m, 0), (m - 1, 1), \ldots, (0, m)$. Each outcome is
-represetned by a state in
+outcomes: $(m, 0), (m - 1, 1), \ldots, (0, m)$. Each outcome is
+represented by a state in
 Figure~\ref{figure:subsampling-majority-markov-chain}. From each
 dataset, the probability distribution of all outcomes gives the
 transition probability in the figure. Next, observe that  $|
@@ -85,9 +88,10 @@ transition probability in the figure. Next, observe that  $|
 values. The values of $r$ 
 (line~\ref{algorithm:subsampling-majority-difference}) hence belong to
 a finite set $\{ r_m, \ldots, r_M \}$ with the minimum $r_m$ and
-maximum $r_M$. For each $r \in \{ r_m, \ldots,
-r_M \}$, it is represented by a state in
-Figure~\ref{figure:subsampling-majority-markov-chain}. For instance,
+maximum $r_M$. 
+%For each $r \in \{ r_m, \ldots, r_M \}$, it is represented by a state
+%in Figure~\ref{figure:subsampling-majority-markov-chain}. 
+For instance,
 both outcomes $(m, 0)$ and $(0, m)$ transit to the state $r_M = 1/(4q)
 - 1$ with probability $1$. For each $r \in \{ r_m, \ldots, r_M \}$,
 the probability of having $r + \mathit{Lap}(\frac{1}{\epsilon}) > \ln
@@ -95,13 +99,17 @@ the probability of having $r + \mathit{Lap}(\frac{1}{\epsilon}) > \ln
 is equal to the probability of $\mathit{Lap}(\frac{1}{\epsilon}) > \ln
 (1/\delta)/\epsilon - r$. This is equal to $\int^{\infty}_{\ln
   (1/\delta)/\epsilon - r} \frac{\epsilon}{2}e^{-\epsilon|x|} dx$.
-From each state $r \in \{ r_m, \ldots, r_M \}$, it thus goes to the state
+From each state $r \in \{ r_m, \ldots, r_M \}$, it hence goes to the state
 $\top$ with probability $\int^{\infty}_{\ln (1/\delta)/\epsilon - r}
 \frac{\epsilon}{2}e^{-\epsilon|x|} dx$ and to the state $\bot$ with
 probability $1 - \int^{\infty}_{\ln (1/\delta)/\epsilon - r}
-\frac{\epsilon}{2}e^{-\epsilon|x|} dx$. Finally, the Markov chain
-moves to the state $R$ if $\mathit{count}_R \geq \mathit{count}_B$;
-otherwise, it moves to $B$.
+\frac{\epsilon}{2}e^{-\epsilon|x|} dx$ in
+Figure~\ref{figure:subsampling-majority-markov-chain}. Finally, the
+Markov chain 
+moves to the state $1$ if $\mathit{count}_R \geq \mathit{count}_B$;
+otherwise, it moves to $0$. Two dataset states are neighbors if they
+differ at most one member. For example, $rrb$ is a neighbor
+of $rrr$ and $rbb$ but not $bbb$.
 
 
 \begin{figure}
@@ -130,8 +138,8 @@ otherwise, it moves to $B$.
       \node[node] (top) at (2.5,  0.75) { $\top$ };
       \node[node] (bot) at (2.5, -0.75) { $\bot$ };
 
-      \node[node] (outR) at (5,  1.25) { $R$ };
-      \node[node] (outB) at (5, .25) { $B$ };
+      \node[node] (outR) at (5,  1.25) { $1$ };
+      \node[node] (outB) at (5, .25) { $0$ };
 
       \path
       (rrr) edge node [above] { } (rmb0)
