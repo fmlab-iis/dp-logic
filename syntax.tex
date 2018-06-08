@@ -12,10 +12,10 @@ an interval in $[0, 1]$ followed by a path formula, or the
 \emph{differentially private} operator $\dpriv{\epsilon}{\delta}$
  with two non-negative real numbers $\epsilon$ and $\delta$ followed
  by a path formula. A
-\emph{path} formula $\phi$ is simply a linear temporal logic formula, with temporal operator \emph{next}  ($\X$)
+\emph{path} formula $\phi$ is simply a linear temporal logic formula, with temporal operator \emph{next}  ($\X$) followed by a path formula, 
 and  \emph{until} operator
 ($\until$) enclosed by two path formulae.
-We moreover define $F \phi \equiv true \until \phi$ and $G\phi \equiv \neg F (\neg\phi)$.
+We define $F \phi \equiv true \until \phi$ and $G\phi \equiv \neg F (\neg\phi)$ as usual.
 
 As in the classical setting, we consider the sublogic $\dpCTL$ by allowing only path formulae of the form $\X\Phi$ and $\Phi\until\Phi$.
 Moreover, one obtains $\PCTL$~\cite{HanssonJ94} and $\PCTLstar$~\cite{BiancoA95} from $\dpCTL$ and $\dpCTLstar$

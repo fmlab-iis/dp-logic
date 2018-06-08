@@ -11,7 +11,7 @@ from~\cite{BK:08:PMC}.
 
 \subsection{Differential Privacy}
 We denote the data universe by $\mathcal{X}$; $x \in \mathcal{X}^n$ is
-a dataset with $n$ rows from the data universe. Two datasets $x$ and
+a \emph{dataset} with $n$ \emph{rows} from the data universe. Two datasets $x$ and
 $x'$ are \emph{neighbors} (denoted by $d(x, x') \leq 1$) if they are
 identical except at most one row. A \emph{query} $f$ is a function
 from $\mathcal{X}^n$ to its range $R \subseteq \bbfZ$. The \emph{sensitivity} of the
@@ -30,9 +30,9 @@ A mechanism $M_f$ for $f$ is \emph{oblivious} if
 $\Pr[M_f(x) = \tilde{r}] = \Pr[M_f(x') = \tilde{r}]$ for every
 $\tilde{r} \in \tilde{R}$ when $f (x) = f (x')$. In words, outputs of an
 oblivious mechanism depend on the query result $f (x)$.
-The order of rows in a dataset, for instance, is
+The order of rows, for instance, is
 irrelevant to oblivious mechanisms. Let $x, x'$
-be datasets and $\tilde{r} \in \tilde{R}$. We say the probability of
+be datasets and $\tilde{r} \in \tilde{R}$. The probability of
 the mechanism $M_f$ outputting $\tilde{r}$ on $x$ is
 \emph{$(\epsilon, \delta)$-close} to those on $x'$ if
 \[
@@ -56,7 +56,7 @@ The non-negative parameters $\epsilon$ and $\delta$ quantify
 mechanism behaviors probabilistically;
 the smaller they are, the behaviors are more similar.
 Informally, a differentially private mechanism has probabilistically
-similar behaviors on neighboring datasets. It will have similar
+similar behaviors on neighbors. It will have similar
 output distributions when any row is replaced by another in a given
 dataset. 
 %Consider, for instance, a database contains the row
@@ -64,7 +64,9 @@ dataset.
 %will have a similar output distribution when the individual is not in
 %the database. Such mechanisms behave similarly regardless of the
 %presence of any individual. 
-Individual privacy is thus preserved by differentially private mechanisms.
+Since the output distribution does not change significantly with the
+absence of any row in a dataset,
+individual privacy is thus preserved by differentially private mechanisms.
 
 \subsection{Markov Chains and Markov Decision Processes}
 
@@ -110,7 +112,7 @@ Let $M = (S, \Act, \wp, L)$ be an MDP. A (history-dependent)
 $\scheduler{Q} : S^+ \rightarrow \Act$ such that
 $\scheduler{Q}(\sigma) = \scheduler{Q}(\sigma')$ for any $\sigma,
 \sigma' \in S^+$ of the same length.
-Intuitively, its decision depends only on the length of the history.
+Intuitively, decisions of a query scheduler depend only on the length of the history.
 A path $\pi =
 \pi_0 \alpha_1 \pi_1 \cdots$ $\pi_n$ $\alpha_{n+1} \cdots$ is an
 \emph{$\scheduler{S}$-path} if $\alpha_{i+1} = \scheduler{S}(\pi_0

@@ -27,9 +27,9 @@ $\mathit{count}_R + \mathit{count}_B = m$. To ensure differential
 privacy, the mechanism makes sure the difference $| \mathit{count}_R -
 \mathit{count}_B |$ is significantly large after perturbation. In
 line~\ref{algorithm:subsampling-majority-noise},
-$\mathit{Lap}(p)$ denotes a continuous random
+$\mathit{Lap}(p)$ denotes the continuous random
 variable with the probability density
-function $f(x) = \frac{1}{2p}e^{-|x|/p}$ of Laplace distribution.
+function $f(x) = \frac{1}{2p}e^{-|x|/p}$ of the Laplace distribution.
 If the perturbed difference is sufficiently large,
 the mechanism reports $1$ if the majority of the $m$
 sub-results is
@@ -82,8 +82,8 @@ $(\mathit{count}_R, \mathit{count}_B)$. There are only $m + 1$
 outcomes: $(m, 0), (m - 1, 1), \ldots, (0, m)$. Each outcome is
 represented by a state in
 Figure~\ref{figure:subsampling-majority-markov-chain}. From each
-dataset, the probability distribution of all outcomes gives the
-transition probability in the figure. Next, observe that  $|
+dataset, the probability distribution on all outcomes gives the
+transition probability. Next, observe that  $|
 \mathit{count}_R - \mathit{count}_B |$ can have only finitely many
 values. The values of $r$ 
 (line~\ref{algorithm:subsampling-majority-difference}) hence belong to
@@ -103,10 +103,9 @@ From each state $r \in \{ r_m, \ldots, r_M \}$, it hence goes to the state
 $\top$ with probability $\int^{\infty}_{\ln (1/\delta)/\epsilon - r}
 \frac{\epsilon}{2}e^{-\epsilon|x|} dx$ and to the state $\bot$ with
 probability $1 - \int^{\infty}_{\ln (1/\delta)/\epsilon - r}
-\frac{\epsilon}{2}e^{-\epsilon|x|} dx$ in
-Figure~\ref{figure:subsampling-majority-markov-chain}. Finally, the
-Markov chain 
-moves to the state $1$ if $\mathit{count}_R \geq \mathit{count}_B$;
+\frac{\epsilon}{2}e^{-\epsilon|x|} dx$. Finally, the
+Markov chain moves from the state $\top$ to $1$ if
+$\mathit{count}_R \geq \mathit{count}_B$; 
 otherwise, it moves to $0$. Two dataset states are neighbors if they
 differ at most one member. For example, $rrb$ is a neighbor
 of $rrr$ and $rbb$ but not $bbb$.

@@ -58,13 +58,13 @@ might be
   && \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} + \delta \textmd{ and }
   \myPr{t}{M_{\scheduler{S}}}{\neighbor{S}}{\phi} \leq
   e^{\epsilon} \cdot \myPr{s}{M_{\scheduler{S}}}{\neighbor{S}}{\phi}
-  + \delta
+  + \delta.
 \end{eqnarray*}
 A state satisfies $\dpriv{\epsilon}{\delta}^{\mathit{bad}} \phi$ if
 no history-dependent scheduler can differentiate the probabilities
 of having paths satisfying
-$\phi$ from neighbors. Recall that a history-dependent scheduler takes
-actions by previous states. Such a definition would allow
+$\phi$ from neighbors. Recall that a history-dependent scheduler chooses
+actions according to previous states. Such a definition would allow
 schedulers to take different actions from different states. 
 Two neighbors could hence be differentiated by different action sequences.
 The specification might be too strong for our purposes.
@@ -82,7 +82,7 @@ in our definition.
 \subsection{Model Checking}
 Given an MDP $M =
 (S, \Act, \wp, L)$, a neighborhood relation $\neighbor{S}$, $s \in
-S$, and a path formula $\phi$, consider the problem of deciding $M,
+S$, and a path formula $\phi$, consider the problem of checking $M,
 \neighbor{S}, s \models 
 \dpriv{\epsilon}{\delta} \phi$ . Recall the semantics of $\dpriv{\epsilon}{\delta}
 \phi$. Given $s, t$ with $s \neighbor{S} t$ and a path formula
@@ -166,7 +166,7 @@ checked soundly and efficiently.
 We model the above threshold algorithm (Algorithm~\ref{algorithm:online-model})
 and apply
 Proposition~\ref{proposition:sufficient-condition-mdp-model-checking} 
-check whether the mechanism is differentially private using the
+to check whether the mechanism is differentially private using the
 classical $\PCTL$ model checking algorithm for MDPs. 
 Since concrete values of the parameters $\epsilon$ and $\delta$ are
 computed, tighter bounds for specific neighbors can be obtained.
@@ -186,5 +186,6 @@ drastically different output distributions from our mechanism.
 Moreover, recall that
 Proposition~\ref{proposition:sufficient-condition-mdp-model-checking}
 is a sufficient condition. It only gives an upper bound of privacy
-parameters. Automatically computing tighter bounds may be possible. 
+parameters. Tighter bounds may be computed by more sophisticated
+sufficient conditions.
 

@@ -65,12 +65,12 @@ Academia Sinica
 \input{introduction}
 
 \noindent
-\paragraph{Organization of the paper.}
+\emph{Organization of the paper.}
 Preliminaries are given in Section~\ref{section:preliminaries}.
-In Section~\ref{section:examples} we discuss how differentially private mechanisms are modeled as Markov chains.
+In Section~\ref{section:examples} we discuss how offline differentially private mechanisms are modeled as Markov chains.
 The logic $\dpCTLstar$ and its syntax are presented in Section~\ref{section:dpCTL}. The semantics over Markov chains and its model checking algorithm are given in Section~\ref{section:semantics}.
 Section~\ref{section:specifying-properties} discusses differential privacy properties using $\dpCTLstar$.
-More examples of differentially private mechanisms as Markov decision processes are given in Section~\ref{section:mdp}.
+More examples of online differentially private mechanisms as Markov decision processes are given in Section~\ref{section:mdp}.
 The semantics over Markov decision processes and undecidability of model checking is given in Section~\ref{section:semantics-mdp}.
 Finally,
 Section~\ref{section:conclusions} concludes our presentation.
@@ -127,8 +127,8 @@ Section~\ref{section:conclusions} concludes our presentation.
 
 \section{Conclusions}
 \label{section:conclusions}
-We have introduced $\dpCTLstar$ to reason about properties in differential privacy, and have investigated its model checking problems. For Markov chains, the model checking problem has the same complexity as for $\PCTLstar$. The general MDP model checking problem however is undecidable. 
-We have discussed some decidable special cases and an efficient yet sufficient condition to check differentially private subformulae.
+We have introduced $\dpCTLstar$ to reason about properties in differential privacy, and investigated its model checking problems. For Markov chains, the model checking problem has the same complexity as for $\PCTLstar$. The general MDP model checking problem however is undecidable. 
+We have discussed some decidable special cases and a sufficient yet efficient condition to check differentially private subformulae.
 An interesting future work is to identify more
 decidable subclasses and sufficient conditions.
 As an example, consider the extended $\dpCTLstar$ formula $\bigwedge_{k \in \bbfZ^{\geq 0}}

@@ -3,7 +3,7 @@ In this section we describe how properties in the differential privacy literatur
 \paragraph{Differential Privacy.}
 Consider the survey mechanism (Section~\ref{subsec:survey}). For  $v$
 with $u N v$, we have $\myPr{u}{K}{N}{\X \mathit{out}_1}\le
-3\myPr{v}{K}{N}{\X \mathit{out}_1}$ for the probability of satisfying
+3\myPr{v}{K}{N}{\X \mathit{out}_1}$ for the probabilities of satisfying
 $\X \mathit{out}_1$ from $u$ and $v$.
 The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_1)$ holds in state $u$
 and similarly for $\dpriv{\ln 3}{0} (\X \mathit{out}_0)$. 
@@ -26,7 +26,14 @@ define the formula
 $\psi = \dpriv{\ln 2}{0} (\X out_0) \wedge \dpriv{\ln 2}{0} (\X out_1) \wedge
 \cdots \wedge \dpriv{\ln 2}{0} (\X out_5)$. If the state $s_k$ satisfies
 $\psi$ for $k = 0, \ldots, 5$, then the $\frac{1}{2}$-geometric mechanism is
-$(\ln 2, 0)$-differentially private.
+$(\ln 2, 0)$-differentially private. For the subsampling majority
+mechanism (Section~\ref{subsection:subsampling}), consider the formula
+$\psi = \dpriv{\epsilon, \delta} (\F 0) \wedge \dpriv{\epsilon,
+  \delta} (\F 1)$. If a state satisfies $\psi$, its probability of
+outputting is $(\epsilon, \delta)$-close to those of its
+neighbor for every outcomes. The subsampling majority
+mechanism is $(\epsilon, \delta)$-differentially private.
+
 
 
 \paragraph{Compositionality.}
@@ -41,7 +48,7 @@ The model is depicted in Figure~\ref{figure:2-dp-mc}.
 
 \begin{figure}
     \centering
-\resizebox{.70\columnwidth}{!}{
+\resizebox{.65\columnwidth}{!}{
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
     distance=1cm,node/.style={circle,draw}]
     \node[node] (p) at  (  -3,  0) { $+$ };
@@ -86,13 +93,13 @@ The model is depicted in Figure~\ref{figure:2-dp-mc}.
 
 
 
-Consider the formula $\dpriv{\ln 9}{0} (\X (\mathit{out}_1\wedge \X \mathit{out}_1))$. A path satisfies $\X (\mathit{out}_1\wedge \X \mathit{out}_1)$ if the second state satisfies $\mathit{out}_1$ and the third state satisfies $\mathit{out}_1$ as well. We verify that this formula is satisfied for states $+$ and $-$. Moreover, the bound $\epsilon=\ln 9$ is tight, since the probability of satisfying $\X (\mathit{out}_1\wedge \X \mathit{out}_1)$ from states $+$ and $-$ are $\frac{9}{16}$ and $\frac{1}{16}$, respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{\ln 9}{0} (\X (a_1\wedge \X a_2))$ specifies differential privacy for the model, where $a_1,a_2$ range over all atomic propositions $\{\mathit{out}_1, \mathit{out}_0\}$.
+Consider the formula $\dpriv{\ln 9}{0} (\X (\mathit{out}_1\wedge \X \mathit{out}_1))$. A path satisfies $\X (\mathit{out}_1\wedge \X \mathit{out}_1)$ if the second state satisfies $\mathit{out}_1$ and the third state satisfies $\mathit{out}_1$ as well. We verify that this formula is satisfied for states $+$ and $-$. Moreover, the bound $\epsilon=\ln 9$ is tight since the probability of satisfying $\X (\mathit{out}_1\wedge \X \mathit{out}_1)$ from states $+$ and $-$ are $\frac{9}{16}$ and $\frac{1}{16}$ respectively. Finally, the formula $\wedge_{a_1,a_2}\dpriv{\ln 9}{0} (\X (a_1\wedge \X a_2))$ specifies differential privacy for the model, where $a_1,a_2$ range over atomic propositions $\{\mathit{out}_1, \mathit{out}_0\}$.
 
 Let us consider two slightly different formulae for comparison:
 \begin{itemize}
 \item $\dpriv{\ln 3}{0} (\X \X \mathit{out}_1)$. In this case we claim
   there is no privacy loss, even though there are two queries. The reason is that the output of the first query is not observed at all. It is easy to verify that it is indeed satisfied by $+$ and $-$.
-\item $\dpriv{\ln 3}{0} (\X (\mathit{out}_1\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_1)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_1)$ specifies the one-step differential privacy. Observe the inner formula is satisfied by all neighbors. Thus, the outer formula also has no privacy loss.
+\item $\dpriv{\ln 3}{0} (\X (\mathit{out}_1\wedge \dpriv{\ln 3}{0}(\X \mathit{out}_1)))$. This is a nested $\dpCTL$ formula, where the inner state formula $\dpriv{\ln 3}{0}(\X \mathit{out}_1)$ specifies the one-step differential privacy. Observe the inner formula is satisfied by all states. The outer formula has no privacy loss.
 \end{itemize}
 
 \paragraph{Tighter Privacy Bounds for Composition.}
@@ -100,7 +107,7 @@ An advantage of applying model checking is that we may get tighter
 bounds for composition. Consider the survey mechanism, and the
 property $\dpriv{0}{.5} (\X \mathit{out}_1)$. Obviously, it holds in
 states $+$ and $-$ since $\myPr{u}{K}{N}{\mathit{out}_1} =
-\frac{3}{4}$, $\frac{1}{4}$ for $u = +, -$ respectively (Figure~\ref{figure:2-dp}). A careful check ensures that one cannot decrease  $\delta_1=.5$ without increasing $\epsilon$.
+\frac{3}{4}$, $\frac{1}{4}$ for $u = +, -$ respectively (Figure~\ref{figure:2-dp}). A careful check infers that one cannot decrease  $\delta_1=.5$ without increasing $\epsilon$.
 Now consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X
 (\mathit{out}_1\wedge \X \mathit{out}_1))$ in
 Figure~\ref{figure:2-dp-mc}. Applying the

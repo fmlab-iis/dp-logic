@@ -4,7 +4,17 @@ Given a Markov chain $K = (S, \wp, L)$, a
 is a reflexive and symmetric relation on $S$. We will write $s
 \neighbor{S} t$ when $(s, t) \in \neighbor{S}$. If $s \neighbor{S} t$,
 we say $s$ and $t$ are \emph{neighbors} or $t$ is a \emph{neighbor} of
-$s$. Define the satisfaction relation $K, \neighbor{S}, s
+$s$. 
+For any Markov chain $K$, neighborhood
+relation $N$ on $S$, $s \in S$, and a path formula $\phi$,
+define
+\[
+\myPr{s}{K}{N}{\phi} =
+\Pr [ \{ \pi : K, N, \pi \models \phi \textmd{ with } \pi_0 = s \} ].
+\]
+That is, $\myPr{s}{K}{N}{\phi}$ denotes the probability of paths
+satisfying $\phi$ from $s$ on $K$ with $N$. 
+Define the satisfaction relation $K, \neighbor{S}, s
 \models \Phi$ as follows.
 \begin{eqnarray*}
 %  K, \neighbor{S}, s \models \top\\
@@ -20,20 +30,19 @@ $s$. Define the satisfaction relation $K, \neighbor{S}, s
   K, \neighbor{S}, s \models \Phi_1\\
   K, \neighbor{S}, s \models \PJ{J} \phi
   & \textmd{ if } &
-  \Pr [\{ \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with }
-                    \pi_0 = s\}] \in J \\
+                    \myPr{s}{K}{\neighbor{S}}{\phi} \in J\\
   K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
-      p(s) \leq e^{\epsilon} p(t) + \delta \textmd{ and }
-      p(t) \leq e^{\epsilon} p(s)  +  \\
-  & &  \delta \textmd{ where } p(x) = \Pr [\{
-      \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with }
-      \pi_0 = x \}]
+      \myPr{s}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
+      \myPr{t}{K}{\neighbor{S}}{\phi} + \delta
+      \textmd{ and }\\
+  & &  \myPr{t}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
+       \myPr{s}{K}{\neighbor{S}}{\phi} + \delta
 \end{eqnarray*}
 
 Moreover, the relation $K, \neighbor{S}, \pi \models \phi$ is defined as
-for the standard linear temporal logic formulae~\cite{ManneP92}. We only recall the semantics for $\X$ and $\until$:
+in the standard linear temporal logic formulae~\cite{ManneP92}. We only recall the semantics for the temporal operators $\X$ and $\until$:
 \begin{eqnarray*}
   K, \neighbor{S}, \pi \models \X \phi
   & \textmd{ if } &
@@ -52,27 +61,6 @@ for the standard linear temporal logic formulae~\cite{ManneP92}. We only recall 
   & & K, \neighbor{S}, \pi[k] \models \Phi
       \textmd{ for every } 0 \leq k < j
 }
-\end{eqnarray*}
-
-For any Markov chain $K$, neighborhood
-relation $N$ on $S$, $s \in S$, and a path formula $\phi$,
-define
-\[
-\myPr{s}{K}{N}{\phi} =
-\Pr [ \{ \pi : K, N, \pi \models \phi \textmd{ with } \pi_0 = s \} ].
-\]
-That is, $\myPr{s}{K}{N}{\phi}$ denotes the probability of paths
-satisfying $\phi$ from $s$ on $K$ with $N$. The semantics of the
-differentially private operator hence becomes
-\begin{eqnarray*}
-  K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
-  & \textmd{ if } &
-  \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
-      \myPr{s}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
-      \myPr{t}{K}{\neighbor{S}}{\phi} + \delta
-      \textmd{ and }\\
-  & &  \myPr{t}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
-       \myPr{s}{K}{\neighbor{S}}{\phi} + \delta
 \end{eqnarray*}
 
 Other than the differentially private operator, the semantics of
@@ -177,10 +165,10 @@ We hence have the following results:
 \end{algorithm}
 
 \begin{proposition}
-  Let $K = (S, \wp, L)$ be a Markov chain and $\neighbor{S}$ a
-  neighborhood relation on $S$.
+  Let $K = (S, \wp, L)$ be a Markov chain, $\neighbor{S}$ a
+  neighborhood relation on $S$, and $\phi$ a $\dpCTL$ path formula.
   $\{ s : K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi \}$ is
-  computable within time polynomial in $|S|$.
+  computable within time polynomial in $|S|$ and $|\phi|$.
 \end{proposition}
 
 \begin{corollary}

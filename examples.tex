@@ -2,7 +2,7 @@ To model differentially private mechanisms by Markov chains, we
 formalize inputs (such as datasets or query results) as states. 
 Randomized computation is modeled by probabilistic transitions. Atomic
 propositions are used to designate intended interpretation on states
-(such as inputs or outputs). We demonstrates these ideas in examples.
+(such as inputs or outputs). We demonstrate these ideas in examples.
 
 \hide{
 For
@@ -24,7 +24,7 @@ the curator generates. We explain the main idea with some examples.
 \label{subsec:survey}
 
 Consider the survey question: have you been diagnosed
-with the disease $X$? In order to protect surveyees' privacy, each
+with the disease $X$? In order to protect privacy, each surveyee
 answers the question as follows. The surveyee first flips a
 coin. If it is tail, she answers the question truthfully. Otherwise,
 she randomly answers $1$ or $0$
@@ -37,7 +37,7 @@ inputs in $\mathcal{X}$ and outputs in $\{ 1, 0 \}$. For any $x \in
 \frac{3}{4}$. Hence $\Pr[M (x) = 1] \leq \frac{3}{4} = 3 \cdot
 \frac{1}{4} \leq e^{\ln 3} \Pr[M (x') = 1]$ for any neighbors $x, x'
 \in \mathcal{X}$. Similarly, $\Pr[M (x) = 0] \leq e^{\ln 3} \Pr[M (x')
-= 0]$. The survey mechanism is $(\ln 3, 0)$-differentially private.
+= 0]$. The survey mechanism is hence $(\ln 3, 0)$-differentially private.
 The random noise boosts the probability of answering
 $1$ or $0$ to at least $\frac{1}{4}$ regardless of
 diagnoses. Inferences on individual diagnosis can be plausibly denied.
@@ -53,7 +53,7 @@ diagnoses. Inferences on individual diagnosis can be plausibly denied.
         \cline{2-4}
         &  & 1 & 0 \\
         \cline{2-4}
-        \multirow{2}*{\rotatebox{90}{$\mathit{state}$}} 
+        \multirow{2}*{\rotatebox{90}{$\mathit{input}$}} 
         &
         + & \frac{3}{4} = \frac{1}{2} \cdot \frac{1}{2} + \frac{1}{2} \cdot 1
           & \frac{1}{4} = \frac{1}{2} \cdot \frac{1}{2} + \frac{1}{2} \cdot 0
@@ -100,7 +100,7 @@ Figure~\ref{figure:2-dp-mdp} shows the corresponding Markov chain.
 In the figure, the states
 $+$ and $-$ denote positive or negative diagnoses 
 respectively; the states $s$ and $t$ denote answers to the survey
-question and hence $\mathit{out}_Y \in L (s)$ and $\mathit{out}_N
+question and hence $\mathit{out}_1 \in L (s)$ and $\mathit{out}_0
 \in L (t)$.
 States $+$ and $-$ are neighbors.
 Missing transitions (such as those from $s$ and $t$) lead
@@ -113,11 +113,11 @@ More sophisticated differentially private mechanisms are
 available. Consider a query
 $f : \mathcal{X}^n \rightarrow \{ 0, 1, \ldots, m \}$. Let $\alpha \in (0, 1)$.
 The \emph{$\alpha$-geometric mechanism}
-outputs $f(x) + Y$ where $Y$ is a random variable with the geometric
+outputs $f(x) + Y$ on a dataset $x$ where $Y$ is a random variable with the geometric
 distribution~\cite{GRS:09:UUPM,GRS:12:UUPM} :
 \[
 \Pr[Y = y] = \frac{1 - \alpha}{1 + \alpha}\alpha^{|y|}
-\textmd{ for } y \in \bbfZ.
+\textmd{ for } y \in \bbfZ
 \]
 %Observe that $\Pr[Y=0] \rightarrow 1$ as $\alpha \rightarrow 0$. The
 %$\alpha$-geometric mechanism is less noisy for smaller $\alpha$.

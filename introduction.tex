@@ -63,16 +63,16 @@ differential privacy.
 
 Two ingredients are introduced to specify differentially private
 behaviors. A reflexive and symmetric user-defined binary relation
-over states is required to formalize similarity. We moreover add
+over states is required to formalize similar datasets. We moreover add
 the path quantifier $\dpriv{\epsilon}{\delta}$ for specifying similar
 behaviors. Informally, a state satisfies $\dpriv{\epsilon}{\delta}
-\phi$ if its probability of having path $\phi$ is close to
-those of similar states. Consider, for instance, a binary data analysis
+\phi$ if its probability of having path satisfying $\phi$ is close to
+those of similar states. Consider, for instance, a data analysis
 mechanism computing the likelihood ($\mathit{high}$ or $\mathit{low}$)
-of an epidemic. Then a state satisfying
+of an epidemic. A state satisfying
 $\dpriv{\epsilon}{\delta} (\F \mathit{high}) \wedge
 \dpriv{\epsilon}{\delta} (\F \mathit{low})$ denotes similar states
-have the same outcomes with similar probabilities.
+have similar probabilities on every outcomes.
 %\todo{not clear here}\lz{here it should be $\X$?}
 
 \hide{
@@ -107,7 +107,7 @@ satisfies $\dpriv{\epsilon}{\delta} \phi$ is undecidable.
 % analyze mechanism
 
 \noindent
-\paragraph{Related Work.}
+\emph{Related Work.}
 An early attempt on formal verification of differential privacy
 is~\cite{TKD:11:FVDPIS}. The work formalizes differential privacy in
 the framework of information leakage. The connection between
@@ -124,10 +124,10 @@ framework to formalize and analyze differential privacy in Markov
 chains and Markov decision processes.
 
 \noindent
-\paragraph{Contributions.} Our main contributions are threefold. 
+\emph{Contributions.} Our main contributions are threefold. 
 \begin{enumerate}
-\item We introduce the logic $\dpCTLstar$ for reasoning about properties in
-differential privacy. The logic is able to to express classical
+\item We introduce the logic $\dpCTLstar$ for reasoning about 
+differential privacy. The logic is able to to express subtle and generalized
 differentially private properties;
 %Complex properties such as those involving infinite behaviors can
 %also be expressed; 
