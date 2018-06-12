@@ -6,11 +6,11 @@ with $u N v$, we have $\myPr{u}{K}{N}{\X \mathit{out}_1}\le
 3\myPr{v}{K}{N}{\X \mathit{out}_1}$ for the probabilities of satisfying
 $\X \mathit{out}_1$ from $u$ and $v$.
 The formula $\dpriv{\ln 3}{0} (\X \mathit{out}_1)$ holds in state $u$
-and similarly for $\dpriv{\ln 3}{0} (\X \mathit{out}_0)$. 
+and similarly for $\dpriv{\ln 3}{0} (\X \mathit{out}_0)$.
 Recall that differential privacy requires similar output distributions
 on neighbors. The formula $\dpriv{\ln 3}{0} (\X
 \mathit{out}_1)\wedge \dpriv{\ln 3}{0} (\X \mathit{out}_0)$ thus
-specifies differential privacy for states $+$ and $-$. 
+specifies differential privacy for states $+$ and $-$.
 The survey mechanism is $(\ln 3, 0)$-differentially private.
 
 
@@ -28,8 +28,8 @@ $\psi = \dpriv{\ln 2}{0} (\X out_0) \wedge \dpriv{\ln 2}{0} (\X out_1) \wedge
 $\psi$ for $k = 0, \ldots, 5$, then the $\frac{1}{2}$-geometric mechanism is
 $(\ln 2, 0)$-differentially private. For the subsampling majority
 mechanism (Section~\ref{subsection:subsampling}), consider the formula
-$\psi = \dpriv{\epsilon, \delta} (\F 0) \wedge \dpriv{\epsilon,
-  \delta} (\F 1)$. If a state satisfies $\psi$, its probability of
+$\psi = \dpriv{\epsilon}{\delta} (\F 0) \wedge \dpriv{\epsilon}
+  {\delta} (\F 1)$. If a state satisfies $\psi$, its probability of
 outputting is $(\epsilon, \delta)$-close to those of its
 neighbor for every outcomes. The subsampling majority
 mechanism is $(\epsilon, \delta)$-differentially private.
@@ -39,10 +39,10 @@ mechanism is $(\epsilon, \delta)$-differentially private.
 \paragraph{Compositionality.}
 Compositionality is one of the building blocks for differential privacy. For any $(\epsilon_1,\delta_1)$-differentially private mechanism $M_1$ and
 $(\epsilon_2,\delta_2)$-differentially private mechanism $M_2$, their combination $(M_1(x), M_2(x))$ is $(\epsilon_1 + \epsilon_2,\delta_1+\delta_2)$-differentially private by the compositional theorem \cite[Theorem 3.16]{DR:14:AFDP}. The degradation is rooted in the repeated releases of information. To illustrate this property, we consider the extended survey mechanism which allows two consecutive queries.
-In this mechanism, an input is either $+$ or $-$; but 
+In this mechanism, an input is either $+$ or $-$; but
 outputs are $\mathit{out}_1\mathit{out}_1$,
 $\mathit{out}_1\mathit{out}_0$, $\mathit{out}_0\mathit{out}_1$, or
-$\mathit{out}_0\mathit{out}_0$. 
+$\mathit{out}_0\mathit{out}_0$.
 The model is depicted in Figure~\ref{figure:2-dp-mc}.
 %where states $Y_1,Y_2$ are labelled by $Y$, and $N_1,N_2$ are labelled by $N$.
 
@@ -129,25 +129,25 @@ recall that outputs are of the form $\bot \cdots \bot \top$. In order
 to establish differential privacy, one wishes to show that $\Phi_i$
 holds for every $i \in \bbfZ^{\geq 0}$ where $\Phi_i =
 \dpriv{3}{0}(\X^i \top)$. That is, the mechanism halts at the $i$-th
-step with similar probabilities for every $i$. 
-It is not clear how to verify them automatically. 
+step with similar probabilities for every $i$.
+It is not clear how to verify them automatically.
 
-Now consider $\Phi=\wedge_{i=1}^{6} \dpriv{3}{0}(\X^i \top) 
+Now consider $\Phi=\wedge_{i=1}^{6} \dpriv{3}{0}(\X^i \top)
 \wedge \PJ{\le .025}(\X^6 F \top) \wedge \dpriv{3}{.025}(\X^6 F
-\top)$. The state with the threshold $t=3$, and the query result $r=4$ 
+\top)$. The state with the threshold $t=3$, and the query result $r=4$
 satisfies $\Phi$ by our computation. It means the
 probability of reaching $\top$ at $i$ steps with $i$ ranges over
-$\{1,\ldots,6\}$, is $(3, 0)$-differentially private for 
+$\{1,\ldots,6\}$, is $(3, 0)$-differentially private for
 neighbors ($r=3$ and $r=5$). It also states that the
 probability of reaching $\top$ after no less than $6$ steps, is
-smaller than $.025$ and $(3, .025)$-differentially private as well. 
+smaller than $.025$ and $(3, .025)$-differentially private as well.
 Rather than checking the probabilities of all possible outputs, $\Phi$
 focuses on finitely many short outputs. It says the mechanism enjoys $(3,
 0)$-differentially privacy for the short outputs, and long outputs are
-unlikely. Moreover, all neighbors are unlikely to have long outputs. 
+unlikely. Moreover, all neighbors are unlikely to have long outputs.
 Using this trick, one can bound the probability of long outputs
 arbitrarily (say, less than $10^{-6}$). Our technique can establish
-practical privacy guarantees automatically. 
+practical privacy guarantees automatically.
 }
 
 %Later we use reachability privacy to specify differential privacy property for MDPs.
@@ -173,8 +173,8 @@ Then the formula holds if the probability of having
 continuous time out (say, in the denial of service attack) is
 $(\epsilon, \delta)$-close for all neighbors. That is, replacing a slave
 device cannot increase the chance of service failure significantly.
-In many applications, data analyses are carried out constantly. 
-Privacy analysis over infinite behaviors is crucial. 
+In many applications, data analyses are carried out constantly.
+Privacy analysis over infinite behaviors is crucial.
 We will revisit this issue again in
 Section~\ref{section:applications}.
 }
