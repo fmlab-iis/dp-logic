@@ -166,26 +166,27 @@ probabilities.
 %      (t'1r1) edge node [above] { $\frac{1}{1}$ } (t'1r'1)
 %      (t'1r1) edge node [above] { $\frac{1}{1}$ } (t'1r'2)
 
-      (t'1r'0) edge [double] node [above]
-              { \hide{$0|0, 0|1$} } (t'1r0)
-      (t'1r'0) edge [double] node [above] 
-              { \hide{$1|0, 1|1, 1|2$} } (t'1r1)
-      (t'1r'0) edge [double] node [below] 
-              { \hide{$2|1, 2|2$} } (t'1r2)
+      (t'1r'0) edge [double] node [right]
+              { \rotatebox{270}{$0\underline{0}, 0\underline{1}$} } (t'1r0)
+      (t'1r'0) edge [double] node [right=-8] 
+              { \rotatebox{315}{$1\underline{0}, 
+                                 1\underline{1}, 1\underline{2}$} } (t'1r1)
+      (t'1r'0) edge [double] node [right] 
+              { \rotatebox{334}{$2\underline{1}, 2\underline{2}$} } (t'1r2)
 
       (tt0rr0) edge node [below] {  } (tt'0rr0)
       (tt0rr0) edge node [left] {  } (tt'1rr0)
       (tt0rr0) edge node [below] {  } (tt'2rr0)
 
-      (tt'2rr'0) edge [double] node [above] 
-                 { \hide{$0|0, 1|0$} } (tt'2rr0)
+      (tt'2rr'0) edge [double] node [right] 
+                 { \rotatebox{270}{$0\underline{0}, 1\underline{0}$} } (tt'2rr0)
       (tt'2rr'0) edge [double] node [above] 
                  { \hide{$0|1, 1|1, 2|1$} } (tt'2rr1)
       (tt'2rr'0) edge [double] node [above] 
                  { \hide{$1|2, 2|2$} } (tt'2rr2)
 
-      (tt'2rr'1) edge [double] node [above]
-                { \hide{$0|0, 1|0$} } (tt'2rr0)
+      (tt'2rr'1) edge [double] node [right=15,below=-11]
+                { \rotatebox{315}{$0\underline{0}, 1\underline{0}$} } (tt'2rr0)
       (tt'2rr'1) edge [double] node [above]
                 { \hide{$0|1, 1|1, 2|1$} } (tt'2rr1)
       (tt'2rr'1) edge [double] node [above]
@@ -236,12 +237,25 @@ with two actions $0\underline{0}$ and $0\underline{1}$ (but not
 $0\underline{2}$). Similarly, the choice from
 $\underline{t}'_2\underline{r}'_1$ to
 $\underline{t}'_2\underline{r}_0$ is associated with the actions
-$0\underline{0}$ and $1\underline{0}$ (but not $2\underline{0}$). On
-the action $0\underline{0}$, the top computation moves to $t'_ir_0$ and
-the bottom computation moves to $\underline{t}'_j\underline{r}_0$ by
-their respective perturbed thresholds.
+$0\underline{0}$ and $1\underline{0}$ (but not $2\underline{0}$). 
+Assume the perturbed thresholds of the top and bottom computation are
+$i$ and $j$ respectively. On the action $0\underline{0}$, the top
+computation moves to $t'_ir_0$ and 
+the bottom computation moves to $\underline{t}'_j\underline{r}_0$ 
 Actions make sure the two computation of neighbors
-is modeled properly. It remains to define the neighborhood
+is modeled properly. Now consider the action sequence
+$-,-,0\underline{1},-,2\underline{2},-,2\underline{1}$ from the states
+$t_0r_1$ and $\underline{t}_0\underline{r}_0$ (``$-$'' represents the
+purely probabilistic action). Together with the first query results, 
+it denotes four consecutive query results $1$, $0$, $2$, $2$ on the
+top computation, and $0$, $1$, $2$, $1$ on the bottom computation.
+Each action sequence models two sequences of query results: one on the
+top, the other on the bottom computation. Moreover, the difference of
+the corresponding query results on the two computation is at most one
+by the definition of the action set. Any sequence of adaptive query
+results is hence formalized by an action sequence in our model.
+
+It remains to define the neighborhood
 relation. Recall the sensitivity is $1$. Consider the neighborhood
 relation 
 $\{ (t_ir_m, t_ir_m),
