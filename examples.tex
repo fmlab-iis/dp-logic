@@ -264,9 +264,12 @@ given in Figure~\ref{figure:geometric-mechanism-table}.
 
 Similar to the survey mechanism, it is straightforward to model the
 truncated $\frac{1}{2}$-geometric mechanism as a Markov chain. 
+One could na\"ively take datasets as inputs in the formalization, but
+it is unnecessary.
 Recall that the truncated $\frac{1}{2}$-geometric mechanism is
-oblivious. It suffices to consider $\{ f (x) : x \in \mathcal{X}^n \}$
-as inputs. 
+oblivious. The mechanism depends on query results but not
+datasets. It hence suffices to consider the range of query $f$
+as inputs.
 Let the state $s_k$ and $t_l$
 denote the input $k$ and output $l$ respectively. Define
 $S = \{ s_k, t_k : k \in \{ 0, 1, \ldots, m \} \}$.
