@@ -28,8 +28,9 @@ $\psi = \dpriv{\ln 2}{0} (\X out_0) \wedge \dpriv{\ln 2}{0} (\X out_1) \wedge
 $\psi$ for $k = 0, \ldots, 5$, then the $\frac{1}{2}$-geometric mechanism is
 $(\ln 2, 0)$-differentially private. For the subsampling majority
 mechanism (Section~\ref{subsection:subsampling}), consider the formula
-$\psi = \dpriv{\epsilon, \delta} (\F 0) \wedge \dpriv{\epsilon,
-  \delta} (\F 1)$. If a state satisfies $\psi$, its probability of
+$\psi = \dpriv{\epsilon}{\delta} (\F 0) \wedge
+\dpriv{\epsilon}{\delta} (\F 1)$. If a state satisfies $\psi$, its
+probability of 
 outputting is $(\epsilon, \delta)$-close to those of its
 neighbor for every outcomes. The subsampling majority
 mechanism is $(\epsilon, \delta)$-differentially private.
@@ -112,11 +113,11 @@ Now consider the formula $\dpriv{\epsilon_2}{\delta_2} (\X
 (\mathit{out}_1\wedge \X \mathit{out}_1))$ in
 Figure~\ref{figure:2-dp-mc}. Applying the
 compositional theorem, one has $\epsilon_2=2\epsilon_1=0$ and
-$\delta_2=2\delta_1=1$. However, we can check easily that one gets
+$\delta_2=2\delta_1=1$. However, we can get
 better privacy parameter $(0,.5)$ using the model checking algorithm
-because $\myPr{u}{K}{N}{\mathit{out}_1} = \frac{9}{16}$,
-$\frac{1}{16}$ for $u = +, -$ respectively.
-In general, compositional theorems for differential privacy only give
+since $\myPr{u}{K}{N}{\X (\mathit{out}_1 \wedge \X\mathit{out}_1)}
+= \frac{9}{16}$, $\frac{1}{16}$ for $u = +, -$ respectively.
+Generally, compositional theorems in differential privacy only give
 asymptotic upper bounds. Privacy parameters $\epsilon$ and $\delta$
 must be calculated carefully and often pessimistically. Our
 algorithm allows data analysts to choose better parameters.
