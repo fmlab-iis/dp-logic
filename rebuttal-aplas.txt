@@ -1,0 +1,37 @@
+First of all, we would like to thank all reviewers' efforts and
+comments.
+
+The main contributions of this work are the formalization of privacy
+protection mechanisms as Markov chains or Markov Decision Processes,
+and its automated analyses. We choose to formalize interactive
+mechanisms by non-determinism in Markov Decision Processes and
+illustrate our formalization by the above threshold mechanism
+(Algorithm 3) for clarity. In the above threshold mechanism, the
+incoming queries f_i's are selected dynamically. Later queries may
+depend on the results of previous queries. Hence the interaction is
+implicit in the choices of incoming queries. It would be great if we
+could give our formalization of more explicit interactions such as
+those in streaming data. Due to space limit, we had to present a
+simpler mechanism with implicit interactions. We also agree a thorough
+investigation on the expressiveness of our formalization will be very
+useful. It will definitely be an interesting future work. Our
+(un)decidability results are for dpCTL*. As long as a mechanism can be
+modeled by Markov chains, dpCTL* properties can be verified
+automatically. Model checking dpCTL* over Markov Decision Processes on
+the other hand is undecidable. Hence interactive mechanisms in general
+cannot be verified with our current formalization.
+
+We are certainly aware of various language-based techniques for
+verifying differential privacy. Just like classical
+programs/properties, we see both techniques are complementary.
+Classical model checking aims to reduce human efforts by focusing on
+abstract models with automated verification. It has helped programmers
+verify simpler programs and properties reasonably successfully over
+decades of research efforts. Our work has the same position. It does
+not aim to verify all possible differentially private programs.
+Instead, it hopefully will solve simpler problems so that programmers
+can have more time for language-based techniques.
+
+
+
+

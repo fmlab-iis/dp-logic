@@ -1,0 +1,86 @@
+----------------------- REVIEW 1 ---------------------
+PAPER: 23
+TITLE: Model Checking Differentially Private Properties
+AUTHORS: Depeng Liu, Bow-Yaw Wang and Lijun Zhang
+
+Overall evaluation: -1 (weak reject)
+
+----------- Overall evaluation -----------
+This paper presents a formalism for model checking differential privacy policies.  The area is clearly important, as such privacy is often seen as a way of balancing privacy needs aginst making productive use of data.
+
+ The paper presents a formalization in which differential privacy properties can be modeled in one of two ways.  For simpler properties, they are modeled as Markov chains, which are amenable to analysis.  More complex properties are modeled in their doCTL* language, which is undecidable to check.  The papers that any privacy property that depends on its environment is in dpCTL*, but there are no concrete examples of what exactly constitutes an interaction with the environment.
+
+ Given the extreme difference between checking Markov chains and dpCTL*, it would be nice to get a sense of what kinds of differential privacy properties could be expressed as chains and which need dpCTL*.  For that, it would be nice to see examples taken from the existing literature and analyzed in terms of whether they can be modeled as chains.  For instance, there has been significant interest in applying differential privacy in the medical domain, and it would be interesting to see which, if any, of the schemes proposed there could be verified.
+
+ Overall, this paper would be greatly enhanced by an evaluation that gives a sense of what kinds of privacy policies could be checked by this mechanism.
+
+----------------------- REVIEW 2 ---------------------
+PAPER: 23
+TITLE: Model Checking Differentially Private Properties
+AUTHORS: Depeng Liu, Bow-Yaw Wang and Lijun Zhang
+
+Overall evaluation: 2 (accept)
+
+----------- Overall evaluation -----------
+This paper introduces a temporal logic dpCLT* to model checking some
+differential privacy algorithms. dpCLT* extends CLT* with the capability of
+checking a relational assertion on two related paths. The paper shows how to
+verify a few algorithms based on dpCLT*.
+
+On the positive side, the idea of applying temporal logic to differential
+privacy verification seems novel to me.  The paper is generally well-written,
+and all examples seem interesting (though dpCLT* cannot reason about Laplace
+distribution yet, which is used in the original above threshold algorithm).
+
+On the negative side, the paper did not convince me that probabilistic temporal
+logic is the right direction for verifying differential privacy, especially
+given considerable existing efforts on language-based proofs using type systems
+and program logics. Compared with those sound methods which already handle
+nontrivial algorithms such as the original above threshold mechanism, what is
+the main benefit of using model checking? To me, dpCLT* is not sound in general
+since it can only explore a limited input space, and it is neither efficient
+nor automatic (constructing Markov chain models seems like a manual task).
+
+That said, I'm still inclined for acceptance since the idea of using temporal
+logic for differential privacy seems new to me, and the technical development
+in this paper seems solid.
+
+Other comments:
+
+The authors should argue why model checking is a promising direction compared
+with those language-based methods. Moreover, the paper currently misses an
+introduction of PCTL and PCTL*; since dpCLT* is built on them, it would be
+helpful to discuss how mature those techniques are (e.g., scalability, tool
+support).
+
+There are a few points that the paper should clarify:
+
+1. what are F\phi and G\phi on page 8?
+
+2. Proposition 1: should the complexity be |S|^2 instead of |S|? Related to
+this, the conclusion states that for Markov chains, the complexity of dpCTL*
+is the same as for PCTL*. Why? Intuitively, dpCTL* checks a relational property
+(it needs to enumerate all pairs of related paths), while PCTL* only needs to
+consider one path.
+
+3. Section 7.1: I don't understand why the model needs to consider the
+computation on neighbors. Shouldn't the relational part of proof be handled by
+the relational assertion in dpCLT*? Is there a limitation of dpCTL* which
+prevents it from verifying above threshold in the same style as the other two
+examples (without explicitly modeling the computation on neighbors)?
+
+4. Figure 6: why there is no incoming edge for t1'r2' and so on?
+
+----------------------- REVIEW 3 ---------------------
+PAPER: 23
+TITLE: Model Checking Differentially Private Properties
+AUTHORS: Depeng Liu, Bow-Yaw Wang and Lijun Zhang
+
+Overall evaluation: 2 (accept)
+
+----------- Overall evaluation -----------
+Authors introduce DPCTL*, a generalization of CTL*, for expressing differential-privacy related properties of mechanisms modeled as Markov decision processes and Markov chains. It is shown that while dpCTL* property checking for Markov chains can be performed with the similar computational complexity as PCTL*, for Markov decision processes the corresponding problem is undecidable. Authors recover decidability for a restricted subclass and also provide an easy-to-check sufficient condition. The search for more expressive but decidable fragments is left as an interesting open problem.
+
+The paper is well-written, easy to follow, and provides a mild introduction to differential privacy and its modeling as Markovian processes.  The paper provides an intuitively useful extension of PCTL*, and justifies its applications to differential privacy using several examples. The technical proofs appear to be correct and provided in sufficient detail.
+
+For these reasons,  I propose an accept.
