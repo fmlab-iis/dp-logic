@@ -1,0 +1,13 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: main.aux
+The style file: splncs03.bst
+Database file #1: refs.bib
+Repeated entry---line 9 of file refs.bib
+ : @book{ManneP92
+ :               ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 407 of file refs.bib
+ : @inproceedings{TKD:11:FVDPIS
+ :                             ,
+I'm skipping whatever remains of this entry
+Warning--empty booktitle in TKD:11:FVDPIS
+(There were 2 error messages)

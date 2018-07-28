@@ -1,0 +1,338 @@
+
+Stream processing gives a motivating example for MDPs. In stream 
+processing, input data are retrieved and
+analyzed continuously. Such continual observation is commonly found
+in social media, service providers, or even electronic surveillance
+systems. To protect privacy, privacy-respecting mechanisms must be
+formulated and designed. Classical differential privacy however is
+insufficient in streaming processing. Note that data are collected
+continuously and outcomes are requested at an indefinite future
+in such applications. All differentially private
+mechanism necessarily stay in their internal states indefinitely
+before outcomes are produced. Although differential privacy demands
+privacy-respecting outcomes, internal states may reveal private
+information in such mechanisms. When differentially private mechanisms
+are in their internal states, privacy is still lost if an intrusion
+occurs.
+
+In pan privacy, data analysis mechanisms are required to respect
+privacy even in their internal states~\cite{DNPR:10:DPCO,DNPRY:10:PPSA}.
+The idea is to show reachability probabilities are similar on
+neighboring observations. In the following, we model a discrete
+variant of a stream processing mechanisms by MDPs. We will also
+specify pan privacy in our model using $\dpCTLstar$.
+
+Consider monitoring events of the types $a$ and $b$ continuously.
+A sequence of event types is said to be an observation. Two
+obsevations are {neighbors} if one can be obtained from the other
+by replacing event types any number of times, that is, if they are of
+the same length. %\bw{Later, we will consider a different definition of
+%neighborhood by restricting the number of replacements.}
+We would like to inquire the number of event types in
+observations. For instance, the query result is $1$
+for observations $a \cdots a$ and $b \cdots b$ of arbitrary positive
+lengths; and it is $2$ for other non-empty observations.
+
+Based on the density estimation algorithm in \cite{DNPRY:10:PPSA}, we
+consider the following mechanism for event type streams. Our mechanism
+keeps a bit for each event type. The bits are initialized to $0$ or
+$1$ uniformly. On observing an event type in the input stream, the
+bit for the event type is set to $0$ and $1$ with probability
+$\frac{3}{8}$ and $\frac{5}{8}$ respectively. The mechanism continues
+to update its bits until it is asked to return the number of observed
+event types. To compute the number of observed event types, the
+mechanism adopts the truncated $\frac{1}{2}$-geometric mechanism on the sum of
+two bits for event types. If the sum is $0$, the mechanism outputs $0$
+with probability $\frac{2}{3}$ and $1, 2$ each with probability
+$\frac{1}{6}$. If the sum is $1$, one of $0, 1, 2$ is returned with
+the uniform distribution. If the sum is $2$, the mechanism outputs $2$
+with probability $\frac{2}{3}$ and $0, 1$ each with probability
+$\frac{1}{6}$ (Algorithm~\ref{algorithm:frequency-estimator}).
+
+\begin{algorithm}
+  \begin{algorithmic}[1]
+  \Procedure{FrequencyEstimator}{}
+    \State{$f_a \leftarrow 0, 1$ with probability
+      $\frac{1}{2}, \frac{1}{2}$ respectively}
+    \Comment{Initialization}
+    \State{$f_b \leftarrow 0, 1$ with probability
+      $\frac{1}{2}, \frac{1}{2}$ respectively}
+    \Match{current event type $e$}
+    \Comment{Processing}
+        \lCase{$a$}{$f_a \leftarrow 0, 1$ with probability
+            $\frac{3}{8}, \frac{5}{8}$ respectively}
+        \lCase{$b$}{$f_b \leftarrow 0, 1$ with probability
+            $\frac{3}{8}, \frac{5}{8}$ respectively}
+    \EndMatch
+    \Match{$f_a + f_b$}
+    \Comment{Output}
+      \lCase{0}{$\mathit{out} \leftarrow 0, 1, 2$ with probability
+          $\frac{2}{3}, \frac{1}{6}, \frac{1}{6}$ respectively}
+      \lCase{1}{$\mathit{out} \leftarrow 0, 1, 2$ with probability
+          $\frac{1}{3}, \frac{1}{3}, \frac{1}{3}$ respectively}
+      \lCase{2}{$\mathit{out} \leftarrow 0, 1, 2$ with probability
+          $\frac{1}{6}, \frac{1}{6}, \frac{2}{3}$ respectively}
+    \EndMatch
+    \State{\Return $\mathit{out}$}
+  \EndProcedure
+  \end{algorithmic}
+  \caption{FrequencyEstimator}
+  \label{algorithm:frequency-estimator}
+\end{algorithm}
+
+\indent
+\emph{Privacy analysis}.
+In the processing phase, the bit $f_a$ for an event type $a$ can only
+have two different distributions $U$ and $B$. If the event type is
+never observed, $\Pr_U[f_a = 0] = \Pr_U[f_a = 1] = \frac{1}{2}$; if
+the event type has been observed, we have $\Pr_B[f_a = 0] =
+\frac{3}{8}$ and $\Pr_B[f_a = 1] = \frac{5}{8}$. Note that
+$\frac{1}{2} \cdot \frac{3}{8} \leq \frac{1}{2} \leq 2 \cdot
+\frac{3}{8}$ and $\frac{1}{2} \cdot \frac{5}{8} \leq \frac{1}{2} \leq
+2 \cdot \frac{5}{8}$. For every $x \in \{ 0, 1 \}$, we have
+$\frac{1}{2} \cdot \Pr_B[f_a = x] \leq \Pr_U[f_a = x] \leq 2 \cdot
+\Pr_B[f_a = x]$. On neighboring observations, the distribution of
+$f_a$ can only be changed from $U$ to $B$, values of $f_a$ is $(\ln 2,
+0)$-differentially private and similarly for $f_b$. Finally, the
+$\frac{1}{2}$-geometric mechanism gives $(\ln 2, 0)$-differential privacy.
+Recall $2\ln 2 = \ln 4$,
+the steaming data analysis mechanism in
+Algorithm~\ref{algorithm:frequency-estimator} is $(\ln 4,
+0)$-differentially private by
+composition theorem.
+
+To model Algorithm~\ref{algorithm:frequency-estimator}, let
+us start with the formalization of observations. Note that the
+lengths of observations are finite but unbounded. An infinite Markov
+chain would be necessary if observations were formalized as states.
+Recall that neighbors are observations of the same length. If we
+furthermore consider the formalization of neighbors, it is not clear
+how to construct a finite Markov chain for
+Algorithm~\ref{algorithm:frequency-estimator}.
+
+In order to obtain a finite model, we formalize neighbors as action
+sequences in MDPs. Consider the action set $\{
+a[a], a[b], b[a], b[b] \}$. Informally, the action $x[y]$ means the
+event type $x$ is replaced by the event type $y$ in a neighbor. An
+action sequence thus represents an observation and one of its
+neighbors and vice versa. More formally, the action sequence
+$x_1[y_1]x_2[y_2]\cdots x_n[y_n]$ represents the observation
+$x_1x_2\cdots x_n$ and its neighbor $y_1y_2\cdots y_n$. For instance,
+the action sequence $a[a]a[b]a[a]b[a]b[b]$ represents the observation
+$aaabb$ and a neighbor $abaab$.
+
+Similar to Algorithm~\ref{algorithm:frequency-estimator}, our MDP has internal states $s_{00}$, $s_{01}$, $s_{10}$,
+$s_{11}$ for the two bits $f_a$ and $f_b$ of observed event types
+(Figure~\ref{figure:adjacent-inputs}). The internal state $s_{01}$
+represents $(f_a, f_b) = (0, 1)$, for instance. Moreover, let $xy \in
+L (s_{xy})$ for $x, y \in \{ 0, 1 \}$. From the
+initialization state $s$, the MDP moves to one of
+the four internal states randomly with the uniform
+distribution. Consider the internal state $s_{01}$. If the actions $a[a]$
+or $a[b]$ are chosen, they denote that the event type $a$ is currently
+observed. The MDP moves to the internal state $s_{01}$
+and $s_{11}$ with probability $.375 = \frac{3}{8}$ and $.625 =
+\frac{5}{8}$ respectively. Other transitions are defined similarly.
+
+On the other hand, the initialization state $t$
+corresponds to the computation on neighbors. The MDP moves to the internal states $t_{00}$,
+$t_{01}$, $t_{10}$, $t_{11}$ randomly with
+the uniform distribution. Similarly, $xy \in L (t_{xy})$ for $x, y \in
+\{ 0, 1 \}$.
+Consider, for example, the internal state
+$t_{10}$. If the action $a[a]$ or $b[a]$ are chosen, they
+denote that the current event type is replaced with the eveny type
+$a$. The MDP moves to the internal state
+$t_{00}$ and $t_{10}$ with probability $.375 =
+\frac{3}{8}$ and $.625 = \frac{5}{8}$ respectively. At an internal
+state, the MDP can move to the output states $0$,
+$1$, or $2$ by the truncated $\frac{1}{2}$-geometric mechanism over
+$\{ 0, 1, 2 \}$ (Figure~\ref{figure:randomized-frequency}, \`{a} la
+Figure~\ref{figure:geometric-mechanism}). For any action sequence,
+observe that paths from the state $s$ and those from $t$
+formalize the computation of Algorithm~\ref{algorithm:frequency-estimator}
+on an observation and its neighbor represented by the sequence. We
+hence say the states $s$ and $t$ are neighbors in the
+MDP (Figure~\ref{figure:frequency-estimator}).
+
+\begin{figure}[tbh]
+  \centering
+  \begin{subfigure}{\columnwidth}
+    \centering
+      \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+      distance=2cm,node/.style={circle,draw}]
+      \node[node] (I) at  ( 0,  0) { $s$ };
+      \node[node] (00) at (-1.5,  1.5) { $s_{00}$ };
+      \node at (-1.9, 1.9) { $00$ };
+      \node[node] (01) at (-1.5, -1.5) { $s_{01}$ };
+      \node at (-1.9, -1.9) { $01$ };
+      \node[node] (10) at ( 1.5,  1.5) { $s_{10}$ };
+      \node at ( 1.9,  1.9) { $10$ };
+      \node[node] (11) at ( 1.5, -1.5) { $s_{11}$ };
+      \node at ( 1.9, -1.9) { $11$ };
+
+      \path
+      (I) edge node [below=2] { $1/4$ } (00)
+      (I) edge node [above=2] { $1/4$ } (01)
+      (I) edge node [below=2] { $1/4$ } (10)
+      (I) edge node [above=2] { $1/4$ } (11)
+
+      (00) edge [loop above] node { $a[\uscore]$, .375 } (00)
+      (00) edge [bend left=10] node { $a[\uscore]$, .625 } (10)
+      (00) edge [loop left] node [above=1,rotate=90] { $b[\uscore]$, .375 } (00)
+      (00) edge [bend left=10] node [left=3,above=1,rotate=270] { $b[\uscore]$, .625 } (01)
+
+      (10) edge [loop above] node { $a[\uscore]$, .625 } (00)
+      (10) edge [bend left=10] node { $a[\uscore]$, .375 } (00)
+      (10) edge [loop right] node [above=1,rotate=270] { $b[\uscore]$, .375 } (10)
+      (10) edge [bend left=10] node [above=1,rotate=270] { $b[\uscore]$, .625 } (11)
+
+      (11) edge [loop below] node { $a[\uscore]$, .625 } (11)
+      (11) edge [bend left=10] node { $a[\uscore]$, .375 } (01)
+      (11) edge [loop right] node [above=1,rotate=270] { $b[\uscore]$, .625 } (11)
+      (11) edge [bend left=10] node [left=-3,above=1,rotate=90] { $b[\uscore]$, .375 } (10)
+
+      (01) edge [loop below] node { $a[\uscore]$, .375 } (01)
+      (01) edge [bend left=10] node { $a[\uscore]$, .625 } (11)
+      (01) edge [loop left] node [above=1,rotate=90] { $b[\uscore]$, .625 } (01)
+      (01) edge [bend left=10] node [left=-3,above=1,rotate=90] { $b[\uscore]$, .375 } (00)
+
+      ;
+
+      \hspace{.05\columnwidth}
+
+      \node[node] (I') at  ( 5.5,    0) { $t$ };
+      \node[node] (00') at (   4,  1.5) { $t_{00}$ };
+      \node at ( 3.6,  1.9) { $00$ };
+      \node[node] (01') at (   4, -1.5) { $t_{01}$ };
+      \node at ( 3.6, -1.9) { $01$ };
+      \node[node] (10') at (   7,  1.5) { $t_{10}$ };
+      \node at ( 7.4,  1.9) { $10$ };
+      \node[node] (11') at (   7, -1.5) { $t_{11}$ };
+      \node at ( 7.4, -1.9) { $11$ };
+
+      \path
+      (I') edge node [below=2] { $1/4$ } (00')
+      (I') edge node [above=2] { $1/4$ } (01')
+      (I') edge node [below=2] { $1/4$ } (10')
+      (I') edge node [above=2] { $1/4$ } (11')
+
+      (00') edge [loop above] node { $\uscore[a]$, .375 } (00')
+      (00') edge [bend left=10] node { $\uscore[a]$, .625 } (10')
+      (00') edge [loop left] node [above=1,rotate=90] { $\uscore[b]$, .375 } (00')
+      (00') edge [bend left=10] node [left=3,above=1,rotate=270] { $\uscore[b]$, .625 } (01')
+
+      (10') edge [loop above] node { $\uscore[a]$, .625 } (00')
+      (10') edge [bend left=10] node { $\uscore[a]$, .375 } (00')
+      (10') edge [loop right] node [above=1,rotate=270] { $\uscore[b]$, .375 } (10')
+      (10') edge [bend left=10] node [above=1,rotate=270] { $\uscore[b]$, .625 } (11')
+
+      (11') edge [loop below] node { $\uscore[a]$, .625 } (11')
+      (11') edge [bend left=10] node { $\uscore[a]$, .375 } (01')
+      (11') edge [loop right] node [above=1,rotate=270] { $\uscore[b]$, .625 } (11')
+      (11') edge [bend left=10] node [left=-3,above=1,rotate=90] { $\uscore[b]$, .375 } (10')
+
+      (01') edge [loop below] node { $\uscore[a]$, .375 } (01')
+      (01') edge [bend left=10] node { $\uscore[a]$, .625 } (11')
+      (01') edge [loop left] node [above=1,rotate=90] { $\uscore[b]$, .625 } (01')
+      (01') edge [bend left=10] node [left=-3,above=1,rotate=90] { $\uscore[b]$, .375 } (00')
+
+      ;
+      \end{tikzpicture}
+      \caption{Adjacent Inputs}
+      \label{figure:adjacent-inputs}
+    \end{subfigure}
+    \begin{subfigure}{\columnwidth}
+      \centering
+      \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+      distance=2cm,node/.style={circle,draw}]
+      \node[node] (0) at (-5,  0) { $0$ };
+      \node[node] (1) at ( 0,  0) { $1$ };
+      \node[node] (2) at ( 5,  0) { $2$ };
+
+      \node[node] (00) at (-4.5, 1.5) { $s_{00}$ };
+      \node at (-4.9,  1.9) { $00$ };
+      \node[node] (01) at (-1.5, 2) { $s_{01}$ };
+      \node at (-1.9,  2.4) { $01$ };
+      \node[node] (10) at ( 1.5, 2) { $s_{10}$ };
+      \node at ( 1.9,  2.4) { $10$ };
+      \node[node] (11) at ( 4.5, 1.5) { $s_{11}$ };
+      \node at ( 4.9,  1.9) { $11$ };
+
+      \node[node] (00') at (-4.5, -1.5) { $t_{00}$ };
+      \node at (-4.9, -1.9) { $00$ };
+      \node[node] (01') at (-1.5, -2) { $t_{01}$ };
+      \node at (-1.9, -2.4) { $01$ };
+      \node[node] (10') at ( 1.5, -2) { $t_{10}$ };
+      \node at ( 1.9, -2.4) { $10$ };
+      \node[node] (11') at ( 4.5, -1.5) { $t_{11}$ };
+      \node at ( 4.9, -1.9) { $11$ };
+
+      \path
+      (00) edge node [left] { $2/3$ } (0)
+      (00) edge node [left=50,above] { $1/6$ } (1)
+      (00) edge node [left=100,above=15] { $1/6$ } (2)
+
+      (01) edge node [right=30,above=20] { $1/3$ } (0)
+      (01) edge node [left=20,above=5] { $1/3$ } (1)
+      (01) edge node [left=70,above=20] { $1/3$ } (2)
+
+      (10) edge node [right=70,above=20] { $1/3$ } (0)
+      (10) edge node [right=20,above=5] { $1/3$ } (1)
+      (10) edge node [left=30,above=20] { $1/3$ } (2)
+
+      (11) edge node [right=100,above=15] { $1/6$ } (0)
+      (11) edge node [right=50,above] { $1/6$ } (1)
+      (11) edge node [right] { $2/3$ } (2)
+
+
+      (00') edge node [left] { $2/3$ } (0)
+      (00') edge node [left=50,below] { $1/6$ } (1)
+      (00') edge node [left=100,below=15] { $1/6$ } (2)
+
+      (01') edge node [right=30,below=20] { $1/3$ } (0)
+      (01') edge node [left=20,below=5] { $1/3$ } (1)
+      (01') edge node [left=70,below=20] { $1/3$ } (2)
+
+      (10') edge node [right=70,below=20] { $1/3$ } (0)
+      (10') edge node [right=20,below=5] { $1/3$ } (1)
+      (10') edge node [left=30,below=20] { $1/3$ } (2)
+
+      (11') edge node [right=100,below=15] { $1/6$ } (0)
+      (11') edge node [right=50,below] { $1/6$ } (1)
+      (11') edge node [right] { $2/3$ } (2)
+      ;
+
+      \end{tikzpicture}
+      \caption{Randomized Frequency}
+      \label{figure:randomized-frequency}
+    \end{subfigure}
+  \caption{Frequency Estimator (some states are drawn twice).}
+  \label{figure:frequency-estimator}
+\end{figure}
+
+\noindent
+\emph{Privacy Specification}.
+For classical differential privacy, we are interested in the output
+distribution. Algorithm~\ref{algorithm:frequency-estimator} has three
+different outputs. By privacy analysis, the state $s$ satisfies the
+following $\dpCTLstar$ formula:
+$
+\Psi = \dpriv{\ln 4}{0} (\F \mathit{at}_0) \wedge \dpriv{\ln 4}{0} (\F
+\mathit{at}_1) \wedge \dpriv{\ln 4}{0} (\F \mathit{at}_2)
+$
+(Here 
+$\mathit{at}_i$, i=1,2,3, is an atomic proposition satisfied only at state $i$, which is not shown in the figure).
+For pan privacy, we moreover wish to measure privacy loss in internal
+states. For observations of length $k$, the probabilities of reaching
+each internal states need to be sufficiently close. The state $I$
+therefore must satisfy
+\[
+\Psi
+\wedge
+\bigwedge_{k \in \bbfN}
+\dpriv{\ln 4}{0} (\X^k {00}) \wedge
+\dpriv{\ln 4}{0} (\X^k {01}) \wedge
+\dpriv{\ln 4}{0} (\X^k {10}) \wedge
+\dpriv{\ln 4}{0} (\X^k {11}).
+\]

@@ -4,17 +4,7 @@ Given a Markov chain $K = (S, \wp, L)$, a
 is a reflexive and symmetric relation on $S$. We will write $s
 \neighbor{S} t$ when $(s, t) \in \neighbor{S}$. If $s \neighbor{S} t$,
 we say $s$ and $t$ are \emph{neighbors} or $t$ is a \emph{neighbor} of
-$s$. 
-For any Markov chain $K$, neighborhood
-relation $N$ on $S$, $s \in S$, and a path formula $\phi$,
-define
-\[
-\myPr{s}{K}{N}{\phi} =
-\Pr [ \{ \pi : K, N, \pi \models \phi \textmd{ with } \pi_0 = s \} ].
-\]
-That is, $\myPr{s}{K}{N}{\phi}$ denotes the probability of paths
-satisfying $\phi$ from $s$ on $K$ with $N$. 
-Define the satisfaction relation $K, \neighbor{S}, s
+$s$. Define the satisfaction relation $K, \neighbor{S}, s
 \models \Phi$ as follows.
 \begin{eqnarray*}
 %  K, \neighbor{S}, s \models \top\\
@@ -30,19 +20,20 @@ Define the satisfaction relation $K, \neighbor{S}, s
   K, \neighbor{S}, s \models \Phi_1\\
   K, \neighbor{S}, s \models \PJ{J} \phi
   & \textmd{ if } &
-                    \myPr{s}{K}{\neighbor{S}}{\phi} \in J\\
+  \Pr [\{ \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with }
+                    \pi_0 = s\}] \in J \\
   K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
   & \textmd{ if } &
   \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
-      \myPr{s}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
-      \myPr{t}{K}{\neighbor{S}}{\phi} + \delta
-      \textmd{ and }\\
-  & &  \myPr{t}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
-       \myPr{s}{K}{\neighbor{S}}{\phi} + \delta
+      p(s) \leq e^{\epsilon} p(t) + \delta \textmd{ and }
+      p(t) \leq e^{\epsilon} p(s)  +  \\
+  & &  \delta \textmd{ where } p(x) = \Pr [\{
+      \pi : K, \neighbor{S}, \pi \models \phi \textmd{ with }
+      \pi_0 = x \}]
 \end{eqnarray*}
 
 Moreover, the relation $K, \neighbor{S}, \pi \models \phi$ is defined as
-in the standard linear temporal logic formulae~\cite{ManneP92}. We only recall the semantics for the temporal operators $\X$ and $\until$:
+for the standard LTL formulas~\cite{which-to-cite?}. We only recall the semantics for $\X$ and $\until$ as follows:
 \begin{eqnarray*}
   K, \neighbor{S}, \pi \models \X \phi
   & \textmd{ if } &
@@ -63,30 +54,51 @@ in the standard linear temporal logic formulae~\cite{ManneP92}. We only recall t
 }
 \end{eqnarray*}
 
+To simplify our notation, for any Markov chain $K$, neighborhood
+relation $N$ on $S$, a state $s \in S$, and a path formula $\phi$,
+define
+\[
+\myPr{s}{K}{N}{\phi} =
+\Pr [ \{ \pi : K, N, \pi \models \phi \textmd{ with } \pi_0 = s \} ].
+\]
+That is, $\myPr{s}{K}{N}{\phi}$ denotes the probability of paths
+satisfying $\phi$ from $s$ on $K$ with $N$. The semantics of the
+differentially private operator hence becomes
+\begin{eqnarray*}
+  K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi
+  & \textmd{ if } &
+  \textmd{for every } t \textmd{ with }  s \neighbor{S} t,
+      \myPr{s}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
+      \myPr{t}{K}{\neighbor{S}}{\phi} + \delta
+      \textmd{ and }\\
+  & &  \myPr{t}{K}{\neighbor{S}}{\phi} \leq e^{\epsilon}
+       \myPr{s}{K}{\neighbor{S}}{\phi} + \delta
+\end{eqnarray*}
+
 Other than the differentially private operator, the semantics of
 $\dpCTLstar$ is standard~\cite{BK:08:PMC}.
 To intuit the semantics of $\dpriv{\epsilon}{\delta} \phi$,
 recall that  $\myPr{s}{K}{N}{\phi}$ is the probability of having
-paths satisfying $\phi$ from $s$. A state $s$ satisfies
-$\dpriv{\epsilon}{\delta} \phi$ if the probability of
-having paths satisfying $\phi$ from $s$ is $(\epsilon, \delta)$-close
-to those from every neighbor of $s$. Informally, it is
+paths satisfying $\phi$ from $s$. Thus, a state $s$ satisfies
+$\dpriv{\epsilon}{\delta} \phi$ if having paths satisfying $\phi$
+from $s$ is $(\epsilon, \delta)$-close to having paths satisfying
+$\phi$ from every neighbor of $s$. In other words, it is
 probabilistically similar to observe paths satisfying $\phi$ from $s$
-and from its neighbors.
+and from all neighbors of $s$.
 
-\subsection{Model Checking}
-We describe the model checking algorithm for $\dpCTL$. The algorithm follows the classical
+\subsection{Model Checking Algorithms}
+We first describe the model checking algorithm for $\dpCTL$, which follows the classical
 algorithms for $\PCTL$ by computing the states satisfying
 sub state-formulae inductively~\cite{HanssonJ94,BK:08:PMC}. It hence suffices to
 consider the inductive step where the states satisfying the subformula
-$\dpriv{\epsilon}{\delta} (\phi)$ are to be computed.
+$\dpriv{\epsilon}{\delta} (\phi)$ is computed.
 
 %We start with the algorithm for Markov chains.
 
 In the classical $\PCTL$ model checking algorithm for Markov chains,
 states satisfying the subformula $\PJ{J} \phi$ are obtained by
-computing $\myPr{s}{K}{\neighbor{S}}{\phi}$ for $s \in S$.
-These probabilities can be obtained by solving linear equations or
+computing $\myPr{s}{K}{\neighbor{S}}{\phi}$ for state $s \in S$.
+These probabilities can be computed by solving linear equations or
 through iterative approximations. We summarize it in the following
 theorem (details see~\cite{BK:08:PMC}):
 
@@ -117,22 +129,22 @@ $\varphi$ to minimize confusion.
 }
 
 In order to determine the set $\{ s : K, \neighbor{S}, s \models
-\dpriv{\epsilon}{\delta} \phi \}$, our algorithm computes
-the probabilities $p (s) = \myPr{s}{K}{\neighbor{S}}{\phi}$ for every
+\dpriv{\epsilon}{\delta} \varphi \}$, our algorithm first computes
+the probabilities $p (s) = \myPr{s}{K}{\neighbor{S}}{\varphi}$ for every
 $s \in S$ (Algorithm~\ref{algorithm:sat-dpriv-dtmc}). For each $s \in S$,
 it then compares the probabilities $p (s)$ and $p (t)$ for every
 neighbor $t$ of $s$. If there is a neighbor $t$ such that $p (s)$ and
 $p (t)$ are not $(\epsilon, \delta)$-close, the state $s$
-is removed from the result. 
+is removed from the result. Hence
 Algorithm~\ref{algorithm:sat-dpriv-dtmc} returns all states which are
 $(\epsilon, \delta)$-close to their neighbors.
 The algorithm requires at most $O
-(|S|^2)$ additional steps.
+(|S|^2)$ additional steps. 
 We hence have the following results:
 
 \begin{algorithm}[tbh]
   \begin{algorithmic}[1]
-    \Procedure{SAT}{$K$, $\neighbor{S}$, $\phi$}
+    \Function{SAT}{$K$, $\neighbor{S}$, $\phi$}
     \Match{$\phi$}
     \Comment{by Lemma~\ref{lemma:PJ-subroutines}}
     \Case{$\X \Psi$}
@@ -149,7 +161,7 @@ We hence have the following results:
     \EndMatch
     \State{$R \leftarrow S$}
     \For{$s \in S$}
-      \For{$t$ with $s \neighbor{S} t$}
+      \For{$t$ with $s \neighbor{K} t$}
         \If{$p(s) \not\leq e^{\epsilon} p(t) + \delta$ or
             $p(t) \not\leq e^{\epsilon} p(s) + \delta$}
         {remove $s$ from $R$}
@@ -158,17 +170,17 @@ We hence have the following results:
     \EndFor
 
     \State{\Return $R$}
-    \EndProcedure
+    \EndFunction
   \end{algorithmic}
-  \caption{SAT($K$, $\neighbor{S}$, $\phi$)}
+  \caption{SAT($\phi$, $\neighbor{K}$)}
   \label{algorithm:sat-dpriv-dtmc}
 \end{algorithm}
 
 \begin{proposition}
-  Let $K = (S, \wp, L)$ be a Markov chain, $\neighbor{S}$ a
-  neighborhood relation on $S$, and $\phi$ a $\dpCTL$ path formula.
+  Let $K = (S, \wp, L)$ be a Markov chain and $\neighbor{S}$ a
+  neighborhood relation on $S$.
   $\{ s : K, \neighbor{S}, s \models \dpriv{\epsilon}{\delta} \phi \}$ is
-  computable within time polynomial in $|S|$ and $|\phi|$.
+  computable within time polynomial in $|S|$.
 \end{proposition}
 
 \begin{corollary}
@@ -179,5 +191,5 @@ We hence have the following results:
 \end{corollary}
 
 The model checking algorithm for $\dpCTLstar$ can be treated as in the classical setting~\cite{BK:08:PMC}:  all we need is to  compute the  probability
-  $\myPr{s}{K}{\neighbor{S}}{\phi}$ with general path formula $\phi$. For this purpose one first constructs a deterministic $\omega$-automaton $R$ for $\phi$. Then, the probability reduces to a
+  $\myPr{s}{K}{\neighbor{S}}{\phi}$ with general path formula $\phi$. For this purpose one first constructs a deterministic $\omega$-automaton $R$ corresponding to $\phi$, such as deterministic Rabin automaton. Then, the probability reduces to a
   reachability probability in the product Markov chain obtained from $K$ and $R$. There are more efficient algorithms without the product construction, see \cite{CY95,CSS03,BaierKKKMW16} for details.

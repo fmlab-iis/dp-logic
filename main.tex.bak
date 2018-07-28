@@ -1,0 +1,127 @@
+\documentclass{llncs}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xspace}
+\pagestyle{plain}
+\usepackage{algorithm,algpseudocode}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+\usepackage{wrapfig}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+\usepackage{url}
+\usepackage{times}
+
+\input{macros}
+
+\newif\ifpublic
+%\publictrue
+
+\title{Model Checking Differentially Private Properties}
+\ifpublic
+\author{
+Depeng Liu\inst{1}
+\and
+Bow-Yaw Wang\inst{2}
+\and
+Lijun Zhang\inst{1}}
+\institute{
+Chinese Academy of Sciences
+\and
+Academia Sinica
+}
+\else
+\author{Author}
+\institute{Institute}
+\fi
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  We introduce the branching time temporal logic $\dpCTLstar$ for
+  specifying differential privacy. Several differentially private
+  mechanisms are formalized as Markov chains or Markov decision
+  processes. Using our formal models, subtle privacy conditions
+  are specified by $\dpCTLstar$. In order to verify privacy properties
+  automatically, model checking problems are investigated.  We
+  give a model checking algorithm for Markov chains. Model checking
+  $\dpCTLstar$ properties on Markov decision processes however is
+  shown to be undecidable.
+\end{abstract}
+
+\section{Introduction}
+\label{section:introduction}
+\input{introduction}
+
+\noindent
+\emph{Organisation of the paper.}
+Preliminaries are given in Section~\ref{section:preliminaries}.
+In Section~\ref{section:examples} we discuss how differentially private mechanisms can be modeled in Markov chains.
+The logic $\dpCTLstar$ and model checking algorithms for Markov chains are presented in
+Section~\ref{section:dpCTL}.
+Section~\ref{section:specifying-properties} describes differential privacy properties using   $\dpCTLstar$.
+They are followed by the extension to Markov decision processes and an
+application in streaming process (Section~\ref{section:mdp}). Finally,
+Section~\ref{section:conclusions} concludes our presentation.
+
+\section{Preliminaries}
+\label{section:preliminaries}
+\input{preliminaries}
+
+\section{Markov Chains  for Differentially Private Mechanisms}
+\label{section:examples}
+\input{examples}
+
+\section{The Logic $\dpCTLstar$}
+\label{section:dpCTL}
+\input{dpCTL}
+
+\subsection{Syntax}
+\label{subsection:syntax}
+\input{syntax}
+
+\subsection{Semantics}
+\label{subsection:semantics}
+\input{semantics}
+
+\section{Specifying Properties in $\dpCTLstar$}
+\label{section:specifying-properties}
+\input{specifications}
+
+\section{Markov Decision Processes}
+\label{section:mdp}
+\input{mdp}
+
+%\section{Model Checking Algorithms}
+%\label{section:model-checking-algorithms}
+%\input{algorithms}
+
+
+\subsection{MDPs for Stream Processing}
+\label{section:applications}
+\input{applications}
+
+\section{Conclusions}
+\label{section:conclusions}
+We have introduced $\dpCTLstar$ to reason about properties in differential privacy, and have investigated the model checking problem. For Markov chains, the model checking problem has the same complexity as for $\PCTLstar$. The general MDP model checking problem is undecidable. We have discussed that some special cases are decidable. An interesting work is to identify more
+decidable subclass. As an example, consider the formula $\bigwedge_{k \in \bbfN}
+\dpriv{\epsilon}{\delta} (\X^k  00)$ which was used in specifying the pan privacy. For the case $\epsilon=\delta=0$, it reduces to a language equivalence problem for probabilistic automata. It is interesting to characterise other cases as well.
+ Another interesting line of further works is to consider continuous perturbation (such as Laplace distribution used in \cite{DR:14:AFDP}) -- we would need Markov models with continuous state space for the modelling.
+
+
+\bibliographystyle{splncs03}
+\bibliography{refs}
+
+\newpage
+\appendix
+
+\section{Proof of Theorem~\ref{theorem:mdp-model-checking}}
+\input{proof}
+
+\end{document}

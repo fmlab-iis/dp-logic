@@ -1,0 +1,500 @@
+@article{AACDP:15:OILDPM,
+  author    = {M{\'{a}}rio S. Alvim and Miguel E. Andr{\'{e}}s and
+               Konstantinos Chatzikokolakis and Pierpaolo Degano and
+               Catuscia Palamidessi},
+  title     = {On the Information Leakage of Differentially-Private
+               Mechanisms},
+  journal   = {Journal of Computer Security},
+  volume    = {23},
+  number    = {4},
+  pages     = {427--469},
+  year      = {2015},
+}
+
+@article{GMP:16:PDPFPS,
+  author    = {Ivan Gazeau and Dale Miller and Catuscia Palamidessi},
+  title     = {Preserving Differential Privacy under Finite-Precision
+               Semantics},
+  journal   = {TCS},
+  volume    = {655},
+  pages     = {92--108},
+  year      = {2016},
+}
+
+@inproceedings{ZK:17:LTADPP,
+  author = {Danfeng Zhang and Daniel Kifer},
+  title = {{LightDP}: Towards Automating Differential Privacy Proofs},
+  booktitle = {POPL},
+  year = {2017},
+  pages = {888--901},
+  publisher = {ACM},
+}
+
+@article{WHRP:17:FADP,
+  author    = {Daniel Winograd{-}Cort and Andreas Haeberlen and
+               Aaron Roth and Benjamin C. Pierce},
+  title     = {A Framework for Adaptive Differential Privacy},
+  journal   = {{PACMPL}},
+  volume    = {1},
+  number    = {{ICFP}},
+  pages     = {10:1--10:29},
+  year      = {2017},
+}
+
+@inproceedings{GHHNP:13:LDPDP,
+  author    = {Marco Gaboardi and Andreas Haeberlen and Justin Hsu and
+               Arjun Narayan and Benjamin C. Pierce},
+  title     = {Linear Dependent Types for Differential Privacy},
+  booktitle = {POPL},
+  pages     = {357--370},
+  year      = {2013},
+}
+
+@inproceedings{RP:10:DMTGS,
+  author    = {J. Reed and B. C. Pierce},
+  title     = {Distance Makes the Types Grow Stronger: A Calculus
+               for Differential Privacy},
+  booktitle = {ICFP},
+  pages     = {157--168},
+  publisher = {ACM},
+  year      = {2010},
+}
+
+@inproceedings{TKD:11:FVDPIS,
+  author    = {M. C. Tschantz and D. Kaynar and A. Datta},
+  title     = {Formal Verification of Differential Privacy for
+               Interactive Systems (Extended Abstract)},
+  series = {ENTCS},
+  volumne   = {276},
+  pages     = {61--79},
+  year      = {2011},
+}
+
+@inproceedings{BFGGHS:16:APCDP,
+  author    = {G. Barthe and N. Fong and M. Gaboardi and B. Gr\'egoire
+               and J. Hsu and P.-Y. Strub},
+  title     = {Advanced Probabilistic Couplings for Differential Privacy},
+  booktitle = {CCS},
+  pages     = {55--67},
+  publisher = {ACM},
+  year      = {2016},
+}
+
+@inproceedings{BGGHS:16:PDPPC,
+  author    = {G. Barthe and M. Gaboardi and B. Gregoire and J.  Hsu and
+               P.-Y.  Strub},
+  title     = {Proving Differential Privacy via Probabilistic Couplings},
+  booktitle = {LICS},
+  pages     = {},
+  publisher = {IEEE},
+  year      = {2016},
+}
+
+@inproceedings{BKOB:12:PRRDP,
+  author    = {G. Barthe and B. K\"opf and F. Olmedo and S.
+               Zanella-B\'eguelin},
+  title     = {Probabilistic Relational Reasoning for Differential Privacy},
+  booktitle = {POPL},
+  pages     = {97--110},
+  publisher = {ACM},
+  year      = {2012},
+}
+
+@inproceedings{BDGKZ:13:VCDPASM,
+  author    = {G. Barthe and G. Danezis and B. Gr\'egoire and C. Kunz
+               and S. Zanella-B\'eguelin},
+  title     = {Verified Computational Differential Privacy with Applications
+               to Smart Metering},
+  booktitle = {CSF},
+  pages     = {287--301},
+  publisher = {IEEE},
+  year      = {2013},
+}
+
+@inproceedings{BGAHKS:14:PDPHL,
+  author    = {G. Barthe and M. Gaboardi and E. J. G. Arias and J. Hsu
+               and C. Kunz and P. Y. Strub},
+  title     = {Proving Differential Privacy in {Hoare} Logic},
+  booktitle = {CSF},
+  pages     = {411-424},
+  publisher = {IEEE},
+  year      = {2014},
+}
+
+@inproceedings{BGAHRS:15:HOARRT,
+  author    = {G. Barthe and M. Gaboardi and E. J. G. Arias and J. Hsu
+               and A. Roth and P. Strub},
+  title     = {Higher-Order Approximate Relational Refinement Types
+               for Mechanism Design and Differential Privacy},
+  booktitle = {POPL},
+  pages     = {68--79},
+  publisher = {ACM},
+  year      = {2015},
+}
+
+@inproceedings{BFGAGHS:16:DPBP,
+  author    = {G. Barthe and G. P. Farina and M. Gaboardi and
+               E. J. G. Arias and A. Gordon and J. Hsu and P.-Y. Strub},
+  title     = {Differentially Private {B}ayesian Programming},
+  booktitle = {CCS},
+  pages     = {68--79},
+  publisher = {ACM},
+  year      = {2016},
+}
+
+@book{Paz71,
+ author = {Paz, Azaria},
+ title = {Introduction to Probabilistic Automata (Computer Science and Applied Mathematics)},
+ year = {1971},
+ isbn = {0125476507},
+ publisher = {Academic Press, Inc.},
+ address = {Orlando, FL, USA},
+}
+
+
+@inproceedings{Worrell08,
+  author    = {James Worrell},
+  title     = {Model Checking and Decision Procedures for Probabilistic Automata
+               and Markov Chains},
+  booktitle = {QEST},
+  pages     = {322},
+  publisher = {{IEEE} Computer Society},
+  year      = {2008},
+}
+
+@inproceedings{CSS03,
+	Author = {Couvreur, Jean-Michel and Saheb, Nasser and Sutre, Gr{\'e}goire},
+	Booktitle = {LPAR},
+	Pages = {361-375},
+	Series = {LNCS},
+	Title = {An Optimal Automata Approach to {LTL} Model Checking of Probabilistic Systems},
+	Volume = {2850},
+	Year = {2003}
+}
+
+
+@article{CY95,
+	Author = {Courcoubetis, Costas and Yannakakis, Mihalis},
+	Journal = {J. of the ACM},
+	Number = {4},
+	Pages = {857-907},
+	Title = {The Complexity of Probabilistic Verification},
+	Volume = {42},
+	Year = {1995}
+}
+
+@inproceedings{BaierKKKMW16,
+	author = {Christel Baier and Stefan Kiefer and Joachim Klein and Sascha Kl\"uppelholz and David M\"uller and James Worrell},
+	title = {{Markov} Chains and Unambiguous {B\"uchi} Automata},
+	booktitle = {CAV},
+  pages     = {23--42},
+  volume    = {9779},
+series={Lecture Notes in Computer Science},
+publisher={Springer},
+	year = {2016}
+}
+
+
+@incollection{FengZ13,
+year={2014},
+isbn={978-3-319-06409-3},
+booktitle={FM},
+volume={8442},
+title={When Equivalence and Bisimulation Join Forces in Probabilistic Automata},
+author={Feng, Yuan and Zhang, Lijun},
+pages={247-262},
+}
+
+
+@article{Rabin63,
+author = {Rabin, M.O.},
+title = {{Probabilistic automata}},
+journal = {Information and Control},
+volume = {6},
+number = {3},
+pages = {230-245},
+year = {1963}
+}
+
+
+@article{Tzeng92,
+author = {Tzeng, W.},
+title = {{A polynomial-time algorithm for the equivalence of probabilistic automata}},
+journal = {SIAM Journal on Computing},
+volume={21},
+number = {2},
+pages = {216-227},
+year = {1992}
+}
+
+@inproceedings{DNPR:10:DPCO,
+ author = {Cynthia Dwork and Moni Naor and Toniann Pitassi and
+           Guy N. Rothblum},
+ title = {Differential Privacy Under Continual Observation},
+ booktitle = {STOC},
+ year = {2010},
+ pages = {715--724},
+ numpages = {10},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {privacy, private data analysis},
+}
+
+@inproceedings{DNPRY:10:PPSA,
+  author    = {Cynthia Dwork and Moni Naor and Toniann Pitassi and
+               Guy N. Rothblum and Sergey Yekhanin},
+  title     = {Pan-Private Streaming Algorithms},
+  booktitle = {Innovations in Computer Science},
+  pages     = {66--80},
+  year      = {2010},
+}
+
+@article{GRS:12:UUPM,
+ author = {Arpita Ghosh and Tim Roughgarden and Mukund Sundararajan},
+ title = {Universally Utility-maximizing Privacy Mechanisms},
+ journal = {SIAM Journal of Computing},
+ year = {2012},
+ pages = {1673--1693},
+ volume = {41},
+ number = {6},
+ publisher = {SIAM},
+}
+
+@inproceedings{GRS:09:UUPM,
+ author = {Arpita Ghosh and Tim Roughgarden and Mukund Sundararajan},
+ title = {Universally Utility-maximizing Privacy Mechanisms},
+ booktitle = {STOC},
+ year = {2009},
+ isbn = {978-1-60558-506-2},
+ pages = {351--360},
+ numpages = {10},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
+
+@article{TKBW:17:PLAI,
+  author    = {Jun Tang and Aleksandra Korolova and Xiaolong Bai and
+               Xueqiang Wang and Xiaofeng Wang},
+  title     = {Privacy Loss in Apple's Implementation of Differential
+               Privacy on {MacOS} 10.12},
+  journal   = {CoRR},
+  volume    = {abs/1709.02753},
+  year      = {2017},
+  url       = {http://arxiv.org/abs/1709.02753},
+  archivePrefix = {arXiv},
+}
+
+@Misc{A:16:EPYU,
+  author =    {WWDC},
+  title =     {Engineering Privacy for Your Users},
+  year =      {2016},
+  url =      {https://developer.apple.com/videos/play/wwdc2016/709/}
+}
+
+@inproceedings{BiancoA95,
+  author    = {Andrea Bianco and
+               Luca de Alfaro},
+  title     = {Model Checking of Probabalistic and Nondeterministic Systems},
+  booktitle = {FSTTCS},
+  pages     = {499--513},
+  year      = {1995},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {1026},
+  publisher = {Springer},
+}
+
+
+@article{HanssonJ94,
+  author    = {Hans Hansson and
+               Bengt Jonsson},
+  title     = {A Logic for Reasoning about Time and Reliability},
+  journal   = {Formal Asp. Comput.},
+  volume    = {6},
+  number    = {5},
+  pages     = {512--535},
+  year      = {1994},
+}
+
+@Book{Put05,
+  Title = {{Markov} Decision Processes: Discrete Stochastic Dynamic Programming},
+  Author = {Puterman, Martin L.},
+  Publisher = {John Wiley \& Sons, Inc.},
+  Year = {2005},
+  Number = {594},
+  Series = {Wiley Series in Probability and Statistics},
+}
+
+
+@InProceedings{DKNP04,
+author={M. Duflot and M. Kwiatkowska and G. Norman and D. Parker},
+title={A Formal Analysis of {Bluetooth} Device Discovery},
+booktitle={Proc. 1st International Symposium on Leveraging Applications of Formal Methods (ISOLA'04)},
+year={2004},
+editor={},
+pages={},
+organization={},
+publisher={},
+series={},
+volume={},
+address={},
+month={},
+note={},
+key={}
+}
+
+@Article{DR:14:AFDP,
+  author =       {C. Dwork and A. Roth},
+  title =        {The Algorithmic Foundations of Differential Privacy},
+  journal =      {Foundations and Trends in Theoretical Computer Science},
+  year =         {2014},
+  volume =    {9},
+  number =    {3--4},
+  pages =     {211--407},
+  publisher = {NOW Publishers},
+}
+
+@InProceedings{DMNS:06:CNSPD,
+  author =       {C. Dwork and F. McSherry and K. Nissim and A. Smith},
+  title =        {Calibrating Noise to Sensitivity in Private Data Analysis},
+  booktitle = {Theory of Cryptography Conference},
+  year =      {06},
+  editor =    {Shai Halevi and Tal Rabin},
+  volume =    {3876},
+  series =    {LNCS},
+  pages =     {265--284},
+  publisher = {Springer},
+}
+
+@InProceedings{D:06:DP,
+  author =       {Cynthia Dwork},
+  title =        {Differential Privacy},
+  booktitle = {International Colloquium on Automata, Languages and
+  Programming (ICALP)},
+  year =      {2006},
+  editor =    {Michele Bugliesi and Bart Preneel and Vladimiro Sassone
+  and Ingo Wegener},
+  volume =    {4052},
+  series =    {LNCS},
+  pages =     {1--12},
+  publisher = {Springer},
+}
+
+@InProceedings{M:12:SLSBDP,
+  author =       {I. Mironov},
+  title =        {On Significance of the Least Significant Bits for
+                  Differential Privacy},
+  booktitle = {ACM Conference on Computer and Communications Security},
+  year =      {2012},
+  editor =    {T. Yu and G. Danezis and V. D. Gligor},
+  pages =     {650--661},
+}
+
+@InProceedings{TKD:11:FVDPIS,
+  author =       {Michael Carl Tschantz and Dilsun Kaynar and Anupam Datta},
+  title =        {Formal Verification of Differential Privacy for
+                  Interactive Systems},
+  booktitle = {Mathematical Foundations of Programming Semantics},
+  year =      {2011},
+  volume =    {276},
+  number =    {0},
+  pages =     {61--79},
+}
+
+@InProceedings{JP:10:DMTGS,
+  author =       {Jason Reed and Benjamin C. Pierce},
+  title =        {Distance Makes the Types Grow Stronger: a Calculus
+                  for Differential Privacy},
+  booktitle = {International Conference on Functional Programming},
+  year =      {2010},
+  editor =    {Paul Hudak and Stephanie Weirich},
+  pages =   {157--168},
+  publisher = {ACM},
+}
+
+@InProceedings{GHHNP:13:LDTDP,
+  author =       {Marco Gaboardi and Andreas Haeberlen and Justin Hsu
+                  and Arjun Narayan and Benjamin C. Pierce},
+  title =        {Linear Dependent Types for Differential Privacy},
+  booktitle = {Principles of Programming Languages},
+  year =      {2013},
+  editor =    {Roberto Giacobazzi and Radhia Cousot},
+  pages =     {357--370},
+  publisher = {ACM},
+}
+
+@InProceedings{BKOZ:12:PRRDP,
+  author =     {Gilles Barthe and Boris K\"opf and Federico Olmedo and
+                  Santiago Zanella B\'eguelin},
+  title =      {Probabilistic Relational Reasoning for Differential Privacy},
+  booktitle = {Principles of Programming Languages},
+  year =      {2012},
+  editor =    {John Field and Michael Hicks},
+  pages =     {97--110},
+  publisher = {ACM},
+}
+
+
+@InProceedings{BDGKZ:13:VCDP,
+  author =       {Gilles Barthe and George Danezis and Benjamin
+               Gr\'egoire and C\'esar Kunz and Santiago Zanella B\'eguelin},
+  title =        {Verified Computational Differential Privacy with
+                  Applications to Smart Metering},
+  booktitle = {Computer Security Foundations},
+  year =      {2013},
+  editor =    {V\'eronique Cortier and Anupam Datta},
+  pages =     {287--301},
+  publisher = {{IEEE} Computer Society},
+}
+
+@article{JLE:14:DPML,
+  author    = {Zhanglong Ji and Zachary Chase Lipton and Charles Elkan},
+  title     = {Differential Privacy and Machine Learning: a Survey and Review},
+  journal   = {CoRR},
+  volume    = {abs/1412.7584},
+  year      = {2014},
+  url       = {http://arxiv.org/abs/1412.7584},
+  archivePrefix = {arXiv},
+}
+
+@Article{FWC:10:PPDP,
+  author =       {Benjamin C. M. Fung and Ke Wang and Rui Chen and
+                  Philip S. Yu},
+  title =        {Privacy-Preserving Data Publish: A Survey of Recent
+                  Developments},
+  journal =      {ACM Computing Surveys},
+  year =         {2010},
+  volume =    {42},
+  number =    {4},
+  pages =     {14:1--14:53},
+  month =     {June},
+}
+
+@Article{CY:98:MDPRE,
+  author =       {Costas Courcoubetis and Mihalis Yannakakis},
+  title =        {Markov Decision Processes and Regular Events},
+  journal =      {IEEE Transactions on Automatic Control},
+  year =         {1998},
+  volume =    {43},
+  number =    {10},
+  pages =     {1399--1418},
+}
+
+@InProceedings{EKVY:07:MMCMDP,
+  author =       {K. Etessami and M. Kwiatkowska and M. Y. Vardi and
+                  M. Yannakakis},
+  title =        {Multi-objective Model Checking of Markov Decision Processes},
+  booktitle = {TACAS},
+  year =      {2007},
+  editor =    {O. Grumberg and M. Huth},
+  volume =    {4424},
+  series =    {LNCS},
+  pages =     {50--65},
+  publisher = {Springer},
+}
+
+@Book{BK:08:PMC,
+  author =    {Christel Baier and Joose-Pieter Katoen},
+  title =        {Principles of Model Checking},
+  publisher =    {The MIT Press},
+  year =         {2008},
+}

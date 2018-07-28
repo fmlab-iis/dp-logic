@@ -1,0 +1,220 @@
+0 Patch Control
+
+0
+0
+1
+main.tex
+65
+17
+11
+
+dpCTL.tex
+TeX
+1060859 0 -1 178 -1 181 52 52 828 361 0 476 66 -1 -1 0 0 0 -1 -1 0 1 0 181 -1   0
+examples.tex
+TeX
+17838075 8 -1 1927 -1 1872 78 78 854 387 0 25 154 -1 -1 0 0 309 -1 -1 309 1 0 1872 -1   0
+syntax.tex
+TeX
+1060859 0 -1 17 -1 23 104 104 880 394 0 146 22 -1 -1 0 0 0 -1 -1 0 1 0 23 -1   0
+semantics.tex
+TeX
+17838075 1 -1 7403 -1 7623 78 78 854 387 0 124 154 -1 -1 0 0 0 -1 -1 0 1 0 7623 -1   0
+:\Users\zhang\Desktop\svn\papers\working\LtlOverview\bib.bib
+BibTeX:UNIX
+1147890 1 130 1 139 1 0 0 1260 232 0 25 264 -1 -1 0 0 21 0 0 21 1 0 1 139   0
+:\Users\zhang\Desktop\svn\papers\working\LtlOverview\SETTA-final\setta2016.tex
+TeX
+1060859 0 -1 24009 -1 23967 26 26 1286 258 0 25 308 -1 -1 0 0 37 -1 -1 37 1 0 23967 -1   0
+introduction.tex
+TeX
+1060859 0 -1 3827 -1 3829 130 130 906 439 0 553 308 -1 -1 0 0 0 -1 -1 0 1 0 3829 -1   0
+macros.tex
+TeX
+1060859 0 -1 960 -1 158 78 78 854 387 0 25 110 -1 -1 0 0 100 -1 -1 100 1 0 158 -1   0
+main.tex
+TeX
+135278587 0 -1 1240 -1 1240 26 26 802 335 0 564 242 -1 -1 0 0 21 -1 -1 21 1 0 1240 -1   0
+specifications.tex
+TeX
+1060859 0 -1 222 -1 243 52 52 1286 378 0 773 88 -1 -1 0 0 129 -1 -1 129 1 0 243 -1   0
+refs.bib
+BibTeX
+1049586 1 0 25 0 16 52 52 1286 378 0 190 0 -1 -1 0 0 26 0 0 26 1 0 16 0   0
+mdp.tex
+TeX
+286273531 0 -1 10830 -1 10929 78 78 1312 404 1 594 176 -1 -1 0 0 38 -1 -1 38 1 0 10929 -1   0
+:\Users\zhang\Desktop\svn\Research\FuChen\commands.tex
+TeX
+1060859 0 -1 0 -1 0 78 78 1338 310 0 25 0 -1 -1 0 0 38 -1 -1 38 1 0 0 -1   0
+algorithms.tex
+TeX
+1060859 1 -1 1380 -1 0 130 130 906 439 0 25 0 -1 -1 0 0 0 -1 -1 0 1 0 0 -1   0
+algorithms-discarded.tex
+TeX
+1060859 0 -1 0 -1 0 0 0 776 309 0 25 0 -1 -1 0 0 6 -1 -1 6 1 0 0 -1   0
+applications.tex
+TeX
+1060859 0 -1 62 -1 390 26 26 802 335 0 575 132 -1 -1 0 0 0 -1 -1 0 1 0 390 -1   0
+preliminaries.tex
+TeX
+17838075 8 -1 4601 -1 4502 52 52 828 361 0 443 154 -1 -1 0 0 0 -1 -1 0 1 0 4502 -1   0
+:\Users\zhang\Desktop\svn\Research\FuChen\petl.bib
+BibTeX:UNIX
+269583346 0 0 1 0 1 52 52 1312 284 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 1 0   0
+:\Users\zhang\Desktop\svn\feng\bisimulation\bib.bib
+BibTeX:UNIX
+269583346 0 351 29 0 1 0 0 1234 326 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 1 0   0
+main.bbl
+TeX:AUX
+269496306 0 8 1348 3 1 26 26 1260 352 0 25 66 -1 -1 0 0 -1 -1 -1 -1 1 0 1 3   0
+:\Users\zhang\Desktop\svn\Research\FuChen\petl.tex
+TeX:UTF-8:UNIX
+286371835 0 -1 0 -1 0 0 0 1234 326 0 25 0 -1 -1 0 0 16 -1 -1 16 1 0 0 -1   0
+:\Users\zhang\Desktop\svn\Research\LMPBisimulation\branchingbisimulationMC\branchingbisimulationMC.tex
+TeX
+269496315 0 -1 0 -1 0 104 104 1338 430 0 25 -924 -1 -1 0 0 32 -1 -1 32 1 0 0 -1   0
+examples-discarded.tex
+TeX
+269496315 0 -1 0 -1 2 104 104 880 413 0 25 -3196 -1 -1 0 0 0 -1 -1 0 1 0 2 -1   0
+bow-yaw.prj
+DATA
+407896306 0 0 1 5 1 26 26 1260 352 1 88 110 -1 -1 0 0 -1 -1 -1 -1 1 0 1 5   0
+:\Users\zhang\Desktop\svn\project\HuaWei\talk\talk-win.tex
+TeX:UNIX
+1159163 0 -1 860 -1 13567 52 52 1260 428 0 25 330 -1 -1 0 0 28 -1 -1 28 1 0 13567 -1   0
+:\Users\zhang\Desktop\svn\Research\ParametricProtocolVerification\paraverif.tex
+TeX
+269496315 0 -1 3898 -1 4864 52 52 1286 378 0 25 374 -1 -1 0 0 71 -1 -1 71 1 0 4864 -1   0
+:\Users\zhang\Desktop\svn\wanwei\Axiom\main.tex
+TeX
+286273531 0 -1 1776 -1 1954 156 156 1364 532 1 88 330 401 0 0 0 48 0 0 48 1 0 1954 -1   0
+:\Users\zhang\Desktop\svn\wanwei\Axiom\proof.tex
+TeX
+269496315 0 -1 3387 -1 3394 52 52 1286 378 0 575 396 -1 -1 0 0 23 -1 -1 23 1 0 3394 -1   0
+:\Users\zhang\Desktop\svn\Research\learning\tacas17-buechi\tacas17.tex
+TeX
+269496315 1 -1 3855 -1 3915 0 0 1208 376 0 25 330 -1 -1 0 0 35 -1 -1 35 1 0 3915 -1   0
+:\Users\zhang\Desktop\svn\Research\learning\buechi-complementation\vmcai\paper.tex
+TeX:UNIX
+269594619 0 -1 0 -1 0 104 104 880 413 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+:\Users\zhang\Desktop\TeachingDM\exer1.tex
+TeX:UNIX
+1159163 0 -1 0 -1 0 0 0 1130 482 0 25 0 -1 -1 0 0 37 -1 -1 37 1 0 0 -1   0
+:\Users\zhang\Desktop\svn\papers\talks\LOmega\lomega.tex
+TeX:UNIX
+17936379 0 233 15 -1 6649 0 0 1208 376 0 168 286 -1 -1 0 0 30 -1 -1 30 1 0 6649 -1   0
+:\Users\zhang\Desktop\svn\Research\ParametricProtocolVerification\invfinder.tex
+TeX
+286273531 8 -1 4693 -1 4686 52 52 1286 378 0 25 418 -1 -1 0 0 26 -1 -1 26 1 0 4686 -1   0
+:\Users\zhang\Desktop\svn\Research\LMPBisimulation\late bisimulation Acta Informatica\fm.tex
+TeX:UNIX
+269496315 0 -1 0 -1 469 0 0 1234 326 0 25 242 -1 -1 0 0 52 -1 -1 52 1 0 469 -1   0
+:\Users\zhang\Desktop\svn\Research\ParametricProtocolVerification\concretize.tex
+TeX
+1060859 0 -1 938 -1 937 26 26 1260 352 0 487 220 -1 -1 0 0 26 -1 -1 26 1 0 937 -1   0
+:\Users\zhang\Desktop\svn\Research\ParametricProtocolVerification\generalization.tex
+TeX
+269496315 0 -1 3738 -1 3350 78 78 1312 404 0 542 242 -1 -1 0 0 26 -1 -1 26 1 0 3350 -1   0
+:\Users\zhang\Desktop\svn\Research\ParametricProtocolVerification\workshop-inviting-candidates.tex
+TeX
+269496315 0 -1 162 -1 98 130 130 1364 456 0 168 110 -1 -1 0 0 15 -1 -1 15 1 0 98 -1   0
+:\Users\zhang\Desktop\svn\Research\ParametricProtocolVerification\preliminaries.tex
+TeX
+269496315 2 -1 1568 -1 1572 78 78 1312 404 0 377 352 -1 -1 0 0 26 -1 -1 26 1 0 1572 -1   0
+:\Users\zhang\Desktop\svn\feng\bisimulation\journal.tex
+TeX:UNIX
+269594619 0 -1 0 -1 0 104 104 1338 430 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+:\Users\zhang\Desktop\svn\papers\talks\ParametricVerification\ICCD-slides1.tex
+TeX
+269496315 0 -1 0 -1 0 78 78 1312 404 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+:\Users\zhang\Desktop\svn\Research\ParametricProtocolVerification\overview.tex
+TeX
+269496315 0 -1 1347 -1 1377 0 0 1234 326 0 333 374 -1 -1 0 0 26 -1 -1 26 1 0 1377 -1   0
+:\Users\zhang\Desktop\svn\Research\ParametricProtocolVerification\consistency.tex
+TeX
+269496315 0 -1 0 -1 0 78 78 1312 404 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+:\Users\zhang\Desktop\concur-review.tex
+TeX
+269496315 0 -1 1693 -1 2523 26 26 1156 508 0 1147 418 -1 -1 0 0 -1 -1 -1 -1 1 0 2523 -1   0
+:\Users\zhang\Desktop\svn\papers\talks\SafeLive\safelive.tex
+TeX:DE:UNIX
+17936379 1 -1 7838 -1 10687 130 130 1338 506 0 25 396 -1 -1 0 0 22 -1 -1 22 1 0 10687 -1   0
+:\Users\zhang\Desktop\svn\papers\talks\ctmc-icalp-transendental\icalp-automata.tex
+TeX:UNIX
+17936379 2 -1 6098 -1 6103 104 104 1312 480 0 509 198 -1 -1 0 0 28 -1 -1 28 1 0 6103 -1   0
+:\Users\zhang\Desktop\svn\Research\learning\AG\paper.tex
+TeX
+1060859 0 -1 58607 -1 58670 78 78 854 387 0 25 387 -1 -1 0 0 -1 -1 -1 -1 1 0 58670 -1   0
+:\Users\zhang\Desktop\svn\project\APPLearning2017SinoGerman\project.tex
+TeX:UNIX
+269594619 0 -1 0 -1 0 130 130 880 489 0 25 -1778 -1 -1 0 0 30 -1 -1 30 1 0 0 -1   0
+:\Users\zhang\Desktop\svn\Research\ProbabilisticInvariant\draft_new.tex
+TeX
+269496315 0 -1 51739 -1 51200 156 156 1364 532 0 25 220 -1 -1 0 0 35 -1 -1 35 1 0 51200 -1   0
+:\Users\zhang\Desktop\svn\Research\pta\pta-dta.tex
+TeX
+269496315 0 -1 0 -1 0 78 78 1312 404 0 25 -731 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+:\Users\zhang\Desktop\svn\wanwei\Axiom\bib.bib
+BibTeX
+269485042 0 689 14 689 14 104 104 1274 463 0 168 264 -1 -1 0 0 22 0 0 22 1 0 14 689   0
+:\Users\zhang\Desktop\svn\Research\learning\buechi-complementation\concur\paper.tex
+TeX
+269496315 0 -1 699 -1 697 0 0 1208 376 0 300 352 -1 -1 0 0 47 -1 -1 47 1 0 697 -1   0
+:\Users\zhang\Desktop\svn\wanwei\Axiom\main.bbl
+TeX:AUX
+269496306 8 0 1331 0 1 78 78 1269 437 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 1 0   0
+:\Users\zhang\Desktop\svn\wanwei\Axiom\lipics-v2016.cls
+TeX:STY:UNIX
+269594610 2 643 53 643 58 26 26 1217 385 0 481 323 -1 -1 0 0 3 0 0 3 1 0 58 643   0
+:\Users\zhang\Desktop\svn\project\keyProject2016\plan.tex
+TeX
+269496315 0 -1 0 -1 0 104 104 1312 480 0 25 0 -1 -1 0 0 23 -1 -1 23 1 0 0 -1   0
+:\Users\zhang\Desktop\svn\Research\learning\buechi-complementation\proofs.tex
+TeX
+269496315 0 -1 0 -1 726 78 78 1286 454 0 137 272 -1 -1 0 0 0 -1 -1 0 1 0 726 -1   0
+:\Users\zhang\Downloads\detecting-anomalies-reactive\main.tex
+TeX:UTF-8:UNIX
+286371835 0 -1 0 -1 0 130 130 1338 506 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+:\Users\zhang\Desktop\svn\project\Learning2017\project.tex
+TeX
+269496315 0 -1 0 -1 0 0 0 1208 376 0 25 0 -1 -1 0 0 30 -1 -1 30 1 0 0 -1   0
+:\CTEX\MiKTeX\bibtex\bst\urlbst\plainurl.bst
+BST:UNIX
+303137778 0 0 1 0 1 0 0 1208 376 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 1 0   0
+:\Users\zhang\Desktop\svn\project\keyProject2016\feature.tex
+TeX
+269496315 0 -1 0 -1 0 78 78 1286 454 0 25 0 -1 -1 0 0 22 -1 -1 22 1 0 0 -1   0
+:\Users\zhang\Desktop\svn\project\keyProject2016\project.tex
+TeX
+1060859 0 -1 0 -1 3266 52 52 1260 428 0 657 102 -1 -1 0 0 30 -1 -1 30 1 0 3266 -1   0
+:\Users\zhang\Desktop\svn\Research\learning\tacas17-buechi\response.txt
+ASCII
+5252987 0 0 1 0 1 26 26 1234 402 1 73 0 -1 -1 0 0 150 0 0 150 1 0 1 0   0
+:\Users\zhang\Desktop\svn\feng\ctmc\ctmc.tex
+TeX:UNIX
+1159163 1 -1 7726 -1 8677 156 156 1364 532 0 25 476 -1 -1 0 0 0 -1 -1 0 1 0 8677 -1   0
+:\Users\zhang\Desktop\TeachingDM\dm.tex
+TeX:UNIX
+269594619 0 -1 213 -1 907 130 130 1338 506 0 33 476 -1 -1 0 0 28 -1 -1 28 1 0 907 -1   0
+:\Users\zhang\Desktop\svn\papers\working\epmc-tool-paper\paper.tex
+TeX
+269496315 0 -1 935 -1 941 104 104 1312 480 0 49 357 -1 -1 0 0 42 -1 -1 42 1 0 941 -1   0
+:\Users\zhang\Desktop\svn\Research\learning\buechi-complementation\paper.tex
+TeX
+17838075 0 -1 93784 -1 93784 52 52 1260 428 0 281 238 -1 -1 0 0 42 -1 -1 42 1 0 93784 -1   0
+
+*main.tex
+>
+*macros
+*introduction
+*preliminaries
+*examples
+*dpCTL
+*syntax
+*semantics
+*specifications
+*mdp
+*applications
+*refs.bib
+<
