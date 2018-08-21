@@ -16,6 +16,8 @@
 \usetikzlibrary{arrows,calc}
 \usepackage{url}
 \usepackage{times}
+\usepackage[symbol]{footmisc}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
 \algtext*{EndWhile}% Remove "end while" text
 \algtext*{EndIf}% Remove "end if" text
@@ -24,20 +26,26 @@
 \input{macros}
 
 \newif\ifpublic
-%\publictrue
+\publictrue
 
 \title{Model Checking Differentially Private Properties}
 \ifpublic
 \author{
-Depeng Liu\inst{1}
+Depeng Liu\inst{1,2}
 \and
-Bow-Yaw Wang\inst{2}
+Bow-Yaw Wang\inst{3}
 \and
-Lijun Zhang\inst{1}}
+Lijun Zhang\inst{1,2}}
 \institute{
+State Key Laboratory of Computer Science, Institute of Software,
 Chinese Academy of Sciences
+\footnotemark[1]
 \and
-Academia Sinica
+University of Chinese Academy of Sciences
+\footnotemark[1]
+\and
+Institute of Information Science, Academia Sinica
+\footnotemark[2]
 }
 \else
 \author{Author}
@@ -47,6 +55,11 @@ Academia Sinica
 \begin{document}
 
 \maketitle
+
+\footnotetext[1]{Partially supported by \todo{please fill in}}
+\footnotetext[2]{Partially supported by the Academia
+Sinica Thematic Project: Socially Accountable Privacy Framework for
+Secondary Data Usage.}
 
 \begin{abstract}
   We introduce the branching time temporal logic $\dpCTLstar$ for
