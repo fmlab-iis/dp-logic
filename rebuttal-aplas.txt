@@ -1,7 +1,7 @@
 ﻿First of all, we would like to thank all reviewers' efforts and
 comments.
 
-Response to Reviewer1:
+Response to Reviewer 1:
 
 The main contributions of this work are the formalization of privacy
 protection mechanisms as Markov chains or Markov Decision Processes,
@@ -23,7 +23,7 @@ automatically. Model checking dpCTL* over Markov Decision Processes on
 the other hand is undecidable. Hence interactive mechanisms in general
 cannot be verified with our current formalization.
 
-Response to Reviewer2:
+Response to Reviewer 2:
 
 We are aware of various language-based techniques for verifying
 differential privacy (of course). Just like classical 
