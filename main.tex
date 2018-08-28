@@ -35,7 +35,7 @@ Depeng Liu\inst{1,2}
 \and
 Bow-Yaw Wang\inst{3}
 \and
-Lijun Zhang\inst{1,2}}
+Lijun Zhang\inst{1,2,4}}
 \institute{
 State Key Laboratory of Computer Science, Institute of Software,
 Chinese Academy of Sciences
@@ -46,6 +46,9 @@ University of Chinese Academy of Sciences
 \and
 Institute of Information Science, Academia Sinica
 \footnotemark[2]
+\and
+Institute of Intelligent Software, Guangzhou
+\footnotemark[1]
 }
 \else
 \author{Author}
@@ -56,7 +59,8 @@ Institute of Information Science, Academia Sinica
 
 \maketitle
 
-\footnotetext[1]{Partially supported by \todo{please fill in}}
+\footnotetext[1]{Partially supported by 
+the National Natural Science Foundation of China (Grants No.\ 61532019, 61761136011, 61472473).}
 \footnotetext[2]{Partially supported by the Academia
 Sinica Thematic Project: Socially Accountable Privacy Framework for
 Secondary Data Usage.}
@@ -140,7 +144,7 @@ Section~\ref{section:conclusions} concludes our presentation.
 
 \section{Conclusions}
 \label{section:conclusions}
-We have introduced $\dpCTLstar$ to reason about properties in differential privacy, and investigated its model checking problems. For Markov chains, the model checking problem has the same complexity as for $\PCTLstar$. The general MDP model checking problem however is undecidable. 
+We have introduced $\dpCTLstar$ to reason about properties in differential privacy, and investigated its model checking problems. For Markov chains, the model checking problem has the same complexity as for $\PCTLstar$. The general MDP model checking problem however is undecidable.
 We have discussed some decidable special cases and a sufficient yet efficient condition to check differentially private subformulae.
 An interesting future work is to identify more
 decidable subclasses and sufficient conditions.
