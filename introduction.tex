@@ -28,7 +28,7 @@ mechanisms~\cite{DR:14:AFDP,JLE:14:DPML}.
 Designing differentially private mechanisms can be tedious for
 sophisticated data analyses. Privacy leak has also been observed in
 data analysis programs implementing differential
-privacy~\cite{M:12:SLSBDP,TKBW:17:PLAI}. This calls for formal 
+privacy~\cite{M:12:SLSBDP,TKBW:17:PLAI}. This calls for formal
 analysis of differential privacy on both designs and implementations.
 In this paper, we propose the logic $\dpCTLstar$ for specifying
 differential privacy and investigate their model checking
@@ -47,12 +47,12 @@ paper.
 In differential privacy, data analysis mechanisms are
 but randomized algorithms. We follow the standard practice in
 probabilistic model checking to formalize such mechanisms
-as Markov chains or Markov decision processes~\cite{Put05}. 
+as Markov chains or Markov decision processes~\cite{Put05}.
 %We give formalizations of several differentially private mechanisms
 %and explain subtle privacy conditions.
 When a data analysis mechanism does not
 interact with its environment, it is formalized as a Markov
-chain. Otherwise, its interactions are formalized by non-deterministic 
+chain. Otherwise, its interactions are formalized by non-deterministic
 actions in
 Markov decision processes. Our formalization effectively assumes that
 actions are controlled by adversaries. It thus
@@ -125,13 +125,13 @@ framework to formalize and analyze differential privacy in Markov
 chains and Markov decision processes.
 
 \noindent
-\emph{Contributions.} Our main contributions are threefold. 
+\emph{Contributions.} Our main contributions are threefold.
 \begin{enumerate}
-\item We introduce the logic $\dpCTLstar$ for reasoning about 
-differential privacy. The logic is able to to express subtle and generalized
+\item We introduce the logic $\dpCTLstar$ for reasoning about
+differential privacy. The logic is able to express subtle and generalized
 differentially private properties;
 %Complex properties such as those involving infinite behaviors can
-%also be expressed; 
+%also be expressed;
 \item We model several differentially private mechanisms in Markov chains or Markov decision processes; and
 \item We show that the model checking
 problem for Markov chains is standard. For Markov decision processes, we show that it is undecidable.
